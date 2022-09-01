@@ -1,0 +1,50 @@
+package com.carwash.orderservice.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.carwash.orderservice.model.Filter;
+import com.carwash.orderservice.model.Order;
+import com.carwash.orderservice.repository.OrderRepository;
+import com.carwash.orderservice.wrapper.OrderList;
+import com.carwash.orderservice.wrapper.StringList;
+
+@Service
+public class OrderServiceImpl implements OrderService{
+	
+	@Autowired
+	OrderRepository orderRepository;
+
+	
+	public boolean insertOrder(Order order) {
+		return false;
+	}
+
+	
+	public OrderList getAllOrders() {
+		return null;
+	}
+
+	
+	public boolean updateOrder(Order order) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
+	public boolean deleteOrders(StringList stringList) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
+	public OrderList getFilteredOrders(Filter filter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
+}

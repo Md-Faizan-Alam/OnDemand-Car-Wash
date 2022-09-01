@@ -1,0 +1,5 @@
+package com.carwash.orderservice.wrapper;
+
+public class OrderList {
+	List<Order> orderList;
+}

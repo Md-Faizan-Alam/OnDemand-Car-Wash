@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;router&apos; to &apos;api-gateway&apos;" description="Rename resource &apos;router&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/router" name="api-gateway" stamp="1661971947508" updateReferences="true"/>
+</session>

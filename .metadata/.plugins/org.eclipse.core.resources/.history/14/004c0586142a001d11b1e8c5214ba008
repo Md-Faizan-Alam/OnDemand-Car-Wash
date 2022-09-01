@@ -1,0 +1,6 @@
+package com.carwash.orderservice.service;
+
+@Service
+public class OrderServiceImpl implements OrderService{
+
+}

@@ -1,0 +1,20 @@
+package com.carwash.orderservice.service;
+
+import com.carwash.orderservice.wrapper.StringList;
+import com.carwash.washerservice.model.AddOn;
+import com.carwash.washerservice.wrapper.AddOnList;
+
+
+public interface OrderService {
+
+	public boolean insertOrder();
+
+	public AddOnList getAllAddOns();
+
+	public boolean updateAddOn(AddOn addOn);
+
+	public boolean deleteAddOns(StringList stringList);
+
+	public AddOnList getFilteredAddOns(Filter filter);
+
+}

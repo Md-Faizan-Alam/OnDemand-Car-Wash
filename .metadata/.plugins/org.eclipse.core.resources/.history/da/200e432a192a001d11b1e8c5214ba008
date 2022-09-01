@@ -1,0 +1,76 @@
+package com.carwash.washerservice.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.carwash.washerservice.model.AddOn;
+import com.carwash.washerservice.model.Filter;
+import com.carwash.washerservice.service.AddOnService;
+import com.carwash.washerservice.wrapper.AddOnList;
+import com.carwash.washerservice.wrapper.StringList;
+
+//@RestController
+//@RequestMapping("/washer/AddOn")
+public class AddOnController {
+
+	// Loose Coupling
+	@Autowired
+	AddOnService addOnService;
+	
+	// End-point to test if the add-on is parsed properly from the Request Body
+	@GetMapping("/pass")
+	public AddOn passAddOn(@RequestBody AddOn addOn) {
+		return addOn;
+	}
+	
+	// End-Point to insert a new add-on to the Database
+	@PostMapping("/add")
+	public ResponseEntity<String> insertAddOn(@RequestBody AddOn addOn) {
+		boolean saved = addOnService.insertAddOn(addOn);
+		if(saved) {
+			return new ResponseEntity<String>("Add-On saved successfully",HttpStatus.CREATED);
+		}
+		return new ResponseEntity<String>("Unable to save Add-On",HttpStatus.BAD_REQUEST);
+	}
+	
+	// End-Point to get the list of all add-ons from the Database
+	@GetMapping("/list")
+	public AddOnList getAllAddOns() {
+		return addOnService.getAllAddOns();
+	}
+	
+	// End-Point to update an existing add-on by sending the replacement through Request Body
+	@PutMapping("/update")
+	public ResponseEntity<String> updateAddOn(@RequestBody AddOn addOn){
+		boolean updated = addOnService.updateAddOn(addOn);
+		if(!updated) {
+			return new ResponseEntity<String>("Add On with this Id does not exist", HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<String>("Add On updated successfully", HttpStatus.OK);
+	}
+	
+	// End-Point to delete single or multiple add-ons from the Database by posting
+	// the list of id(s) of the add-ons that are to be deleted
+	@DeleteMapping("/delete")
+	public ResponseEntity<String> deleteAddOns(@RequestBody StringList stringList){
+		boolean deleted = addOnService.deleteAddOns(stringList);
+		if(deleted) {
+			return new ResponseEntity<String>("Add Ons deleted successfully", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("Add On with one of these Ids does not exist", HttpStatus.BAD_REQUEST);
+	}
+	
+	// End-Point to get the list of add-ons filtered according to a set of specifications
+	// These specifications are posted in the form of a filter object
+	@GetMapping("/filter")
+	public AddOnList getFilteredAddOns(@RequestBody Filter filter) {
+		return addOnService.getFilteredAddOns(filter);
+	}
+	
+}
