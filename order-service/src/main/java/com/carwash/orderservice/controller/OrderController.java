@@ -1,10 +1,13 @@
 package com.carwash.orderservice.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +28,7 @@ public class OrderController {
 	
 	@GetMapping("/pass")
 	public Order pass(Order order) {
+		order.setBookingTime(new Date(System.currentTimeMillis()));
 		return order;
 	}
 	
@@ -33,13 +37,13 @@ public class OrderController {
 		return new Filter();
 	}
 	
-	@GetMapping("/add")
+	@PostMapping("/add")
 	public ResponseEntity<String> insertOrder(@RequestBody Order order){
-		boolean saved = orderService.insertOrder(order);
-		if(saved) {
-			return new ResponseEntity<String>("Order saved successfully",HttpStatus.CREATED);
+		String saved = orderService.insertOrder(order);
+		if(saved.equals("Order saved successfully")) {
+			return new ResponseEntity<String>(saved,HttpStatus.CREATED);
 		}
-		return new ResponseEntity<String>("Unable to save Order",HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>(saved,HttpStatus.BAD_REQUEST);
 	}
 	
 	@GetMapping("/list")

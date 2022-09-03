@@ -8,7 +8,7 @@ import com.carwash.orderservice.wrapper.StringList;
 
 public interface OrderService {
 
-	public boolean insertOrder(Order order);
+	public String insertOrder(Order order);
 
 	public OrderList getAllOrders();
 

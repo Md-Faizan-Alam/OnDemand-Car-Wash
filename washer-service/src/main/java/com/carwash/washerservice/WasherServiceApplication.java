@@ -23,12 +23,12 @@ public class WasherServiceApplication {
 	}
 	
 	@Bean
-    public Docket api() { 
-        return new Docket(DocumentationType.SWAGGER_2)
-        		.select()
-        		.apis(RequestHandlerSelectors.basePackage("com.carwash"))
-        		.paths(PathSelectors.ant("/washer/**"))
-        		.build();
-    }
+	public Docket swaggerConfig() {
+		return new Docket(DocumentationType.SWAGGER_2)
+				.select()
+				.apis(RequestHandlerSelectors.basePackage("com.carwash.washerservice"))
+				.paths(PathSelectors.ant("/washer/**"))
+				.build();
+	}
 	
 }

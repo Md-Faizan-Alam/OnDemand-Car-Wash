@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="org.springframework.cloud.netflix.eureka.EnableEurekaClient"/>
-    <fullyQualifiedTypeName name="org.springframework.data.mongodb.repository.config.EnableMongoRepositories"/>
-    <fullyQualifiedTypeName name="io.vavr.collection.List"/>
-    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
-    <fullyQualifiedTypeName name="com.carwash.washerservice.model.WashPackList"/>
-    <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
-    <fullyQualifiedTypeName name="com.carwash.washerservice.model.WashPack"/>
-    <fullyQualifiedTypeName name="com.carwash.washerservice.model.Filter"/>
     <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonIgnore"/>
     <fullyQualifiedTypeName name="com.carwash.washerservice.wrapper.IntegerList"/>
-    <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="javax.websocket.server.ServerEndpoint"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
     <fullyQualifiedTypeName name="org.junit.jupiter.api.BeforeEach"/>
@@ -22,7 +13,6 @@
     <fullyQualifiedTypeName name="com.carwash.washerservice.service.AddOnService"/>
     <fullyQualifiedTypeName name="com.carwash.washerservice.wrapper.StringList"/>
     <fullyQualifiedTypeName name="org.apache.tomcat.util.digester.ArrayStack"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="com.carwash.washerservice.repository.AddOnRepository"/>
     <fullyQualifiedTypeName name="com.carwash.washerservice.service.AddOnServiceImpl"/>
     <fullyQualifiedTypeName name="org.junit.jupiter.api.Nested"/>
@@ -31,9 +21,6 @@
     <fullyQualifiedTypeName name="com.carwash.washerservice.wrapper.AddOnList"/>
     <fullyQualifiedTypeName name="springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc"/>
     <fullyQualifiedTypeName name="springfox.documentation.swagger2.annotations.EnableSwagger2"/>
-    <fullyQualifiedTypeName name="springfox.documentation.spi.DocumentationType"/>
-    <fullyQualifiedTypeName name="springfox.documentation.builders.PathSelectors"/>
-    <fullyQualifiedTypeName name="springfox.documentation.builders.RequestHandlerSelectors"/>
     <fullyQualifiedTypeName name="org.springframework.web.servlet.config.annotation.EnableWebMvc"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
@@ -44,11 +31,33 @@
     <fullyQualifiedTypeName name="javax.annotation.Generated"/>
     <fullyQualifiedTypeName name="com.carwash.orderservice.service.OrderService"/>
     <fullyQualifiedTypeName name="ch.qos.logback.core.filter.Filter"/>
-    <fullyQualifiedTypeName name="com.carwash.orderservice.repository.OrderRepository"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.Optional"/>
-    <fullyQualifiedTypeName name="com.carwash.orderservice.model.Order"/>
     <fullyQualifiedTypeName name="com.carwash.orderservice.model.Filter"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
     <fullyQualifiedTypeName name="com.carwash.orderservice.wrapper.StringList"/>
+    <fullyQualifiedTypeName name="org.bouncycastle.its.asn1.Latitude"/>
+    <fullyQualifiedTypeName name="com.carwash.orderservice.model.Location"/>
+    <fullyQualifiedTypeName name="com.carwash.orderservice.model.Feedback"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="io.vavr.collection.Array"/>
+    <fullyQualifiedTypeName name="java.lang.reflect.Array"/>
+    <fullyQualifiedTypeName name="java.sql.Array"/>
+    <fullyQualifiedTypeName name="java.util.Arrays"/>
+    <fullyQualifiedTypeName name="com.carwash.orderservice.repository.OrderRepository"/>
+    <fullyQualifiedTypeName name="com.carwash.orderservice.model.Order"/>
+    <fullyQualifiedTypeName name="com.carwash.orderservice.service.OrderServiceImpl"/>
+    <fullyQualifiedTypeName name="org.bouncycastle.its.asn1.Longitude"/>
+    <fullyQualifiedTypeName name="com.carwash.orderservice.exceptions.InvalidOrderException"/>
+    <fullyQualifiedTypeName name="com.carwash.orderservice.exceptions.InvalidStatusException"/>
+    <fullyQualifiedTypeName name="com.carwash.orderservice.exceptions.BookedForThePastException"/>
+    <fullyQualifiedTypeName name="com.carwash.orderservice.exceptions.NoCompletionDateException"/>
+    <fullyQualifiedTypeName name="com.carwash.orderservice.exceptions.LatitudeOutOfRangeException"/>
+    <fullyQualifiedTypeName name="com.carwash.orderservice.exceptions.LongitudeOutOfRangeException"/>
+    <fullyQualifiedTypeName name="com.carwash.orderservice.exceptions.RatingOutOfRangeException"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="java.lang.Exception"/>
+    <fullyQualifiedTypeName name="springfox.documentation.spi.DocumentationType"/>
+    <fullyQualifiedTypeName name="springfox.documentation.builders.RequestHandlerSelectors"/>
+    <fullyQualifiedTypeName name="springfox.documentation.builders.PathSelectors"/>
 </qualifiedTypeNameHistroy>

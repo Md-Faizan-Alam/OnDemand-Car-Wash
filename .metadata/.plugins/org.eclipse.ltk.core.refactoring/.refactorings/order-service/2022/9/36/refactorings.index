@@ -1,2 +1,13 @@
 1662047847250	Rename package 'com.carwash.washerservice'
 1662047866837	Rename package 'com.carwash.washerservice.service'
+1662097857700	Rename resource 'application.properties'
+1662098457217	Delete element
+1662174996541	Delete element
+1662181708247	Copy compilation unit
+1662182101274	Copy compilation unit
+1662182249358	Copy compilation unit
+1662182776815	Copy compilation unit
+1662182891000	Copy compilation unit
+1662183034459	Rename type 'LattudeOutOfRangeException'
+1662183188049	Copy compilation unit
+1662184054895	Delete element
