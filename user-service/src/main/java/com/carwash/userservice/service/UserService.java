@@ -19,5 +19,7 @@ public interface UserService {
 	public UserList getFilteredUsers(Filter filter);
 	
 	public UserList getUsersByExample(User order);
+	
+	public User getUserByUsername(String username);
 
 }

@@ -35,7 +35,6 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	public void validateOrder(Order order) throws Exception {
-
 		// Check if status is a valid string
 		if (!order.validateStatus()) {
 			throw new InvalidStatusException(order.getStatus());
@@ -52,20 +51,13 @@ public class OrderServiceImpl implements OrderService {
 				throw new NoCompletionDateException();
 			}
 		}
-		
 		if(!order.getStatus().equals("COMPLETED")) {
 			if(order.getCustomerFeedback() != null || order.getWasherFeedback() != null || order.getBucketsOfWaterUsed() != 0) {
 				throw new FeedbackNotPossibleException();
 			}
 		}
-		
 		try {
 			order.getLocation().validate();
-		} catch (Exception e) {
-			throw e;
-		}
-
-		try {
 			order.validateFeedbacks();
 		} catch (Exception e) {
 			throw e;

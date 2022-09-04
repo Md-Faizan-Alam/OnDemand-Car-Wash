@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.carwash.userservice.model.Filter;
@@ -26,13 +28,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public void validateUser(User user) throws Exception {
+		try {
+			user.validateRole();
+			user.validateEmail();
+		}catch(Exception e){
+			throw e;
+		}
 	}
 
 	public String insertUser(User user) {
 		if(user.getUserId()!= null) {
 			if (userRepository.existsById(user.getUserId())) {
 				return "User Already Exists";
-			}			
+			}
 		}
 		try {
 			validateUser(user);
@@ -76,6 +84,15 @@ public class UserServiceImpl implements UserService {
 	
 	public UserList getUsersByExample(User user) {
 		return null;
+	}
+	
+	public User getUserByUsername(String username) {
+		Query query = new Query(Criteria.where("email").is(username));
+		User user = mongoTemplate.findOne(query, User.class);
+		if(user == null) {
+			return new User(username,"nopassword");
+		}
+		return user;
 	}
 	
 	

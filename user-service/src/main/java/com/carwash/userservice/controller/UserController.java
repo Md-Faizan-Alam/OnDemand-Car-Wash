@@ -3,6 +3,10 @@ package com.carwash.userservice.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.carwash.userservice.model.AuthenticationRequest;
+import com.carwash.userservice.model.AuthenticationResponse;
 import com.carwash.userservice.model.Filter;
 import com.carwash.userservice.model.User;
+import com.carwash.userservice.service.JwtUtil;
 import com.carwash.userservice.service.UserService;
 import com.carwash.userservice.wrapper.StringList;
 import com.carwash.userservice.wrapper.UserList;
@@ -23,6 +30,33 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	JwtUtil jwtUtil;
+	
+	@Autowired
+	UserDetailsService userDetailsService;
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
+	@PostMapping("/authenticate")
+	public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
+		
+		try {
+			authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
+					);			
+		}catch(Exception e) {
+			return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse("Failed"),HttpStatus.FORBIDDEN);
+		}
+		
+		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+		
+		final String jwt = jwtUtil.generateToken(userDetails);
+		
+		return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse(jwt),HttpStatus.OK);
+	}
 	
 	@GetMapping("/pass")
 	public User pass(User user) {

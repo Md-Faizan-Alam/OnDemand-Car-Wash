@@ -33,6 +33,7 @@ public class OrderController {
 		return order;
 	}
 	
+	
 	@GetMapping("/demoFilter")
 	public Filter getFilter() {
 		LocalDateTime date = LocalDateTime.now();
@@ -86,3 +87,47 @@ public class OrderController {
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//	@GetMapping("/dummy")
+//	public List<Order> getDummyDate(){
+//		List<Order> orderList = new ArrayList<>();
+//		Order order = new Order("marutisuzuki","silverwash",new StringList(new ArrayList<>()), 1000.00, new Location(45,120),LocalDateTime.now());
+//		orderList.add(order);
+//		order = new Order("mahindraxuv","goldwash",new StringList(new ArrayList<>()), 2000.00, new Location(55,130),LocalDateTime.now());
+//		return orderList;
+//	}
