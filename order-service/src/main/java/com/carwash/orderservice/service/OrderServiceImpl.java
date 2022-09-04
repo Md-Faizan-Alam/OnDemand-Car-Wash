@@ -1,12 +1,18 @@
 package com.carwash.orderservice.service;
 
+import java.time.ZoneOffset;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.carwash.orderservice.exceptions.BookedForThePastException;
+import com.carwash.orderservice.exceptions.FeedbackNotPossibleException;
 import com.carwash.orderservice.exceptions.InvalidStatusException;
 import com.carwash.orderservice.exceptions.NoCompletionDateException;
 import com.carwash.orderservice.model.Filter;
@@ -20,6 +26,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	OrderRepository orderRepository;
+	
+	@Autowired
+	MongoTemplate mongoTemplate;
 
 	public void setRepository(OrderRepository orderRepository) {
 		this.orderRepository = orderRepository;
@@ -34,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
 		if (order.getCompletionTime() != null) {
 			// If completion time is not null then it has to be greater than the booking
 			// time
-			if ((order.getCompletionTime().getTime()) < (order.getBookingTime().getTime())) {
+			if ((order.getCompletionTime().isBefore(order.getBookingTime()))) {
 				throw new BookedForThePastException();
 			}
 		} else {
@@ -43,6 +52,13 @@ public class OrderServiceImpl implements OrderService {
 				throw new NoCompletionDateException();
 			}
 		}
+		
+		if(!order.getStatus().equals("COMPLETED")) {
+			if(order.getCustomerFeedback() != null || order.getWasherFeedback() != null || order.getBucketsOfWaterUsed() != 0) {
+				throw new FeedbackNotPossibleException();
+			}
+		}
+		
 		try {
 			order.getLocation().validate();
 		} catch (Exception e) {
@@ -56,16 +72,11 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 
-	public boolean orderExists(String orderId) {
-		if (orderId == null)
-			return false;
-		Optional<Order> order = orderRepository.findById(orderId);
-		return order.isPresent();
-	}
-
 	public String insertOrder(Order order) {
-		if (orderExists(order.getOrderId())) {
-			return "Order Already Exists";
+		if(order.getOrderId()!= null) {
+			if (orderRepository.existsById(order.getOrderId())) {
+				return "Order Already Exists";
+			}			
 		}
 		try {
 			validateOrder(order);
@@ -81,17 +92,22 @@ public class OrderServiceImpl implements OrderService {
 		return new OrderList(orderList);
 	}
 
-	public boolean updateOrder(Order order) {
-		if (orderExists(order.getOrderId())) {
-			orderRepository.save(order);
-			return true;
+	public String updateOrder(Order order) {
+		if (!orderRepository.existsById(order.getOrderId())) {
+			return "Order with this Id does not Exist";
 		}
-		return false;
+		try {
+			validateOrder(order);
+			orderRepository.save(order);
+			return "Order updated successfully";
+		}catch(Exception e) {
+			return e.getMessage();
+		}
 	}
 
 	public boolean deleteOrders(StringList stringList) {
 		for (String orderId : stringList.getStringList()) {
-			if (!orderExists(orderId))
+			if (!orderRepository.existsById(orderId))
 				return false;
 		}
 		orderRepository.deleteAllById(stringList.getStringList());
@@ -99,7 +115,21 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	public OrderList getFilteredOrders(Filter filter) {
-		return null;
+		Query query = new Query().addCriteria(Criteria.where("bookingTime")
+				.gt(filter.getAfter().toInstant(ZoneOffset.of("Z")))
+				.lt(filter.getBefore().toInstant(ZoneOffset.of("Z")))				
+				);
+		List<Order> orderList = mongoTemplate.find(query, Order.class);
+		return new OrderList(orderList);
 	}
+	
+	public OrderList getOrdersByExample(Order order) {
+		ExampleMatcher matcher = ExampleMatcher.matchingAny().withIgnorePaths("bucketsOfWaterUsed");
+		Example<Order> example = Example.of(order,matcher);
+		List<Order> orderList = orderRepository.findAll(example);
+		return new OrderList(orderList);
+	}
+	
+	
 
 }

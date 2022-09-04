@@ -12,10 +12,12 @@ public interface OrderService {
 
 	public OrderList getAllOrders();
 
-	public boolean updateOrder(Order order);
+	public String updateOrder(Order order);
 
 	public boolean deleteOrders(StringList stringList);
 
 	public OrderList getFilteredOrders(Filter filter);
+	
+	public OrderList getOrdersByExample(Order order);
 
 }

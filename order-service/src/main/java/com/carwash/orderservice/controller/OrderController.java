@@ -1,6 +1,7 @@
 package com.carwash.orderservice.controller;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,13 +29,15 @@ public class OrderController {
 	
 	@GetMapping("/pass")
 	public Order pass(Order order) {
-		order.setBookingTime(new Date(System.currentTimeMillis()));
+		order.setBookingTime(LocalDateTime.now());
 		return order;
 	}
 	
 	@GetMapping("/demoFilter")
 	public Filter getFilter() {
-		return new Filter();
+		LocalDateTime date = LocalDateTime.now();
+		date = date.truncatedTo(ChronoUnit.SECONDS);
+		return new Filter(date,date);
 	}
 	
 	@PostMapping("/add")
@@ -47,21 +50,21 @@ public class OrderController {
 	}
 	
 	@GetMapping("/list")
-	public OrderList getAllWashPacks() {
+	public OrderList getAllOrders() {
 		return orderService.getAllOrders();
 	}
 	
 	@PutMapping("/update")
-	public ResponseEntity<String> updateWashPack(@RequestBody Order order){
-		boolean updated = orderService.updateOrder(order);
-		if(updated) {
-			return new ResponseEntity<String>("Order updated successfully", HttpStatus.OK);
+	public ResponseEntity<String> updateOrder(@RequestBody Order order){
+		String updated = orderService.updateOrder(order);
+		if(updated == "Order updated successfully") {
+			return new ResponseEntity<String>(updated, HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("Order with this Id does not exist", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>(updated, HttpStatus.BAD_REQUEST);
 	}
 	
 	@DeleteMapping("/delete")
-	public ResponseEntity<String> deleteWashPacks(@RequestBody StringList stringList){
+	public ResponseEntity<String> deleteOrders(@RequestBody StringList stringList){
 		boolean deleted = orderService.deleteOrders(stringList);
 		if(deleted) {
 			return new ResponseEntity<String>("Orders deleted successfully", HttpStatus.OK);
@@ -70,8 +73,14 @@ public class OrderController {
 	}
 	
 	@GetMapping("/filter")
-	public OrderList getFilteredWashPacks(@RequestBody Filter filter) {
+	public OrderList getOrderByRange(@RequestBody Filter filter) {
 		return orderService.getFilteredOrders(filter);
+	}
+	
+	
+	@GetMapping("/find")
+	public OrderList getOrdersByExample(@RequestBody Order order) {
+		return orderService.getOrdersByExample(order);
 	}
 	
 	

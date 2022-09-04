@@ -1,11 +1,13 @@
 package com.carwash.orderservice.model;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import com.carwash.orderservice.exceptions.RatingOutOfRangeException;
 import com.carwash.orderservice.wrapper.StringList;
@@ -18,14 +20,17 @@ public class Order {
 	private String carId;			// Id of the car associated with the order
 	private String washPackId;		// Id of the Wash Pack that is in the order
 	private StringList addOnIdList;	// A list of Id(s) of the AddOns that are associated with the List
-	private Date bookingTime;		// The time and date of booking
+	private double amount;			// The total amount that is paid by the customer for the order
+	@Field(targetType = FieldType.DATE_TIME)
+	private LocalDateTime bookingTime;		// The time and date of booking
 	private Location location;		// Location in which the process is to take place
 	private String status;			// It can have values like [ "PENDING" , "IN_PROCESS" , "COMPLETED" , "CANCELLED" , "TERMINATED" ]
 	
 	// Can be null till order is not accepted by any washer
 	private String washerId;		// Id of the washer associated with the order
 	
-	private Date completionTime;	// The time and date of completion
+	@Field(targetType = FieldType.DATE_TIME)
+	private LocalDateTime completionTime;	// The time and date of completion
 	
 	private Feedback customerFeedback;	// Feedback provided by the customer
 	private Feedback washerFeedback;	// Feedback provided by the washer
@@ -38,14 +43,15 @@ public class Order {
 	private static List<String> validStatus =  Arrays.asList( "PENDING" , "IN_PROCESS" , "COMPLETED" , "CANCELLED" , "TERMINATED" );
 
 	// Custom Constructor
-	public Order(String carId, String washPackId, StringList addOnIdList, Location location , Date completionTime) {
+	public Order(String carId, String washPackId, StringList addOnIdList, double amount, Location location , LocalDateTime completionTime) {
 		
 		this.carId = carId;
 		this.washPackId = washPackId;
 		this.addOnIdList = addOnIdList;
+		this.amount = amount;
 		this.location = location;
 		
-		this.bookingTime = new Date(System.currentTimeMillis());
+		this.bookingTime = LocalDateTime.now();
 		this.status = "PENDING";
 		this.washerId = null;
 		this.completionTime = completionTime;
@@ -56,13 +62,14 @@ public class Order {
 	
 	
 	public Order() {}
-	public Order(String orderId, String carId, String washPackId, StringList addOnIdList, Date bookingTime,
-			Location location, String status, String washerId, Date completionTime, Feedback customerFeedback,
-			Feedback washerFeedback, int bucketsOfWaterUsed) {
+	public Order(String orderId, String carId, String washPackId, StringList addOnIdList, double amount,
+			LocalDateTime bookingTime, Location location, String status, String washerId, LocalDateTime completionTime,
+			Feedback customerFeedback, Feedback washerFeedback, int bucketsOfWaterUsed) {
 		this.orderId = orderId;
 		this.carId = carId;
 		this.washPackId = washPackId;
 		this.addOnIdList = addOnIdList;
+		this.amount = amount;
 		this.bookingTime = bookingTime;
 		this.location = location;
 		this.status = status;
@@ -72,6 +79,7 @@ public class Order {
 		this.washerFeedback = washerFeedback;
 		this.bucketsOfWaterUsed = bucketsOfWaterUsed;
 	}
+
 
 	public String getOrderId() {
 		return orderId;
@@ -104,12 +112,20 @@ public class Order {
 	public void setAddOnIdList(StringList addOnIdList) {
 		this.addOnIdList = addOnIdList;
 	}
+	
+	public double getAmount() {
+		return amount;
+	}
 
-	public Date getBookingTime() {
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	public LocalDateTime getBookingTime() {
 		return bookingTime;
 	}
 
-	public void setBookingTime(Date bookingTime) {
+	public void setBookingTime(LocalDateTime bookingTime) {
 		this.bookingTime = bookingTime;
 	}
 
@@ -137,11 +153,11 @@ public class Order {
 		this.washerId = washerId;
 	}
 
-	public Date getCompletionTime() {
+	public LocalDateTime getCompletionTime() {
 		return completionTime;
 	}
 
-	public void setCompletionTime(Date completionTime) {
+	public void setCompletionTime(LocalDateTime completionTime) {
 		this.completionTime = completionTime;
 	}
 
@@ -182,10 +198,5 @@ public class Order {
 			throw new RatingOutOfRangeException("washer");
 		}
 	}
-	
-	
-	
-	
-	
 	
 }
