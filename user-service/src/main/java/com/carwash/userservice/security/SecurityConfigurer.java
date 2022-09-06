@@ -12,15 +12,11 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.carwash.userservice.service.UserDetailsServiceImpl;
-
 @SuppressWarnings("deprecation")
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
-	
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
-	
 	@Autowired
 	JwtRequestFilter jwtRequestFilter;
 

@@ -7,6 +7,8 @@ import com.carwash.washerservice.wrapper.WashPackList;
 
 public interface WashPackService {
 	
+	public boolean doesExists(String washPackId);
+	
 	public boolean insertWashPack(WashPack washPack);
 	
 	public WashPackList getAllWashPacks();

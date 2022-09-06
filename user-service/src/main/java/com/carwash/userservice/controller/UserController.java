@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,102 +16,161 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.carwash.userservice.model.AuthenticationRequest;
-import com.carwash.userservice.model.AuthenticationResponse;
+import com.carwash.userservice.model.Car;
 import com.carwash.userservice.model.Filter;
 import com.carwash.userservice.model.User;
-import com.carwash.userservice.service.JwtUtil;
+import com.carwash.userservice.security.AuthenticationRequest;
+import com.carwash.userservice.security.AuthenticationResponse;
+import com.carwash.userservice.security.JwtUtil;
+import com.carwash.userservice.service.CarService;
 import com.carwash.userservice.service.UserService;
+import com.carwash.userservice.wrapper.CarList;
 import com.carwash.userservice.wrapper.StringList;
 import com.carwash.userservice.wrapper.UserList;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
-	UserService userService;
-	
+	private CarService carService;
+
 	@Autowired
-	JwtUtil jwtUtil;
-	
+	private JwtUtil jwtUtil;
+
 	@Autowired
-	UserDetailsService userDetailsService;
-	
+	private UserDetailsService userDetailsService;
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
+	/*-------------------------------------- Authenticate End-point ---------------------------------*/
 	@PostMapping("/authenticate")
-	public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
-		
+	public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest)
+			throws Exception {
+
 		try {
-			authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
-					);			
-		}catch(Exception e) {
-			return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse("Failed"),HttpStatus.FORBIDDEN);
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+					authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+		} catch (BadCredentialsException e) {
+//			throw new Exception("Incorrect Username or Password" , e);
+			return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse("Failed"),
+					HttpStatus.FORBIDDEN);
 		}
-		
+
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-		
 		final String jwt = jwtUtil.generateToken(userDetails);
-		
-		return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse(jwt),HttpStatus.OK);
+		return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse(jwt), HttpStatus.OK);
 	}
-	
+
+	/*-------------------------------------- User Controller ---------------------------------*/
+
+	// Method that returns an empty example of a user
 	@GetMapping("/pass")
-	public User pass(User user) {
-		return user;
+	public User pass() {
+		return new User();
 	}
-	
+
+	// Method that returns an empty example of a filter
 	@GetMapping("/demoFilter")
 	public Filter getFilter() {
 		return new Filter();
 	}
-	
+
+	// Method to insert a new User into the database
 	@PostMapping("/add")
-	public ResponseEntity<String> insertUser(@RequestBody User user){
+	public ResponseEntity<String> insertUser(@RequestBody User user) {
 		String saved = userService.insertUser(user);
-		if(saved.equals("User saved successfully")) {
-			return new ResponseEntity<String>(saved,HttpStatus.CREATED);
+		if (saved.equals("User saved successfully")) {
+			return new ResponseEntity<String>(saved, HttpStatus.CREATED);
 		}
-		return new ResponseEntity<String>(saved,HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>(saved, HttpStatus.BAD_REQUEST);
 	}
-	
+
+	// Method that returns the list of all users from the database
 	@GetMapping("/list")
 	public UserList getAllUsers() {
 		return userService.getAllUsers();
 	}
-	
+
+	// Method to update a user that already exists in the database
 	@PutMapping("/update")
-	public ResponseEntity<String> updateUser(@RequestBody User user){
+	public ResponseEntity<String> updateUser(@RequestBody User user) {
 		String updated = userService.updateUser(user);
-		if(updated == "User updated successfully") {
+		if (updated == "User updated successfully") {
 			return new ResponseEntity<String>(updated, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(updated, HttpStatus.BAD_REQUEST);
 	}
-	
+
+	// Method to delete a user from the database
 	@DeleteMapping("/delete")
-	public ResponseEntity<String> deleteUsers(@RequestBody StringList stringList){
+	public ResponseEntity<String> deleteUsers(@RequestBody StringList stringList) {
 		boolean deleted = userService.deleteUsers(stringList);
-		if(deleted) {
+		if (deleted) {
 			return new ResponseEntity<String>("Users deleted successfully", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("User with one of these Ids does not exist", HttpStatus.BAD_REQUEST);
 	}
-	
+
+	// Method to get a list of users from the database filtered according to the
+	// given specifications
 	@GetMapping("/filter")
-	public UserList getUserByRange(@RequestBody Filter filter) {
+	public UserList getFilteredUsers(@RequestBody Filter filter) {
 		return userService.getFilteredUsers(filter);
 	}
-	
-	
+
+	// Method to find a user using an example
 	@GetMapping("/find")
 	public UserList getUsersByExample(@RequestBody User user) {
 		return userService.getUsersByExample(user);
 	}
-	
-	
-	
+
+	/*-------------------------------------- Car Controller ---------------------------------*/
+
+	// Method that returns an empty example of a user
+	@GetMapping("/car/pass")
+	public Car carPass() {
+		return new Car();
+	}
+
+	// Method to insert a new User into the database
+	@PostMapping("/car/add")
+	public ResponseEntity<String> insertCar(@RequestBody Car car) {
+		String saved = carService.insertCar(car);
+		if (saved.equals("User saved successfully")) {
+			return new ResponseEntity<String>(saved, HttpStatus.CREATED);
+		}
+		return new ResponseEntity<String>(saved, HttpStatus.BAD_REQUEST);
+	}
+
+	// Method that returns the list of all users from the database
+	@GetMapping("/car/list")
+	public CarList getAllCars() {
+		return carService.getAllCars();
+	}
+
+	// Method to update a user that already exists in the database
+	@PutMapping("/car/update")
+	public ResponseEntity<String> updateCar(@RequestBody Car car) {
+		String updated = carService.updateCar(car);
+		if (updated == "Car updated successfully") {
+			return new ResponseEntity<String>(updated, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(updated, HttpStatus.BAD_REQUEST);
+	}
+
+	// Method to delete a user from the database
+	@DeleteMapping("/car/delete")
+	public ResponseEntity<String> deleteCars(@RequestBody StringList stringList) {
+		boolean deleted = carService.deleteCars(stringList);
+		if (deleted) {
+			return new ResponseEntity<String>("Cars deleted successfully", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("Car with one of these Ids does not exist", HttpStatus.BAD_REQUEST);
+	}
+
 }

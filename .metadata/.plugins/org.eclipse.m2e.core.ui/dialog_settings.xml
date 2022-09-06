@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="C:\Users\fajju\BU-Training\CarWash\user-service"/>
 			<item value="C:\Users\fajju\BU-Training\CarWash\order-service"/>
 			<item value="C:\Users\fajju\BU-Training\CarWash\washer-service"/>
 			<item value="C:\Users\fajju\BU-Training\CarWash\router"/>

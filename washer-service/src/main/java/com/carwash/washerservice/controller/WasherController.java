@@ -32,25 +32,31 @@ public class WasherController {
 	@Autowired
 	AddOnService addOnService;
 	
-	// End-point to test if the WashPack is parsed properly from the Request Body
+	
+	/*------------------------------------ WashPack Controller ---------------------------------------------------*/
+	
+	// Method that returns an example of a WashPack
 	@GetMapping("/WashPack/pass")
-	public WashPack passWashPack(@RequestBody WashPack washPack) {
-		return washPack;
+	public WashPack passWashPack() {
+		return new WashPack();
 	}
 	
-	// End-Point that returns an example of a Filter object. This end-point is used during testing through Post-Man
-	// This example filter can be copied onto the body and modified, for the purpose of testing the end-points that
-	// require the user to post a filter object in the body
+	
+	// Method that returns an example of a filter
 	@GetMapping("/WashPack/demoFilter")
 	public Filter getFilter() {
-		Filter filter = new Filter();
-		filter.setMinPrice(0);
-		filter.setMaxPrice(10000);
-		filter.setSortBy("price");
-		return filter;
+		return new Filter(0,1000,"price");
 	}
 	
-	// End-Point to insert a new wash pack to the Database
+	// Method to check if WashPacks with all the id(s) in the given StringList exist in the database
+	@PostMapping("/WashPack/exists")
+	public ResponseEntity<Boolean> checkExistenceOfWashPack(@RequestBody String washPackId) {
+		if(!washPackService.doesExists(washPackId)) return new ResponseEntity<Boolean>(false,HttpStatus.OK);
+		return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+	}
+	
+	
+	// Method to insert a new wash pack to the Database
 	@PostMapping("/WashPack/add")
 	public ResponseEntity<String> insertWashPack(@RequestBody WashPack washPack) {
 		boolean saved = washPackService.insertWashPack(washPack);
@@ -60,13 +66,15 @@ public class WasherController {
 		return new ResponseEntity<String>("Unable to save Wash Pack",HttpStatus.BAD_REQUEST);
 	}
 	
-	// End-Point to get the list of all wash packs from the Database
+	
+	// Method to get the list of all wash packs from the Database
 	@GetMapping("/WashPack/list")
 	public WashPackList getAllWashPacks() {
 		return washPackService.getAllWashPacks();
 	}
 	
-	// End-Point to update an existing wash pack by sending the replacement through Request Body
+	
+	// Method to update an existing wash pack by sending the replacement through Request Body
 	@PutMapping("/WashPack/update")
 	public ResponseEntity<String> updateWashPack(@RequestBody WashPack washPack){
 		boolean updated = washPackService.updateWashPack(washPack);
@@ -76,8 +84,8 @@ public class WasherController {
 		return new ResponseEntity<String>("Wash Pack updated successfully", HttpStatus.OK);
 	}
 	
-	// End-Point to delete single or multiple wash packs from the Database by posting
-	// the list of id(s) of the wash packs that are to be deleted
+	
+	// Method to delete all WashPacks corresponding to the given list of id(s)
 	@DeleteMapping("/WashPack/delete")
 	public ResponseEntity<String> deleteWashPacks(@RequestBody StringList stringList){
 		boolean deleted = washPackService.deleteWashPacks(stringList);
@@ -87,20 +95,34 @@ public class WasherController {
 		return new ResponseEntity<String>("Wash Packs deleted successfully", HttpStatus.OK);
 	}
 	
-	// End-Point to get the list of wash packs filtered according to a set of specifications
-	// These specifications are posted in the form of a filter object
+	
+	// Method to filter the WashPacks according to specifications provided in the filter object
 	@GetMapping("/WashPack/filter")
 	public WashPackList getFilteredWashPacks(@RequestBody Filter filter) {
 		return washPackService.getFilteredWashPacks(filter);
 	}
 	
-	// End-point to test if the add-on is parsed properly from the Request Body
+	
+	/*------------------------------------ AddOn Controller ---------------------------------------------------*/
+	
+	// Method that returns an empty example of an AddOn
 	@GetMapping("/AddOn/pass")
-	public AddOn passAddOn(@RequestBody AddOn addOn) {
-		return addOn;
+	public AddOn passAddOn() {
+		return new AddOn();
 	}
 	
-	// End-Point to insert a new add-on to the Database
+	
+	// Method to check if AddOns with all the id(s) in the given StringList exist in the database 
+	@PostMapping("/AddOn/exists")
+	public ResponseEntity<Boolean> checkExistenceOfAddOn(@RequestBody StringList addOnIdList) {
+		for(String addOnId : addOnIdList.getStringList()) {
+			if(!addOnService.doesExists(addOnId)) return new ResponseEntity<>(false,HttpStatus.OK);
+		}
+		return new ResponseEntity<>(true,HttpStatus.OK);
+	}
+	
+	
+	// Method to insert a new add-on to the Database
 	@PostMapping("/AddOn/add")
 	public ResponseEntity<String> insertAddOn(@RequestBody AddOn addOn) {
 		boolean saved = addOnService.insertAddOn(addOn);
@@ -110,13 +132,13 @@ public class WasherController {
 		return new ResponseEntity<String>("Unable to save Add-On",HttpStatus.BAD_REQUEST);
 	}
 	
-	// End-Point to get the list of all add-ons from the Database
+	// Method to get the list of all add-ons from the Database
 	@GetMapping("/AddOn/list")
 	public AddOnList getAllAddOns() {
 		return addOnService.getAllAddOns();
 	}
 	
-	// End-Point to update an existing add-on by sending the replacement through Request Body
+	// Method to update an existing add-on by sending the replacement through Request Body
 	@PutMapping("/AddOn/update")
 	public ResponseEntity<String> updateAddOn(@RequestBody AddOn addOn){
 		boolean updated = addOnService.updateAddOn(addOn);
@@ -126,7 +148,7 @@ public class WasherController {
 		return new ResponseEntity<String>("Add On updated successfully", HttpStatus.OK);
 	}
 	
-	// End-Point to delete single or multiple add-ons from the Database by posting
+	// Method to delete single or multiple add-ons from the Database by posting
 	// the list of id(s) of the add-ons that are to be deleted
 	@DeleteMapping("/AddOn/delete")
 	public ResponseEntity<String> deleteAddOns(@RequestBody StringList stringList){
@@ -137,11 +159,13 @@ public class WasherController {
 		return new ResponseEntity<String>("Add On with one of these Ids does not exist", HttpStatus.BAD_REQUEST);
 	}
 	
-	// End-Point to get the list of add-ons filtered according to a set of specifications
+	// Method to get the list of add-ons filtered according to a set of specifications
 	// These specifications are posted in the form of a filter object
 	@GetMapping("/AddOn/filter")
 	public AddOnList getFilteredAddOns(@RequestBody Filter filter) {
 		return addOnService.getFilteredAddOns(filter);
 	}
+	
+	
 	
 }

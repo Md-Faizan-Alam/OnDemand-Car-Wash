@@ -1,7 +1,14 @@
 package com.carwash.userservice.model;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.carwash.userservice.exceptions.InvalidCarTypeException;
+import com.carwash.userservice.exceptions.InvalidColorException;
+import com.carwash.userservice.exceptions.InvalidRegistrationNumberException;
 
 @Document("CARS")
 public class Car {
@@ -12,6 +19,9 @@ public class Car {
 	private String carType;
 	private String color;
 	private String registrationNumber;
+	
+	private static List<String> validCarTypes = Arrays.asList( "SEDAN" , "HATCHBACK" , "CONVERTIBLE" , "COUPE" , "MINIVAN" , "STATION_WAGON" , "PICK_UP_TRUCK" , "TRUCK" , "OFF_ROAD" , "VAN" );
+	
 	public Car() {}
 	public Car(String carId, String customerId, String carType, String color, String registrationNumber) {
 		this.carId = carId;
@@ -50,5 +60,21 @@ public class Car {
 	public void setRegistrationNumber(String registrationNumber) {
 		this.registrationNumber = registrationNumber;
 	}
+	
+	public void validateCarTypes() throws InvalidCarTypeException{
+		if(validCarTypes.contains(this.carType)) return;
+		throw new InvalidCarTypeException(this.carType);
+	}
+	
+	public void validateColor() throws InvalidColorException {
+		if(this.color.matches("^#([A-Fa-f0-9]{6}$")) return;
+		throw new InvalidColorException(this.color);
+	}
+	
+	public void validateRegistrationNumber() throws InvalidRegistrationNumberException{
+		if(this.registrationNumber.matches("^[A-Z]{2}[0-9]{4}$")) return;
+		throw new InvalidRegistrationNumberException(this.color);
+	}
+	
 	
 }

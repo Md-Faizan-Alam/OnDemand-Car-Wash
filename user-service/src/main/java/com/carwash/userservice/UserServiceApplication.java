@@ -21,8 +21,8 @@ public class UserServiceApplication {
 	@Bean
   	public OpenAPI springShopOpenAPI() {
     return new OpenAPI()
-            .info(new Info().title("Order Service API")
-            .description("Service for communication with the Order Database")
+            .info(new Info().title("User Service API")
+            .description("Service for communication with the User Database")
             .version("v0.0.1"));
   	}
 

@@ -83,14 +83,14 @@ class ServiceTest {
 			stringList.add("vu2ru87y489734y");
 			stringList.add("ryj32qrfwn87y8r");
 			stringList.add("vr38ru98ruewr9w");
-			when(washPackService.washPackRepository.countByWashPackId("vu2ru87y489734y")).thenReturn(1L);
-			when(washPackService.washPackRepository.countByWashPackId("ryj32qrfwn87y8r")).thenReturn(1L);
-			when(washPackService.washPackRepository.countByWashPackId("vr38ru98ruewr9w")).thenReturn(1L);
+			when(washPackService.washPackRepository.existsById("vu2ru87y489734y")).thenReturn(true);
+			when(washPackService.washPackRepository.existsById("ryj32qrfwn87y8r")).thenReturn(true);
+			when(washPackService.washPackRepository.existsById("vr38ru98ruewr9w")).thenReturn(true);
 			boolean existingWashPackssAreDeleted = washPackService.deleteWashPacks(stringList);
 			
 			// Adding an invalid Id
 			stringList.add("vm9we9rw969wc9m");
-			when(washPackService.washPackRepository.countByWashPackId("vm9we9rw969wc9m")).thenReturn(0L);
+			when(washPackService.washPackRepository.existsById("vm9we9rw969wc9m")).thenReturn(false);
 			boolean nonExistentWashPackIsDeleted = washPackService.deleteWashPacks(stringList);
 			
 			assertAll(
@@ -104,7 +104,7 @@ class ServiceTest {
 		@DisplayName("Test for Updation of Wash Packs")
 		void testUpdateWashPack() {
 			WashPack washPack = new WashPack("fu8rwr8ujrf8wh8e", "Silver Wash", "Complete vacuuming of cars incl. seats and boot + Washing and cleaning of foot mats + Body Shampooing and washing including door frames + Tyre arches cleaning + Underbody wash + Engine hot water wash and dressing + Side doors cleaning + Dashboard polishing + Car perfume spray",400);
-			when(washPackService.washPackRepository.countByWashPackId("fu8rwr8ujrf8wh8e")).thenReturn(1L);
+			when(washPackService.washPackRepository.existsById("fu8rwr8ujrf8wh8e")).thenReturn(true);
 			boolean existingWashPacknIsUpdated = washPackService.updateWashPack(washPack);
 			washPack.setPrice(100);
 			boolean priceIsSetToLessThanMinimum = washPackService.updateWashPack(washPack);
@@ -167,14 +167,14 @@ class ServiceTest {
 			stringList.add("vu2ru87y489734y");
 			stringList.add("ryj32qrfwn87y8r");
 			stringList.add("vr38ru98ruewr9w");
-			when(addOnService.addOnRepository.countByAddOnId("vu2ru87y489734y")).thenReturn(1L);
-			when(addOnService.addOnRepository.countByAddOnId("ryj32qrfwn87y8r")).thenReturn(1L);
-			when(addOnService.addOnRepository.countByAddOnId("vr38ru98ruewr9w")).thenReturn(1L);
+			when(addOnService.addOnRepository.existsById("vu2ru87y489734y")).thenReturn(true);
+			when(addOnService.addOnRepository.existsById("ryj32qrfwn87y8r")).thenReturn(true);
+			when(addOnService.addOnRepository.existsById("vr38ru98ruewr9w")).thenReturn(true);
 			boolean existingAddOnssAreDeleted = addOnService.deleteAddOns(stringList);
 			
 			// Adding an invalid Id to the list
 			stringList.add("vm9we9rw969wc9m");
-			when(addOnService.addOnRepository.countByAddOnId("vm9we9rw969wc9m")).thenReturn(0L);
+			when(addOnService.addOnRepository.existsById("vm9we9rw969wc9m")).thenReturn(false);
 			boolean nonExistentAddOnIsDeleted = addOnService.deleteAddOns(stringList);
 			
 			assertAll(
@@ -187,7 +187,7 @@ class ServiceTest {
 		@DisplayName("Test for Updation of Add-On")
 		void testUpdateAddOn() {
 			AddOn addOn = new AddOn("fu8rwr8ujrf8wh8e", "AC Disinfectant", "The aim of this service is to clean and sanitize the air conditioning compartment of the car.",100);
-			when(addOnService.addOnRepository.countByAddOnId("fu8rwr8ujrf8wh8e")).thenReturn(1L);
+			when(addOnService.addOnRepository.existsById("fu8rwr8ujrf8wh8e")).thenReturn(true);
 			boolean existingAddOnIsUpdated = addOnService.updateAddOn(addOn);
 			addOn.setPrice(40);
 			boolean priceIsSetToLessThanMinimum = addOnService.updateAddOn(addOn);

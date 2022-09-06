@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value=""/>
+		<item key="selection" value="car"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="true"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="user"/>
+			<item value="userRepository"/>
+			<item value="User"/>
+			<item value="End-Point"/>
+			<item value="End-point"/>
+			<item value="order"/>
+			<item value="Order"/>
+			<item value="orderList"/>
+			<item value="new Date(System.currentTimeMillis())"/>
 			<item value="documentationPluginsBootstrapper"/>
 			<item value="condition"/>
 			<item value="// TODO Auto-generated method stub"/>
 			<item value="@Override"/>
 			<item value="Mapping(&quot;/AddOn/WashPack/"/>
 			<item value="Mapping(&quot;/"/>
-			<item value="@GetMapping(&quot;"/>
-			<item value="getPatterns"/>
-			<item value="washPack"/>
-			<item value="WashPack"/>
-			<item value="Wash Pack"/>
 		</list>
 		<list key="replacehistory">
+			<item value="car"/>
+			<item value="carRepository"/>
+			<item value="Car"/>
+			<item value="Method"/>
+			<item value="user"/>
+			<item value="User"/>
+			<item value="userList"/>
+			<item value="LocalDateTime.now()"/>
 			<item value=""/>
 			<item value=" "/>
 			<item value="Mapping(&quot;/WashPack/"/>
@@ -31,8 +43,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="958"/>
-		<item key="DIALOG_Y_ORIGIN" value="80"/>
+		<item key="DIALOG_X_ORIGIN" value="429"/>
+		<item key="DIALOG_Y_ORIGIN" value="98"/>
 		<item key="DIALOG_WIDTH" value="322"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

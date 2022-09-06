@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.carwash.userservice.exceptions.InvalidEmailException;
+import com.carwash.userservice.exceptions.InvalidPhoneNumberException;
 import com.carwash.userservice.exceptions.InvalidRoleException;
 
 @Document("USERS")
@@ -20,13 +21,14 @@ public class User {
 	private String password;
 	private String role;
 	private List<String> carIds;
+	private String phoneNumber;
 	
 	private static final List<String> validRoles = Arrays.asList("CUSTOMER" , "WASHER" , "ADMIN");
 	
 	
 	public User() {}
 	public User(String userId, String firstName, String lastName, String email, String password, String role,
-			List<String> carIds) {
+			List<String> carIds, String phoneNumber) {
 		this.userId = userId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -34,13 +36,13 @@ public class User {
 		this.password = password;
 		this.role = role;
 		this.carIds = carIds;
+		this.phoneNumber = phoneNumber;
 	}
 	
 	public User(String email, String password) {
 		this.email = email;
 		this.password = password;
 	}
-
 
 	public String getUserId() {
 		return userId;
@@ -78,6 +80,19 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	public List<String> getCarIds() {
+		return carIds;
+	}
+	public void setCarIds(List<String> carIds) {
+		this.carIds = carIds;
+	}
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 	
 	
 	public void validateRole() throws InvalidRoleException{
@@ -87,17 +102,14 @@ public class User {
 	}
 	
 	public void validateEmail() throws InvalidEmailException{
-		if(!this.email.matches("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")){
-			throw new InvalidEmailException(email);
-		}
-	}
-	public List<String> getCarIds() {
-		return carIds;
-	}
-	public void setCarIds(List<String> carIds) {
-		this.carIds = carIds;
+		if(this.email.matches("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")) return;
+		throw new InvalidEmailException(this.email);
 	}
 	
+	public void validatePhoneNumber() throws InvalidPhoneNumberException{
+		if(this.phoneNumber.matches("^[1-9][0-9]{9}$")) return;
+		throw new InvalidPhoneNumberException(this.phoneNumber);
+	}
 	
 	
 	

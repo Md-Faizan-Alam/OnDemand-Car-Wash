@@ -26,5 +26,9 @@ public class StringList {
 		stringList.add(string);
 	}
 	
+	public void clear() {
+		stringList.clear();
+	}
+	
 	
 }

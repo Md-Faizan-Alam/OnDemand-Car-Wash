@@ -20,6 +20,6 @@ public interface UserService {
 	
 	public UserList getUsersByExample(User order);
 	
-	public User getUserByUsername(String username);
+	public User getUserByUsername(String username) throws Exception;
 
 }

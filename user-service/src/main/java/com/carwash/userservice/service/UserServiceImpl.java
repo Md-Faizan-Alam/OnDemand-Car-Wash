@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	MongoTemplate mongoTemplate;
 
@@ -27,18 +27,23 @@ public class UserServiceImpl implements UserService {
 		this.userRepository = userRepository;
 	}
 
+	public boolean doesExist(String userId) {
+		return userRepository.existsById(userId);
+	}
+
 	public void validateUser(User user) throws Exception {
 		try {
 			user.validateRole();
 			user.validateEmail();
-		}catch(Exception e){
+			user.validatePhoneNumber();
+		} catch (Exception e) {
 			throw e;
 		}
 	}
 
 	public String insertUser(User user) {
-		if(user.getUserId()!= null) {
-			if (userRepository.existsById(user.getUserId())) {
+		if (user.getUserId() != null) {
+			if (doesExist(user.getUserId())) {
 				return "User Already Exists";
 			}
 		}
@@ -46,7 +51,7 @@ public class UserServiceImpl implements UserService {
 			validateUser(user);
 			userRepository.save(user);
 			return "User saved successfully";
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return e.getMessage();
 		}
 	}
@@ -57,21 +62,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public String updateUser(User user) {
-		if (!userRepository.existsById(user.getUserId())) {
+		if (!doesExist(user.getUserId())) {
 			return "User with this Id does not Exist";
 		}
 		try {
 			validateUser(user);
 			userRepository.save(user);
 			return "User updated successfully";
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return e.getMessage();
 		}
 	}
 
 	public boolean deleteUsers(StringList stringList) {
 		for (String userId : stringList.getStringList()) {
-			if (!userRepository.existsById(userId))
+			if (!doesExist(userId))
 				return false;
 		}
 		userRepository.deleteAllById(stringList.getStringList());
@@ -81,20 +86,18 @@ public class UserServiceImpl implements UserService {
 	public UserList getFilteredUsers(Filter filter) {
 		return null;
 	}
-	
+
 	public UserList getUsersByExample(User user) {
 		return null;
 	}
-	
-	public User getUserByUsername(String username) {
+
+	public User getUserByUsername(String username) throws Exception {
 		Query query = new Query(Criteria.where("email").is(username));
 		User user = mongoTemplate.findOne(query, User.class);
-		if(user == null) {
-			return new User(username,"nopassword");
+		if (user == null) {
+			throw new Exception("User with the given username not found");
 		}
 		return user;
 	}
-	
-	
 
 }

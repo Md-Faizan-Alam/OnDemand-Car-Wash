@@ -9,6 +9,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 
+import com.carwash.orderservice.exceptions.BookedForThePastException;
+import com.carwash.orderservice.exceptions.FeedbackNotPossibleException;
+import com.carwash.orderservice.exceptions.InvalidStatusException;
+import com.carwash.orderservice.exceptions.NoCompletionDateException;
 import com.carwash.orderservice.exceptions.RatingOutOfRangeException;
 import com.carwash.orderservice.wrapper.StringList;
 
@@ -186,8 +190,9 @@ public class Order {
 	}
 
 	
-	public boolean validateStatus(){
-		return validStatus.contains(this.status);
+	public void validateStatus() throws InvalidStatusException{
+		if(validStatus.contains(this.status)) return;
+		throw new InvalidStatusException(status);
 	}
 	
 	public void validateFeedbacks() throws RatingOutOfRangeException{
@@ -198,5 +203,24 @@ public class Order {
 			throw new RatingOutOfRangeException("washer");
 		}
 	}
+	
+	public void validateCompletion() throws FeedbackNotPossibleException {
+		if(this.status.equals("COMPLETED")) return;
+		if(this.customerFeedback != null || this.washerFeedback != null || this.bucketsOfWaterUsed != 0) {
+			throw new FeedbackNotPossibleException();
+		}
+	}
+	
+	public void validateDateOrder() throws BookedForThePastException{
+		if(this.completionTime == null) return;
+		if(this.completionTime.isBefore(bookingTime)) throw new BookedForThePastException();
+	}
+	
+	public void validateCompletionDate() throws NoCompletionDateException{
+		if(this.status.equals("COMPLETED") && this.completionTime == null) {
+			throw new NoCompletionDateException();
+		}
+	}
+	
 	
 }

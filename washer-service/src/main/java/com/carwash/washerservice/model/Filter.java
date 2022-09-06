@@ -1,5 +1,8 @@
 package com.carwash.washerservice.model;
 
+import java.util.Arrays;
+import java.util.List;
+
 /* The Filter object is a set of specifications posted by the user containing
  information about how they want the list of wash packs or add-ons to be filtered */
 public class Filter {
@@ -10,6 +13,8 @@ public class Filter {
 	// It takes the name of the field w.r.t which the list is to be sorted in ascending order
 	// If the string does not match the name of any field then it is sorted by price
 	private String sortBy;
+	
+	private List<String> validFields = Arrays.asList("washPackTitle","washPackDescription","price");
 	
 	public Filter() {
 	}
@@ -35,6 +40,11 @@ public class Filter {
 	}
 	public void setSortBy(String sortBy) {
 		this.sortBy = sortBy;
+	}
+	
+	public void validateField() {
+		if(this.validFields.contains(this.sortBy)) return;
+		this.sortBy = "price";
 	}
 	
 }

@@ -7,6 +7,8 @@ import com.carwash.washerservice.wrapper.StringList;
 
 public interface AddOnService {
 	
+	public boolean doesExists(String addOnId);
+	
 	public boolean insertAddOn(AddOn addOn);
 	
 	public AddOnList getAllAddOns();

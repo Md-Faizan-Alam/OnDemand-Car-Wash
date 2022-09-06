@@ -1,7 +1,0 @@
-package com.carwash.orderservice.controller;
-
-@RestController
-@RequestMapping("/order")
-public class OrderController {
-	
-}

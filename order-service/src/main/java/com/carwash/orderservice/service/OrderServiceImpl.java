@@ -10,11 +10,9 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import com.carwash.orderservice.exceptions.BookedForThePastException;
-import com.carwash.orderservice.exceptions.FeedbackNotPossibleException;
-import com.carwash.orderservice.exceptions.InvalidStatusException;
-import com.carwash.orderservice.exceptions.NoCompletionDateException;
+import com.carwash.orderservice.exceptions.NonExistentIdException;
 import com.carwash.orderservice.model.Filter;
 import com.carwash.orderservice.model.Order;
 import com.carwash.orderservice.repository.OrderRepository;
@@ -24,39 +22,46 @@ import com.carwash.orderservice.wrapper.StringList;
 @Service
 public class OrderServiceImpl implements OrderService {
 
+	private static final String BASE_URL = "http://api-gateway";
+
+	private static final String WASH_PACK_URL = BASE_URL + "/washer/WashPack";
+
+	private static final String ADD_ON_URL = BASE_URL + "/washer/AddOn";
+
 	@Autowired
 	OrderRepository orderRepository;
-	
+
 	@Autowired
 	MongoTemplate mongoTemplate;
+
+	@Autowired
+	RestTemplate restTemplate;
 
 	public void setRepository(OrderRepository orderRepository) {
 		this.orderRepository = orderRepository;
 	}
+	
+	public void validateExistenceOfIds(Order order) throws NonExistentIdException{
+		boolean washPackExists = restTemplate
+				.postForEntity(WASH_PACK_URL + "/exists", order.getWashPackId(), Boolean.class).getBody();
+		
+		if (!washPackExists)
+			throw new NonExistentIdException("Wash Pack");
+		
+		boolean addOnsExist = restTemplate
+				.postForEntity(ADD_ON_URL+"/exists", order.getAddOnIdList(), Boolean.class).getBody();
+		
+		if (!addOnsExist)
+			throw new NonExistentIdException("Add-On");
+	}
 
 	public void validateOrder(Order order) throws Exception {
-		// Check if status is a valid string
-		if (!order.validateStatus()) {
-			throw new InvalidStatusException(order.getStatus());
-		}
-		if (order.getCompletionTime() != null) {
-			// If completion time is not null then it has to be greater than the booking
-			// time
-			if ((order.getCompletionTime().isBefore(order.getBookingTime()))) {
-				throw new BookedForThePastException();
-			}
-		} else {
-			// If completion time is null then the order cannot have the status COMPLETED
-			if (order.getStatus().equals("COMPLETED")) {
-				throw new NoCompletionDateException();
-			}
-		}
-		if(!order.getStatus().equals("COMPLETED")) {
-			if(order.getCustomerFeedback() != null || order.getWasherFeedback() != null || order.getBucketsOfWaterUsed() != 0) {
-				throw new FeedbackNotPossibleException();
-			}
-		}
 		try {
+			validateExistenceOfIds(order);
+			order.validateStatus();
+			order.validateDateOrder();
+			order.validateCompletionDate();
+			order.validateCompletion();
 			order.getLocation().validate();
 			order.validateFeedbacks();
 		} catch (Exception e) {
@@ -65,16 +70,16 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	public String insertOrder(Order order) {
-		if(order.getOrderId()!= null) {
+		if (order.getOrderId() != null) {
 			if (orderRepository.existsById(order.getOrderId())) {
 				return "Order Already Exists";
-			}			
+			}
 		}
 		try {
 			validateOrder(order);
 			orderRepository.save(order);
 			return "Order saved successfully";
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return e.getMessage();
 		}
 	}
@@ -92,7 +97,7 @@ public class OrderServiceImpl implements OrderService {
 			validateOrder(order);
 			orderRepository.save(order);
 			return "Order updated successfully";
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return e.getMessage();
 		}
 	}
@@ -107,21 +112,18 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	public OrderList getFilteredOrders(Filter filter) {
-		Query query = new Query().addCriteria(Criteria.where("bookingTime")
-				.gt(filter.getAfter().toInstant(ZoneOffset.of("Z")))
-				.lt(filter.getBefore().toInstant(ZoneOffset.of("Z")))				
-				);
+		Query query = new Query()
+				.addCriteria(Criteria.where("bookingTime").gt(filter.getAfter().toInstant(ZoneOffset.of("Z")))
+						.lt(filter.getBefore().toInstant(ZoneOffset.of("Z"))));
 		List<Order> orderList = mongoTemplate.find(query, Order.class);
 		return new OrderList(orderList);
 	}
-	
+
 	public OrderList getOrdersByExample(Order order) {
 		ExampleMatcher matcher = ExampleMatcher.matchingAny().withIgnorePaths("bucketsOfWaterUsed");
-		Example<Order> example = Example.of(order,matcher);
+		Example<Order> example = Example.of(order, matcher);
 		List<Order> orderList = orderRepository.findAll(example);
 		return new OrderList(orderList);
 	}
-	
-	
 
 }
