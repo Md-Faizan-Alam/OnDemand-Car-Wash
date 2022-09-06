@@ -26,5 +26,9 @@ public class StringList {
 		stringList.add(string);
 	}
 	
+	public boolean remove(String string) {
+		return stringList.remove(string);
+	}
+	
 	
 }

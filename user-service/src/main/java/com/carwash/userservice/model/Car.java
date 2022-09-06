@@ -15,6 +15,7 @@ public class Car {
 
 	@Id
 	private String carId;
+
 	private String customerId;
 	private String carType;
 	private String color;
@@ -67,13 +68,13 @@ public class Car {
 	}
 	
 	public void validateColor() throws InvalidColorException {
-		if(this.color.matches("^#([A-Fa-f0-9]{6}$")) return;
+		if(this.color.matches("^#[A-Fa-f0-9]{6}$")) return;
 		throw new InvalidColorException(this.color);
 	}
 	
 	public void validateRegistrationNumber() throws InvalidRegistrationNumberException{
 		if(this.registrationNumber.matches("^[A-Z]{2}[0-9]{4}$")) return;
-		throw new InvalidRegistrationNumberException(this.color);
+		throw new InvalidRegistrationNumberException(this.registrationNumber);
 	}
 	
 	

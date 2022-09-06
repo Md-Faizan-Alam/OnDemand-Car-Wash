@@ -1,6 +1,9 @@
 package com.carwash.userservice.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -8,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import com.carwash.userservice.exceptions.CustomerNotFoundException;
 import com.carwash.userservice.model.Filter;
 import com.carwash.userservice.model.User;
 import com.carwash.userservice.repository.UserRepository;
@@ -29,6 +33,12 @@ public class UserServiceImpl implements UserService {
 
 	public boolean doesExist(String userId) {
 		return userRepository.existsById(userId);
+	}
+	
+	public boolean washerExists(String washerId) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("userId").is(washerId).and("role").is("WASHER"));
+		return mongoTemplate.exists(query, User.class);
 	}
 
 	public void validateUser(User user) throws Exception {
@@ -89,6 +99,24 @@ public class UserServiceImpl implements UserService {
 
 	public UserList getUsersByExample(User user) {
 		return null;
+	}
+	
+	public void addCarToUser(String userId, String carId) throws CustomerNotFoundException {
+		User user = null;
+		try {
+			user = userRepository.findById(userId).get();
+			if(user.getCarIds() == null) {
+				user.setCarIds(new ArrayList<>());
+			}
+			user.getCarIds().add(carId);
+			userRepository.save(user);
+		}catch(NoSuchElementException e){
+			throw new CustomerNotFoundException(userId);
+		}
+	}
+	
+	public Optional<User> getUserById(String userId) {
+		return userRepository.findById(userId);
 	}
 
 	public User getUserByUsername(String username) throws Exception {

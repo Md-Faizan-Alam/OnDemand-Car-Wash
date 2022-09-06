@@ -6,12 +6,14 @@ import com.carwash.userservice.wrapper.StringList;
 
 public interface CarService {
 	
+	public boolean doesExist(String carId);
+	
 	public String insertCar(Car car);
 
 	public CarList getAllCars();
 
 	public String updateCar(Car car);
 
-	public boolean deleteCars(StringList stringList);
+	public String deleteCars(StringList stringList);
 	
 }
