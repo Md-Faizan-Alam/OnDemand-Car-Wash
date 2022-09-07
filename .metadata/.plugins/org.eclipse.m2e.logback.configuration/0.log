@@ -19818,3 +19818,4 @@ org.eclipse.core.runtime.CoreException: Could not resolve artifact org.webjars:s
 2022-09-06 23:49:32,669 [Worker-75: Building Project admin-service] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2022-09-06 23:49:32,669 [Worker-75: Building Project admin-service] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
 2022-09-06 23:49:32,669 [Worker-75: Building Project admin-service] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\fajju\BU-Training\CarWash\admin-service\src\test\resources
+2022-09-07 09:05:50,277 [Worker-16: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
