@@ -6,8 +6,6 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import io.swagger.v3.oas.models.OpenAPI;
@@ -25,17 +23,14 @@ public class AdminServiceApplication {
 	@Bean
 	@LoadBalanced
 	public RestTemplate getRestTemplate() {
-		RestTemplate template = new RestTemplate();
-		template.getMessageConverters().add(new StringHttpMessageConverter());
-		template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-		return template;
+		return new RestTemplate();
 	}
 
 	@Bean
   	public OpenAPI springShopOpenAPI() {
     return new OpenAPI()
-            .info(new Info().title("Order Service API")
-            .description("Service for communication with the Order Database")
+            .info(new Info().title("Admin Service API")
+            .description("Service for communication with the Report Database")
             .version("v0.0.1"));
   	}
 
