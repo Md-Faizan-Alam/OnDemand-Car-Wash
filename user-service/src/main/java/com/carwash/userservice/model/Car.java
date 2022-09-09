@@ -68,7 +68,7 @@ public class Car {
 	}
 	
 	public void validateColor() throws InvalidColorException {
-		if(this.color.matches("^#[A-Fa-f0-9]{6}$")) return;
+		if(this.color.matches("^#[A-F0-9]{6}$")) return;
 		throw new InvalidColorException(this.color);
 	}
 	

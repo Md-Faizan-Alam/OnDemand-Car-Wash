@@ -1,5 +1,0 @@
-package com.carwash.orderservice.repository;
-
-public interface OrderRepository {
-
-}

@@ -8,9 +8,7 @@ import com.carwash.adminservice.model.Report;
 public class ReportList {
 	List<Report> reportList = new ArrayList<>();
 
-	public ReportList() {
-		
-	}
+	public ReportList() {}
 	public ReportList(List<Report> reportList) {
 		this.reportList = reportList;
 	}

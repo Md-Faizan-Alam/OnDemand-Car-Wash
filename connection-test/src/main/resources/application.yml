@@ -1,0 +1,14 @@
+server:
+  port: 8081
+
+spring:
+  application.name: washer-service
+  data:
+    mongodb:
+      uri: mongodb+srv://Database:kiran@cluster0.2qd3q14.mongodb.net/?
+      database: washerDB
+
+
+springdoc:
+  swagger-ui:
+    path: /washer/swagger
