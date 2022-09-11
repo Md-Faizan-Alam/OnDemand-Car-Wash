@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import com.carwash.orderservice.exceptions.NonExistentIdException;
 import com.carwash.orderservice.model.Filter;
 import com.carwash.orderservice.model.Order;
+import com.carwash.orderservice.model.UrlCollection;
 import com.carwash.orderservice.repository.OrderRepository;
 import com.carwash.orderservice.wrapper.OrderList;
 import com.carwash.orderservice.wrapper.StringList;
@@ -27,18 +28,9 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-	private static final String BASE_URL = "http://api-gateway";
-
-	private static final String WASH_PACK_URL = BASE_URL + "/washer/WashPack";
-
-	private static final String ADD_ON_URL = BASE_URL + "/washer/AddOn";
-
-	private static final String CAR_URL = BASE_URL + "/user/car";
-
-	private static final String WASHER_URL = BASE_URL + "/user/washer";
+	@Autowired
+	UrlCollection urlCollection;
 	
-	private static final String JWT = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYWpqdWFsYW1AZ21haWwuY29tIiwiZXhwIjoxNjYyNDkyMTI2LCJpYXQiOjE2NjI0NTYxMjZ9.8N_BzxbgDNGcFKhC3TI98ap6JymskZFnVk6EyGCenAQ";
-
 	@Autowired
 	OrderRepository orderRepository;
 
@@ -51,11 +43,12 @@ public class OrderServiceImpl implements OrderService {
 	public void setRepository(OrderRepository orderRepository) {
 		this.orderRepository = orderRepository;
 	}
+	public void setRestTemplate(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
+	}
 
 	@CircuitBreaker(name = "validationBreaker" , fallbackMethod = "fallbackValidateExistence")
-	public void validateExistence(String url, Object id, String objectName) throws Exception {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setBearerAuth(JWT);
+	public void validateExistence(String url, Object id, String objectName, HttpHeaders headers) throws Exception {
 		boolean exists = restTemplate
 				.exchange(url + "/exists", HttpMethod.POST, new HttpEntity<Object>(id, headers), Boolean.class)
 				.getBody();
@@ -67,18 +60,18 @@ public class OrderServiceImpl implements OrderService {
 		throw new Exception("Other services are also required for insertion or updation");
 	}
 
-	public void validateExistenceOfIds(Order order) throws Exception {
-		validateExistence(WASH_PACK_URL, order.getWashPackId(), "Wash Pack");
-		validateExistence(ADD_ON_URL, order.getAddOnIdList(), "Add-On");
-		validateExistence(CAR_URL, order.getCarId(), "Car");
+	public void validateExistenceOfIds(Order order, HttpHeaders headers) throws Exception {
+		validateExistence(urlCollection.getWashPack(), order.getWashPackId(), "Wash Pack", headers);
+		validateExistence(urlCollection.getAddOn(), order.getAddOnIdList(), "Add-On", headers);
+		validateExistence(urlCollection.getCar(), order.getCarId(), "Car", headers);
 		if(order.getWasherId() != null) {
-			validateExistence(WASHER_URL, order.getWasherId(), "Washer");		
+			validateExistence(urlCollection.getWasher(), order.getWasherId(), "Washer", headers);		
 		}
 	}
 
-	public void validateOrder(Order order) throws Exception {
+	public void validateOrder(Order order, HttpHeaders headers) throws Exception {
 		try {
-			validateExistenceOfIds(order);
+			validateExistenceOfIds(order, headers);
 			order.validateStatus();
 			order.validateDateOrder();
 			order.validateCompletionDate();
@@ -90,14 +83,14 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 
-	public String insertOrder(Order order) {
+	public String insertOrder(Order order, HttpHeaders headers) {
 		if (order.getOrderId() != null) {
 			if (orderRepository.existsById(order.getOrderId())) {
 				return "Order Already Exists";
 			}
 		}
 		try {
-			validateOrder(order);
+			validateOrder(order, headers);
 			orderRepository.save(order);
 			return "Order saved successfully";
 		} catch (Exception e) {
@@ -110,12 +103,12 @@ public class OrderServiceImpl implements OrderService {
 		return new OrderList(orderList);
 	}
 
-	public String updateOrder(Order order) {
+	public String updateOrder(Order order, HttpHeaders headers) {
 		if (!orderRepository.existsById(order.getOrderId())) {
 			return "Order with this Id does not Exist";
 		}
 		try {
-			validateOrder(order);
+			validateOrder(order, headers);
 			orderRepository.save(order);
 			return "Order updated successfully";
 		} catch (Exception e) {

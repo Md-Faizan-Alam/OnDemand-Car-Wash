@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
-    <fullyQualifiedTypeName name="com.carwash.orderservice.exceptions.FeedbackNotPossibleException"/>
-    <fullyQualifiedTypeName name="com.carwash.orderservice.exceptions.BookedForThePastException"/>
-    <fullyQualifiedTypeName name="com.carwash.orderservice.exceptions.NoCompletionDateException"/>
-    <fullyQualifiedTypeName name="com.carwash.orderservice.exceptions.InvalidStatusException"/>
-    <fullyQualifiedTypeName name="org.springframework.security.crypto.password.AbstractPasswordEncoder"/>
-    <fullyQualifiedTypeName name="com.fasterxml.jackson.databind.util.JSONWrappedObject"/>
     <fullyQualifiedTypeName name="org.springframework.http.converter.StringHttpMessageConverter"/>
     <fullyQualifiedTypeName name="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
     <fullyQualifiedTypeName name="com.fasterxml.jackson.databind.ObjectMapper"/>
@@ -15,7 +7,6 @@
     <fullyQualifiedTypeName name="org.bouncycastle.mime.Headers"/>
     <fullyQualifiedTypeName name="org.springframework.http.MediaType"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
-    <fullyQualifiedTypeName name="com.carwash.userservice.wrapper.StringList"/>
     <fullyQualifiedTypeName name="com.carwash.userservice.exceptions.InvalidColorException"/>
     <fullyQualifiedTypeName name="com.carwash.userservice.exceptions.InvalidRegistrationNumberException"/>
     <fullyQualifiedTypeName name="com.carwash.userservice.exceptions.InvalidCarTypeException"/>
@@ -28,7 +19,6 @@
     <fullyQualifiedTypeName name="org.springframework.data.mongodb.core.MongoTemplate"/>
     <fullyQualifiedTypeName name="com.carwash.userservice.service.CarService"/>
     <fullyQualifiedTypeName name="org.springframework.data.mongodb.core.query.Criteria"/>
-    <fullyQualifiedTypeName name="com.carwash.userservice.model.User"/>
     <fullyQualifiedTypeName name="com.carwash.userservice.exceptions.CustomerNotFoundException"/>
     <fullyQualifiedTypeName name="com.carwash.userservice.repository.UserRepository"/>
     <fullyQualifiedTypeName name="com.carwash.userservice.service.UserService"/>
@@ -44,15 +34,10 @@
     <fullyQualifiedTypeName name="com.mongodb.annotations.Immutable"/>
     <fullyQualifiedTypeName name="org.springframework.data.annotation.Immutable"/>
     <fullyQualifiedTypeName name="org.springframework.data.mongodb.core.query.Update"/>
-    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
-    <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
     <fullyQualifiedTypeName name="com.carwash.orderservice.exceptions.NonExistentIdException"/>
     <fullyQualifiedTypeName name="java.net.http.HttpRequest"/>
     <fullyQualifiedTypeName name="org.springframework.http.RequestEntity"/>
     <fullyQualifiedTypeName name="java.net.URL"/>
-    <fullyQualifiedTypeName name="org.springframework.http.HttpMethod"/>
-    <fullyQualifiedTypeName name="org.springframework.http.HttpEntity"/>
-    <fullyQualifiedTypeName name="org.springframework.http.HttpHeaders"/>
     <fullyQualifiedTypeName name="org.springframework.data.mongodb.core.query.Query"/>
     <fullyQualifiedTypeName name="io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker"/>
     <fullyQualifiedTypeName name="com.carwash.adminservice.exceptions.InvalidReportException"/>
@@ -60,4 +45,19 @@
     <fullyQualifiedTypeName name="com.carwash.adminservice.model.Filter"/>
     <fullyQualifiedTypeName name="com.carwash.adminservice.model.Order"/>
     <fullyQualifiedTypeName name="com.carwash.adminservice.model.Location"/>
+    <fullyQualifiedTypeName name="org.springframework.http.HttpMethod"/>
+    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
+    <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
+    <fullyQualifiedTypeName name="org.mockito.internal.matchers.Any"/>
+    <fullyQualifiedTypeName name="com.ctc.wstx.shaded.msv_core.util.Uri"/>
+    <fullyQualifiedTypeName name="org.springframework.http.HttpEntity"/>
+    <fullyQualifiedTypeName name="com.carwash.orderservice.wrapper.StringList"/>
+    <fullyQualifiedTypeName name="org.assertj.core.util.Arrays"/>
+    <fullyQualifiedTypeName name="com.carwash.userservice.model.User"/>
+    <fullyQualifiedTypeName name="com.carwash.userservice.wrapper.StringList"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.HttpServlet"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
+    <fullyQualifiedTypeName name="org.springframework.http.HttpHeaders"/>
+    <fullyQualifiedTypeName name="org.springframework.cloud.context.config.annotation.RefreshScope"/>
+    <fullyQualifiedTypeName name="org.springframework.boot.context.properties.ConfigurationProperties"/>
 </qualifiedTypeNameHistroy>

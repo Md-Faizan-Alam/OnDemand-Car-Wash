@@ -1,61 +1,149 @@
-.nav-link:hover{
-  font-weight: 500;
+.nav-link:hover {
+    font-weight: 500;
 }
 
 .green-shadow {
-  box-shadow: 0 .5rem 1rem var(--bs-success);
+    box-shadow: 0 0.5rem 1rem var(--bs-success);
 }
 
-.home-card{
-  height: 40vw;
-  background-image: url(../public/Background.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
+.home-card {
+    height: 40vw;
+    background-image: url(../public/Background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-#welcome-box{
-  margin-left: 5vw;
-  top: 10vw;
-  background-color: rgba(0, 0, 0, 0);
-  border: none;
+#welcome-box {
+    margin-left: 5vw;
+    top: 10vw;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
 }
 
-.btn-outline-success{
-  font-size: large;
-  padding-inline: 25px;
-  box-shadow: 0px 3px 10px var(--bs-success);
+.btn-outline-success {
+    font-size: large;
+    padding-inline: 25px;
+    box-shadow: 0px 3px 10px var(--bs-success);
 }
 
-.btn-outline-success:hover{
-  box-shadow: 0px 3px 5px var(--bs-success);
+.btn-outline-success:hover {
+    box-shadow: 0px 3px 5px var(--bs-success);
 }
 
-.wash-pack-card{
-  background-size: cover;
-  width: 30vw;
-  padding-top: 20vh;
-  box-shadow: 3px 3px 10px;
-  border: none;
-  background-color: rgba(0, 0, 0, 0.5);
-  background-blend-mode: color;
-  color: white;
-  font-weight: 500;
+.btn-success {
+    font-size: large;
+    padding-inline: 25px;
+    box-shadow: 0px 3px 10px var(--bs-success);
 }
 
-.advert{
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 50vh;
+.btn-success:hover {
+    color: var(--bs-success);
+    background-color: transparent;
+    box-shadow: 0px 3px 5px var(--bs-success);
 }
 
-#footer{
-  background-color: #d0d0d0;
-  padding: 20vh 20vh;
-  font-size: 18px;
+.wash-pack-card {
+    background-size: cover;
+    width: 30vw;
+    height: 18vw;
+    padding-top: 20vh;
+    box-shadow: 3px 3px 10px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: color;
+    color: white;
+    font-weight: 500;
 }
 
-#login-form{
-  width: 30vw;
-  margin-left: 5vw;
-  top: 5vw;
+.advert {
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 50vh;
+}
+
+#footer {
+    background-color: #d0d0d0;
+    padding: 20vh 20vh;
+    font-size: 18px;
+}
+
+#login-background {
+    background-image: url(../public/Background-4.jpg);
+    background-size: cover;
+    height: 100vh;
+    mask-image: linear-gradient(
+        0.25turn,
+        transparent 0%,
+        black 20%,
+        black 70%,
+        transparent
+    );
+}
+
+#login-block {
+    border-radius: 10%;
+    width: max-content;
+    top: 10vh;
+    font-family: "Bree Serif";
+    color: var(--bs-success);
+    padding: 5vh 10vh;
+    box-shadow: 0px 0px 20px black;
+}
+
+.login-input {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: lighter;
+    width: 100%;
+    padding: 5px 10px;
+    border: none;
+    border-bottom: 2px solid var(--bs-success);
+}
+
+.login-input:focus {
+    border: none;
+    border-bottom: 2px solid rgb(0, 219, 0);
+    outline: none;
+}
+
+.hyper-link {
+    text-decoration: none;
+    text-decoration: underline;
+    color: var(--bs-success);
+    font-size: smaller;
+}
+
+.hyper-link:hover {
+    color: green;
+}
+
+#tab-component-background{
+    min-height: 100vh;
+}
+
+.user-tab{
+    font-size: large;
+    border: none;
+    background-color: white;
+    padding: 10px 20px;
+    border-bottom: 2px solid;
+}
+
+.user-info-row{
+    margin-left: 10vh;
+    padding: 1vh 5vh;
+    border-bottom: 2px solid var(--bs-success);
+    width: max-content;
+}
+
+.tab-component{
+    background-color: white;
+    border: 5px solid var(--bs-success);
+    border-radius: 2vh;
+    box-shadow: 0px 0px 50px var(--bs-success);
+}
+
+.showPassword{
+    background-color: white;
+    border: none;
+    outline: none;
 }

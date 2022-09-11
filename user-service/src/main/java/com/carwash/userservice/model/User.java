@@ -39,6 +39,17 @@ public class User {
 		this.phoneNumber = phoneNumber;
 	}
 	
+	public User(User user) {
+		this.userId = user.getUserId();
+		this.firstName = user.getFirstName();;
+		this.lastName = user.getLastName();
+		this.email = user.getEmail();
+		this.password = user.getPassword();
+		this.role = user.getRole();
+		this.carIds = user.getCarIds();
+		this.phoneNumber = user.getPhoneNumber();
+	}
+	
 	public User(String email, String password) {
 		this.email = email;
 		this.password = password;

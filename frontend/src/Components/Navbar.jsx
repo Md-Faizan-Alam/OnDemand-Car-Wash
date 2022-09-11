@@ -1,16 +1,17 @@
+import { Link } from "react-router-dom";
 import "../App.css";
 
 const Navbar = (props) => {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-white green-shadow">
             <div className="container-fluid">
-                <a
+                <Link
                     className="navbar-brand text-success ms-5 fs-4"
-                    href="#"
+                    to={"/"}
                     style={{fontFamily: "Bree Serif, serif"}}
                 >
                     GreenWash &nbsp; |
-                </a>
+                </Link>
                 <button
                     className="navbar-toggler"
                     type="button"
@@ -28,61 +29,61 @@ const Navbar = (props) => {
                 >
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <a
+                            <Link
                                 className="nav-link text-dark fs-5"
                                 aria-current="page"
-                                href="#"
+                                to={"/"}
                             >
                                 Home
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a
+                            <Link
                                 className="nav-link text-dark fs-5"
                                 aria-current="page"
-                                href="#"
+                                to={"/about"}
                             >
                                 About Us
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a
+                            <Link
                                 className="nav-link text-dark fs-5"
                                 aria-current="page"
-                                href="#"
+                                to={"/contact"}
                             >
                                 Contact Us
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a
+                            <Link
                                 className="nav-link text-dark fs-5"
                                 aria-current="page"
-                                href="#"
+                                to={"/form"}
                             >
                                 Book Now
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                     <div className="d-flex">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <a
+                                <Link
                                     className="nav-link text-dark fs-5"
                                     aria-current="page"
-                                    href="#"
+                                    to={"/form"}
                                 >
                                     Login
-                                </a>
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <a
+                                <Link
                                     className="nav-link text-dark fs-5"
                                     aria-current="page"
-                                    href="#"
+                                    to={"/form/register"}
                                 >
                                     Sign Up
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>

@@ -3,7 +3,10 @@ package com.carwash.orderservice.controller;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,8 +45,11 @@ public class OrderController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<String> insertOrder(@RequestBody Order order){
-		String saved = orderService.insertOrder(order);
+	public ResponseEntity<String> insertOrder(@RequestBody Order order, HttpServletRequest request){
+		String jwt = request.getHeader("Authorization");
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(jwt);
+		String saved = orderService.insertOrder(order, headers);
 		if(saved.equals("Order saved successfully")) {
 			return new ResponseEntity<String>(saved,HttpStatus.CREATED);
 		}
@@ -56,8 +62,11 @@ public class OrderController {
 	}
 	
 	@PutMapping("/update")
-	public ResponseEntity<String> updateOrder(@RequestBody Order order){
-		String updated = orderService.updateOrder(order);
+	public ResponseEntity<String> updateOrder(@RequestBody Order order, HttpServletRequest request){
+		String auth = request.getHeader("Authorization");
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", auth);
+		String updated = orderService.updateOrder(order, headers);
 		if(updated == "Order updated successfully") {
 			return new ResponseEntity<String>(updated, HttpStatus.OK);
 		}
