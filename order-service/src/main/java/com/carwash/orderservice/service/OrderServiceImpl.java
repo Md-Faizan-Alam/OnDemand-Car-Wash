@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,6 +21,7 @@ import com.carwash.orderservice.model.Filter;
 import com.carwash.orderservice.model.Order;
 import com.carwash.orderservice.model.UrlCollection;
 import com.carwash.orderservice.repository.OrderRepository;
+import com.carwash.orderservice.security.AuthenticationRequest;
 import com.carwash.orderservice.wrapper.OrderList;
 import com.carwash.orderservice.wrapper.StringList;
 
@@ -45,6 +47,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 	public void setRestTemplate(RestTemplate restTemplate) {
 		this.restTemplate = restTemplate;
+	}
+	public void setCollection(UrlCollection urlCollection) {
+		this.urlCollection = urlCollection;
 	}
 
 	@CircuitBreaker(name = "validationBreaker" , fallbackMethod = "fallbackValidateExistence")
@@ -139,5 +144,15 @@ public class OrderServiceImpl implements OrderService {
 		List<Order> orderList = orderRepository.findAll(example);
 		return new OrderList(orderList);
 	}
+	
+	public UserDetails getUserByUsername(String username) {
+		AuthenticationRequest authRequest = new AuthenticationRequest(username,"secretsarenevertobeshared");
+		UserDetails userDetails = restTemplate
+				.exchange( "http://localhost:8100/user/getUserDetails" , HttpMethod.POST, new HttpEntity<Object>(authRequest), UserDetails.class)
+				.getBody();
+		return userDetails;
+	}
+	
+	
 
 }

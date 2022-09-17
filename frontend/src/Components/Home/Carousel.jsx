@@ -5,11 +5,12 @@ const Carousel = (props) => {
     
     const getCarouselItem = () =>{
         let items = [];
-        for(let i=props.start ; i < props.end ; i+=3){
-            items.push(<CarouselItem active={i===props.start ? "active" : ""} start={i} end={( i+3 < props.end ? i+3 : props.end )} />);
+        for(let i=0 ; i < props.list.length ; i+=3){
+            items.push(<CarouselItem key={i} active={i===0 ? "active" : ""} list={props.list.slice(i,i+3)} />);
         }
         return items;
     }
+
 
     return (
         <div id={props.id} className="carousel slide" data-bs-ride="carousel">

@@ -48,7 +48,7 @@ public class WasherController {
 		return new Filter(0,1000,"price");
 	}
 	
-	// Method to check if WashPacks with all the id(s) in the given StringList exist in the database
+	// Method to check if WashPacks with all the id(s) in the given string exist in the database
 	@PostMapping("/WashPack/exists")
 	public ResponseEntity<Boolean> checkExistenceOfWashPack(@RequestBody String washPackId) {
 		if(!washPackService.doesExists(washPackId)) return new ResponseEntity<Boolean>(false,HttpStatus.OK);
@@ -97,7 +97,7 @@ public class WasherController {
 	
 	
 	// Method to filter the WashPacks according to specifications provided in the filter object
-	@GetMapping("/WashPack/filter")
+	@PostMapping("/WashPack/filter")
 	public WashPackList getFilteredWashPacks(@RequestBody Filter filter) {
 		return washPackService.getFilteredWashPacks(filter);
 	}

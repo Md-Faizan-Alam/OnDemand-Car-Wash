@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.carwash.userservice.exceptions.CustomerNotFoundException;
 import com.carwash.userservice.model.Filter;
 import com.carwash.userservice.model.User;
+import com.carwash.userservice.security.MyUserDetails;
 import com.carwash.userservice.wrapper.StringList;
 import com.carwash.userservice.wrapper.UserList;
 
@@ -28,6 +29,8 @@ public interface UserService {
 	public void addCarToUser(String userId, String carId) throws CustomerNotFoundException;
 	
 	public User getUserByUsername(String username) throws Exception;
+	
+	public MyUserDetails getUserDetailsByUsername(String username) throws Exception;
 	
 	public Optional<User> getUserById(String userId);
 

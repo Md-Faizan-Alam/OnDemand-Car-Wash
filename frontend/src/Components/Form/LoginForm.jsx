@@ -1,34 +1,49 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { validateUser } from "../../Actions/UserAction";
+import setSigned from "../../Actions/SignedAction";
+import UserService from "../../Services/UserService";
+import FormIndicator from "./FormIndicator";
 import ShowPassword from "./ShowPassword";
 
 const LoginForm = (props) => {
+
     const [visible, setVisible] = useState(false);
-    const [username,setUsername] = useState("");
-    const [password,setPassword] = useState("");
-    const dispatch = useDispatch();
+    const [indicator, setIndicator] = useState("blank");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
-    const switchVisibility = ()=>{
+    const switchVisibility = () => {
         setVisible(!visible);
-    }
+    };
 
-    const handleUsername = (event)=>{
+    const handleUsername = (event) => {
         setUsername(event.target.value);
-    }
-    const handlePassword = (event)=>{
+    };
+    const handlePassword = (event) => {
         setPassword(event.target.value);
-    }
+    };
 
-    const handleLogin = () =>{
-        dispatch(validateUser(username,password));
-    }
+    const handleLogin = async () => {
+        setIndicator("spinner");
+        let isValid = await UserService.validateCredentials(username, password);
+        if (isValid) {
+            dispatch(setSigned(true));
+            navigate("/user/profile");
+        } else {
+            setIndicator("message");
+            setUsername("");
+            setPassword("");
+        }
+    };
 
     return (
         <div className="container">
+
+            <FormIndicator indicator={indicator} message={"Invalid username or password"}/>
+
             <div className="row mb-3">
                 <div className="col-11">
                     <input
@@ -40,6 +55,7 @@ const LoginForm = (props) => {
                     />
                 </div>
             </div>
+
             <div className="row mb-4">
                 <div className="col">
                     <input
@@ -50,12 +66,15 @@ const LoginForm = (props) => {
                         placeholder="Password"
                     />
                 </div>
+
                 <div className="col-1">
                     <button className="showPassword" onClick={switchVisibility}>
-                    <ShowPassword visible={visible} />
+                        <ShowPassword visible={visible} />
                     </button>
                 </div>
+                
             </div>
+
             <div className="row mb-3">
                 <div className="col">
                     <button
@@ -67,6 +86,7 @@ const LoginForm = (props) => {
                     </button>
                 </div>
             </div>
+
             <div className="row">
                 <div className="col text-center">
                     <Link className="hyper-link" to={""}>
@@ -74,6 +94,7 @@ const LoginForm = (props) => {
                     </Link>
                 </div>
             </div>
+
             <div className="row">
                 <div className="col text-center">
                     <Link className="hyper-link" to={"/form/register"}>
@@ -81,6 +102,7 @@ const LoginForm = (props) => {
                     </Link>
                 </div>
             </div>
+
         </div>
     );
 };

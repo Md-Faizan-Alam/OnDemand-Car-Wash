@@ -2,4 +2,12 @@ spring:
   application.name: api-gateway
   config:
     import: configserver:http://localhost:8888
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedMethods: "*"
+            allowedHeaders: "*"
   

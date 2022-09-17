@@ -47,8 +47,8 @@ class ServiceTest {
 		@DisplayName("Test for Insertion of Wash Pack")
 		void testInsertWashPack() {
 			WashPack washPack = new WashPack();
-			washPack.setWashPackTitle("Silver Wash");
-			washPack.setWashPackDescription("Complete vacuuming of cars incl. seats and boot + Washing and cleaning of foot mats + Body Shampooing and washing including door frames + Tyre arches cleaning + Underbody wash + Engine hot water wash and dressing + Side doors cleaning + Dashboard polishing + Car perfume spray");
+			washPack.setTitle("Silver Wash");
+			washPack.setDescription("Complete vacuuming of cars incl. seats and boot + Washing and cleaning of foot mats + Body Shampooing and washing including door frames + Tyre arches cleaning + Underbody wash + Engine hot water wash and dressing + Side doors cleaning + Dashboard polishing + Car perfume spray");
 			washPack.setPrice(400);
 			when(washPackService.washPackRepository.save(washPack)).thenReturn(washPack);
 			boolean validDataIsSaved = washPackService.insertWashPack(washPack);
@@ -65,8 +65,8 @@ class ServiceTest {
 		void testGetAllWashPacks() {
 			List<WashPack> allWashPacks = new ArrayList<>();
 			WashPack washPack = new WashPack();
-			washPack.setWashPackTitle("Silver Wash");
-			washPack.setWashPackDescription("Complete vacuuming of cars incl. seats and boot + Washing and cleaning of foot mats + Body Shampooing and washing including door frames + Tyre arches cleaning + Underbody wash + Engine hot water wash and dressing + Side doors cleaning + Dashboard polishing + Car perfume spray");
+			washPack.setTitle("Silver Wash");
+			washPack.setDescription("Complete vacuuming of cars incl. seats and boot + Washing and cleaning of foot mats + Body Shampooing and washing including door frames + Tyre arches cleaning + Underbody wash + Engine hot water wash and dressing + Side doors cleaning + Dashboard polishing + Car perfume spray");
 			washPack.setPrice(400);
 			allWashPacks.add(washPack);
 			when(washPackService.washPackRepository.findAll()).thenReturn(allWashPacks);
@@ -109,7 +109,7 @@ class ServiceTest {
 			washPack.setPrice(100);
 			boolean priceIsSetToLessThanMinimum = washPackService.updateWashPack(washPack);
 			washPack.setPrice(400);
-			washPack.setWashPackId("uvu8ru98u90wi");
+			washPack.setId("uvu8ru98u90wi");
 			boolean nonExistingWashPackIsUpdated = washPackService.updateWashPack(washPack);
 			
 			assertAll(
@@ -131,8 +131,8 @@ class ServiceTest {
 		@DisplayName("Test for Insertion of Add-On")
 		void testInsertAddOn() {
 			AddOn addOn = new AddOn();
-			addOn.setAddOnTitle("AC Disinfectant");
-			addOn.setAddOnDescription("The aim of this service is to clean and sanitize the air conditioning compartment of the car.");
+			addOn.setTitle("AC Disinfectant");
+			addOn.setDescription("The aim of this service is to clean and sanitize the air conditioning compartment of the car.");
 			addOn.setPrice(100);
 			when(addOnService.addOnRepository.save(addOn)).thenReturn(addOn);
 			boolean validDataIsSaved = addOnService.insertAddOn(addOn);
@@ -149,8 +149,8 @@ class ServiceTest {
 		void testGetAllAddOn() {
 			List<AddOn> allAddOns = new ArrayList<>();
 			AddOn addOn = new AddOn();
-			addOn.setAddOnTitle("AC Disinfectant");
-			addOn.setAddOnDescription("The aim of this service is to clean and sanitize the air conditioning compartment of the car.");
+			addOn.setTitle("AC Disinfectant");
+			addOn.setDescription("The aim of this service is to clean and sanitize the air conditioning compartment of the car.");
 			addOn.setPrice(100);
 			allAddOns.add(addOn);
 			when(addOnService.addOnRepository.findAll()).thenReturn(allAddOns);
@@ -192,7 +192,7 @@ class ServiceTest {
 			addOn.setPrice(40);
 			boolean priceIsSetToLessThanMinimum = addOnService.updateAddOn(addOn);
 			addOn.setPrice(100);
-			addOn.setAddOnId("uvu8ru98u90wi");
+			addOn.setId("uvu8ru98u90wi");
 			boolean nonExistingAddOnIsUpdated = addOnService.updateAddOn(addOn);
 			
 			assertAll(

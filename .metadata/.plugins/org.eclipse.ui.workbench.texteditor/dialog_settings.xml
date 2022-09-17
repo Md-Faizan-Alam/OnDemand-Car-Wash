@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="validateExistence"/>
+		<item key="selection" value="et"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="true"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="validateExistence"/>
-			<item value="updateOrder(order)"/>
-			<item value="insertOrder(order)"/>
-			<item value="messageFor"/>
-			<item value="Order"/>
-			<item value="order"/>
-			<item value="orderList"/>
-			<item value="user"/>
-			<item value="userRepository"/>
-			<item value="User"/>
-			<item value="End-Point"/>
-			<item value="End-point"/>
-			<item value="new Date(System.currentTimeMillis())"/>
-			<item value="documentationPluginsBootstrapper"/>
-			<item value="condition"/>
+			<item value="etAddOn"/>
+			<item value="etWashPack"/>
+			<item value="getAddOn"/>
+			<item value="getWashPack"/>
+			<item value="AddOnDescription"/>
+			<item value="addOnDescription"/>
+			<item value="AddOnTitle"/>
+			<item value="addOnTitle"/>
+			<item value="AddOnId"/>
+			<item value="addOnId"/>
+			<item value="WashPackTitle"/>
+			<item value="WashPackDescription"/>
+			<item value="WashPackId"/>
+			<item value="washPackDescription"/>
+			<item value="washPackTitle"/>
 		</list>
 		<list key="replacehistory">
+			<item value="et"/>
+			<item value="get"/>
+			<item value="Description"/>
+			<item value="description"/>
+			<item value="Title"/>
+			<item value="title"/>
+			<item value="Id"/>
+			<item value="id"/>
+			<item value=""/>
+			<item value="order"/>
 			<item value="updateOrder(order, headers)"/>
 			<item value="insertOrder(order, headers)"/>
 			<item value="Report"/>
 			<item value="report"/>
 			<item value="reportList"/>
-			<item value="car"/>
-			<item value="carRepository"/>
-			<item value="Car"/>
-			<item value="Method"/>
-			<item value="user"/>
-			<item value="User"/>
-			<item value="userList"/>
-			<item value="LocalDateTime.now()"/>
-			<item value=""/>
-			<item value=" "/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

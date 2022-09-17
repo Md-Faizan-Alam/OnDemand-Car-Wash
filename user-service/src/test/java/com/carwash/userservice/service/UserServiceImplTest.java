@@ -7,11 +7,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.carwash.userservice.model.User;
 import com.carwash.userservice.repository.UserRepository;
@@ -21,18 +24,22 @@ class UserServiceImplTest {
 	
 	UserServiceImpl userService;
 	
+	PasswordEncoder passwordEncoder;
+	
 	@BeforeEach
 	void init() {
 		UserRepository mockUserRepository = mock(UserRepository.class);
+		passwordEncoder = new BCryptPasswordEncoder();
 		userService = new UserServiceImpl();
 		userService.setRepository(mockUserRepository);
+		userService.setEncoder(passwordEncoder);
 	}
 
 	@Test
 	@DisplayName("Test for insertion of User")
 	void testInsertUser() {
-		User validUser = new User(null, "John", "Doe", "johndoe@gmail.com", "john1234", "CUSTOMER", new ArrayList<String>(), "1234567890");
-		User invalidUser = new User(null, "John", "Doe", "johndoegmail.com", "john1234", "HELLO", new ArrayList<String>(), "0234567890");
+		User validUser = new User(null, "John", "Doe", "johndoe@gmail.com", "john1234", "CUSTOMER", new ArrayList<String>(), "1234567890", LocalDate.now().minusYears(18L), "MALE");
+		User invalidUser = new User(null, "John", "Doe", "johndoegmail.com", "john1234", "HELLO", new ArrayList<String>(), "0234567890", LocalDate.now().minusYears(18L), "MALE");
 		User user = new User(validUser);
 		
 		when(userService.userRepository.save(user)).thenReturn(user);
@@ -64,8 +71,8 @@ class UserServiceImplTest {
 	@Test
 	@DisplayName("Test for updation of User")
 	void tsetUpdateUser() {
-		User validUser = new User("ur8ur8umr8u0iei09ei", "John", "Doe", "johndoe@gmail.com", "john1234", "CUSTOMER", new ArrayList<String>(), "1234567890");
-		User invalidUser = new User("fowuuud09duwa09diii", "John", "Doe", "johndoegmail.com", "john1234", "HELLO", new ArrayList<String>(), "0234567890");
+		User validUser = new User("ur8ur8umr8u0iei09ei", "John", "Doe", "johndoe@gmail.com", "john1234", "CUSTOMER", new ArrayList<String>(), "1234567890", LocalDate.now().minusYears(18L), "MALE");
+		User invalidUser = new User("fowuuud09duwa09diii", "John", "Doe", "johndoegmail.com", "john1234", "HELLO", new ArrayList<String>(), "0234567890", LocalDate.now().minusYears(18L), "MALE");
 		User user = new User(validUser);
 		
 		when(userService.userRepository.existsById("ur8ur8umr8u0iei09ei")).thenReturn(true);

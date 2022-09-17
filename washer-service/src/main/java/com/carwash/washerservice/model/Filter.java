@@ -14,7 +14,7 @@ public class Filter {
 	// If the string does not match the name of any field then it is sorted by price
 	private String sortBy;
 	
-	private List<String> validFields = Arrays.asList("washPackTitle","washPackDescription","price");
+	private List<String> validFields = Arrays.asList("title","description","price");
 	
 	public Filter() {
 	}

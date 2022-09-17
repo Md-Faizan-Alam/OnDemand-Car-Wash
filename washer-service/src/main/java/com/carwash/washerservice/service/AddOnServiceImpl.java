@@ -47,7 +47,7 @@ public class AddOnServiceImpl implements AddOnService {
 
 	// Method to insert a new add-on to the database
 	public boolean insertAddOn(AddOn addOn) {
-		if (addOn.getAddOnId() != null)
+		if (addOn.getId() != null)
 			return false;
 		if (this.validateAddOn(addOn)) {
 			addOnRepository.save(addOn);
@@ -64,7 +64,7 @@ public class AddOnServiceImpl implements AddOnService {
 	// Method to replace an existing add-on with the given add-on. Everything but
 	// the id can be different
 	public boolean updateAddOn(AddOn addOn) {
-		if (!doesExists(addOn.getAddOnId()))
+		if (!doesExists(addOn.getId()))
 			return false;
 		if (this.validateAddOn(addOn)) {
 			addOnRepository.save(addOn);

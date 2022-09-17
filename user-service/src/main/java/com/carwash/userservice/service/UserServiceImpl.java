@@ -6,15 +6,19 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.carwash.userservice.exceptions.CustomerNotFoundException;
 import com.carwash.userservice.model.Filter;
 import com.carwash.userservice.model.User;
 import com.carwash.userservice.repository.UserRepository;
+import com.carwash.userservice.security.MyUserDetails;
 import com.carwash.userservice.wrapper.StringList;
 import com.carwash.userservice.wrapper.UserList;
 
@@ -26,13 +30,29 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	MongoTemplate mongoTemplate;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	public void setRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
+	public void setEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
+	}
 
 	public boolean doesExist(String userId) {
 		return userRepository.existsById(userId);
+	}
+	
+	public boolean emailExists(String email) {
+		User user = new User();
+		user.setEmail(email);
+		UserList userList = getUsersByExample(user);
+		if(userList.getUserList().isEmpty()) {
+			return false;
+		}
+		return true;
 	}
 	
 	public boolean washerExists(String washerId) {
@@ -53,12 +73,13 @@ public class UserServiceImpl implements UserService {
 
 	public String insertUser(User user) {
 		if (user.getUserId() != null) {
-			if (doesExist(user.getUserId())) {
+			if (doesExist(user.getUserId()) || emailExists(user.getEmail())) {
 				return "User Already Exists";
 			}
 		}
 		try {
 			validateUser(user);
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			userRepository.save(user);
 			return "User saved successfully";
 		} catch (Exception e) {
@@ -70,13 +91,24 @@ public class UserServiceImpl implements UserService {
 		List<User> userList = userRepository.findAll();
 		return new UserList(userList);
 	}
+	
+	public String getPasswordById(String id) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("userId").is(id)).fields().include("password");
+		User user = mongoTemplate.findOne(query, User.class);
+		return user.getPassword();
+	}
 
 	public String updateUser(User user) {
 		if (!doesExist(user.getUserId())) {
 			return "User with this Id does not Exist";
 		}
+		String password = getPasswordById(user.getUserId());
 		try {
 			validateUser(user);
+			if(!password.equals(user.getPassword())) {
+				user.setPassword(passwordEncoder.encode(user.getPassword()));
+			}
 			userRepository.save(user);
 			return "User updated successfully";
 		} catch (Exception e) {
@@ -98,7 +130,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public UserList getUsersByExample(User user) {
-		return null;
+		ExampleMatcher matcher = ExampleMatcher.matchingAny();
+		Example<User> example = Example.of(user, matcher);
+		List<User> userList = userRepository.findAll(example);
+		return new UserList(userList);
 	}
 	
 	public void addCarToUser(String userId, String carId) throws CustomerNotFoundException {
@@ -126,6 +161,11 @@ public class UserServiceImpl implements UserService {
 			throw new Exception("User with the given username not found");
 		}
 		return user;
+	}
+	
+	public MyUserDetails getUserDetailsByUsername(String username) throws Exception{
+		User user = getUserByUsername(username);
+		return new MyUserDetails(user.getEmail(),user.getPassword(),user.getRole());
 	}
 
 }

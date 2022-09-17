@@ -1,5 +1,6 @@
 package com.carwash.userservice.model;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import com.carwash.userservice.exceptions.InvalidRoleException;
 @Document("USERS")
 public class User {
 	
+	private static final List<String> validRoles = Arrays.asList("CUSTOMER" , "WASHER" , "ADMIN");
+	private static final List<String> validGenders = Arrays.asList("MALE" , "FEMALE" , "OTHER");
 	@Id
 	private String userId;
 	private String firstName;
@@ -22,13 +25,15 @@ public class User {
 	private String role;
 	private List<String> carIds;
 	private String phoneNumber;
+	private LocalDate dateOfBirth;
+	private String gender;
 	
-	private static final List<String> validRoles = Arrays.asList("CUSTOMER" , "WASHER" , "ADMIN");
 	
-	
-	public User() {}
+	public User() {
+	}
 	public User(String userId, String firstName, String lastName, String email, String password, String role,
-			List<String> carIds, String phoneNumber) {
+			List<String> carIds, String phoneNumber, LocalDate dateOfBirth, String gender) {
+		super();
 		this.userId = userId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -37,24 +42,9 @@ public class User {
 		this.role = role;
 		this.carIds = carIds;
 		this.phoneNumber = phoneNumber;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
 	}
-	
-	public User(User user) {
-		this.userId = user.getUserId();
-		this.firstName = user.getFirstName();;
-		this.lastName = user.getLastName();
-		this.email = user.getEmail();
-		this.password = user.getPassword();
-		this.role = user.getRole();
-		this.carIds = user.getCarIds();
-		this.phoneNumber = user.getPhoneNumber();
-	}
-	
-	public User(String email, String password) {
-		this.email = email;
-		this.password = password;
-	}
-
 	public String getUserId() {
 		return userId;
 	}
@@ -91,7 +81,6 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
-
 	public List<String> getCarIds() {
 		return carIds;
 	}
@@ -104,22 +93,55 @@ public class User {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 	
 	
-	public void validateRole() throws InvalidRoleException{
-		if(!validRoles.contains(this.role)) {
-			throw new InvalidRoleException(role);
-		}
+	// Custom Constructors and functions
+	public User(String email, String password) {
+		this.email = email;
+		this.password = password;
+	}
+	
+	public User(User user) {
+		this.userId = user.getUserId();
+		this.firstName = user.getFirstName();;
+		this.lastName = user.getLastName();
+		this.email = user.getEmail();
+		this.password = user.getPassword();
+		this.role = user.getRole();
+		this.carIds = user.getCarIds();
+		this.phoneNumber = user.getPhoneNumber();
 	}
 	
 	public void validateEmail() throws InvalidEmailException{
 		if(this.email.matches("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")) return;
 		throw new InvalidEmailException(this.email);
 	}
-	
+	public void validateGender() throws Exception{
+		if(!validGenders.contains(this.gender)) {
+			throw new Exception(this.gender+" is not a valid gender for a user");
+		}
+	}
 	public void validatePhoneNumber() throws InvalidPhoneNumberException{
 		if(this.phoneNumber.matches("^[1-9][0-9]{9}$")) return;
 		throw new InvalidPhoneNumberException(this.phoneNumber);
+	}
+	
+	public void validateRole() throws InvalidRoleException{
+		if(!validRoles.contains(this.role)) {
+			throw new InvalidRoleException(role);
+		}
 	}
 	
 	

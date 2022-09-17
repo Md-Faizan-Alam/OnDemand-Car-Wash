@@ -24,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
 import com.carwash.orderservice.model.Feedback;
 import com.carwash.orderservice.model.Location;
 import com.carwash.orderservice.model.Order;
+import com.carwash.orderservice.model.UrlCollection;
 import com.carwash.orderservice.repository.OrderRepository;
 import com.carwash.orderservice.wrapper.StringList;
 
@@ -31,14 +32,17 @@ class OrderServiceImplTest {
 
 	OrderServiceImpl orderService;
 	HttpHeaders headers;
+	UrlCollection urlCollection;
 
 	@BeforeEach
 	void init() {
 		OrderRepository mockOrderRepository = mock(OrderRepository.class);
 		RestTemplate mockRestTemplate = mock(RestTemplate.class);
+		urlCollection = new UrlCollection("random/url","random/url","random/url","random/url");
 		orderService = new OrderServiceImpl();
 		orderService.setRepository(mockOrderRepository);
 		orderService.setRestTemplate(mockRestTemplate);
+		orderService.setCollection(urlCollection);
 		headers = new HttpHeaders();
 	}
 

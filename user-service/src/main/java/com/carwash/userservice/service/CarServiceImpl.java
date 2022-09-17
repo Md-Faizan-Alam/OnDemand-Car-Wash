@@ -1,5 +1,6 @@
 package com.carwash.userservice.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +106,17 @@ public class CarServiceImpl implements CarService {
 		
 		carRepository.deleteAllById(stringList.getStringList());
 		return "Cars deleted successfully";
+	}
+	
+	public CarList getCarsByUsername(String username) {
+		List<String> carIds = new ArrayList<String>();
+		try {
+			carIds = userService.getUserByUsername(username).getCarIds();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		List<Car> carList = (List<Car>)carRepository.findAllById(carIds);
+		return new CarList(carList);
 	}
 
 }

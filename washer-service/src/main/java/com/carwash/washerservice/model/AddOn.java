@@ -7,37 +7,37 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class AddOn {
 	
 	@Id
-	private String addOnId;
-	private String addOnTitle;
-	private String addOnDescription;
+	private String id;
+	private String title;
+	private String description;
 	private int price;
 	
 	public AddOn() {
 	}
-	public AddOn(String addOnId, String addOnTitle, String addOnDescription, int price) {
+	public AddOn(String id, String title, String description, int price) {
 		super();
-		this.addOnId = addOnId;
-		this.addOnTitle = addOnTitle;
-		this.addOnDescription = addOnDescription;
+		this.id = id;
+		this.title = title;
+		this.description = description;
 		this.price = price;
 	}
-	public String getAddOnId() {
-		return addOnId;
+	public String getId() {
+		return id;
 	}
-	public void setAddOnId(String addOnId) {
-		this.addOnId = addOnId;
+	public void setId(String id) {
+		this.id = id;
 	}
-	public String getAddOnTitle() {
-		return addOnTitle;
+	public String getTitle() {
+		return title;
 	}
-	public void setAddOnTitle(String addOnTitle) {
-		this.addOnTitle = addOnTitle;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public String getAddOnDescription() {
-		return addOnDescription;
+	public String getDescription() {
+		return description;
 	}
-	public void setAddOnDescription(String addOnDescription) {
-		this.addOnDescription = addOnDescription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public int getPrice() {
 		return price;

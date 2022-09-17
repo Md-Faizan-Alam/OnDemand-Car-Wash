@@ -15,7 +15,7 @@ public class WashPackList {
 		super();
 		this.washPackList = washPackList;
 	}
-	public List<WashPack> getWashPackList() {
+	public List<WashPack> getList() {
 		return washPackList;
 	}
 	public void setWashPackList(List<WashPack> washPackList) {
@@ -27,15 +27,15 @@ public class WashPackList {
 	public boolean equals(Object obj) {
 		if(! (obj instanceof WashPackList) ) return false;
 		WashPackList givenObj = (WashPackList)obj;
-		List<WashPack> allWashPacks = givenObj.getWashPackList();
+		List<WashPack> allWashPacks = givenObj.getList();
 		if( allWashPacks.size() != washPackList.size() ) return false;
 		for(int i=0;i<allWashPacks.size();i++) {
 			WashPack myPack = washPackList.get(i) , objPack = allWashPacks.get(i);
-			if(myPack.getWashPackId() != null) {
-				if( ! objPack.getWashPackId().equals( myPack.getWashPackId() ) ) return false;				
+			if(myPack.getId() != null) {
+				if( ! objPack.getId().equals( myPack.getId() ) ) return false;				
 			}
-			if( ! objPack.getWashPackTitle().equals( myPack.getWashPackTitle() ) ) return false;
-			if( ! objPack.getWashPackDescription().equals( myPack.getWashPackDescription() ) ) return false;
+			if( ! objPack.getTitle().equals( myPack.getTitle() ) ) return false;
+			if( ! objPack.getDescription().equals( myPack.getDescription() ) ) return false;
 			if( objPack.getPrice() != myPack.getPrice() ) return false;
 		}
 		return true;

@@ -1,14 +1,14 @@
 package com.carwash.userservice.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,13 +23,14 @@ import com.carwash.userservice.model.User;
 import com.carwash.userservice.security.AuthenticationRequest;
 import com.carwash.userservice.security.AuthenticationResponse;
 import com.carwash.userservice.security.JwtUtil;
+import com.carwash.userservice.security.MyUserDetails;
 import com.carwash.userservice.service.CarService;
 import com.carwash.userservice.service.UserService;
 import com.carwash.userservice.wrapper.CarList;
 import com.carwash.userservice.wrapper.StringList;
 import com.carwash.userservice.wrapper.UserList;
 
-@CrossOrigin
+//@CrossOrigin(originPatterns = "*")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -166,6 +167,13 @@ public class UserController {
 		}
 		return new ResponseEntity<String>(deleted, HttpStatus.BAD_REQUEST);
 	}
+	
+	@GetMapping("/car/byCustomer")
+	public ResponseEntity<CarList> getCarsByCustomer(HttpServletRequest request){
+		String username = jwtUtil.getUsernameFromRequest(request);
+		CarList carList = carService.getCarsByUsername(username);
+		return new ResponseEntity<CarList>(carList,HttpStatus.OK);
+	}
 
 	/*
 	 * -----------------------------------------------------------------------------
@@ -198,6 +206,27 @@ public class UserController {
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 		final String jwt = jwtUtil.generateToken(userDetails);
 		return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse(jwt), HttpStatus.OK);
+	}
+	
+	@PostMapping("/getUserDetails")
+	public ResponseEntity<MyUserDetails> verifyUser(@RequestBody AuthenticationRequest authRequest) throws Exception {
+		if(authRequest.getPassword().equals("secretsarenevertobeshared")) {
+			MyUserDetails user = userService.getUserDetailsByUsername(authRequest.getUsername());
+			return new ResponseEntity<MyUserDetails>(user, HttpStatus.OK);
+		}
+		throw new Exception("Access Denied");
+	}
+	
+	@GetMapping("/getUser")
+	public ResponseEntity<User> getUser(HttpServletRequest request){
+		String username = jwtUtil.getUsernameFromRequest(request);
+		User user = new User();
+		try {
+			user = userService.getUserByUsername(username);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<User>(user,HttpStatus.OK);
 	}
 
 }

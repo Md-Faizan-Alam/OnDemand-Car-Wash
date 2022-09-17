@@ -1,4 +1,4 @@
-import Tabs from "./Tabs";
+import NewTabs from "./Tabs";
 
 const UserHeader = (props) => {
     return(
@@ -8,7 +8,7 @@ const UserHeader = (props) => {
 
                 <div className="row fs-2">
                     <div className="col">
-                        John Doe
+                        {props.user.firstName} {props.user.lastName}
                     </div>
                 </div>
 
@@ -20,7 +20,7 @@ const UserHeader = (props) => {
 
                 <div className="row mt-5">
                     <div className="col">
-                        <Tabs />
+                        <NewTabs />
                     </div>
                 </div>
 

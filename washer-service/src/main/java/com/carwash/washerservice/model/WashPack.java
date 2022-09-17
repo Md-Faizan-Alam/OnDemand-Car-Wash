@@ -7,34 +7,34 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class WashPack {
 	
 	@Id
-	private String washPackId;
-	private String washPackTitle;
-	private String washPackDescription;
+	private String id;
+	private String title;
+	private String description;
 	private int price;
 	
 	public WashPack() {
 		
 	}
 	
-	public WashPack(String washPackId, String washPackTitle, String washPackDescription, int price) {
+	public WashPack(String id, String title, String description, int price) {
 		super();
-		this.washPackId = washPackId;
-		this.washPackTitle = washPackTitle;
-		this.washPackDescription = washPackDescription;
+		this.id = id;
+		this.title = title;
+		this.description = description;
 		this.price = price;
 	}
 
-	public String getWashPackId() {
-		return washPackId;
+	public String getId() {
+		return id;
 	}
-	public void setWashPackId(String washPackId) {
-		this.washPackId = washPackId;
+	public void setId(String id) {
+		this.id = id;
 	}
-	public String getWashPackDescription() {
-		return washPackDescription;
+	public String getDescription() {
+		return description;
 	}
-	public void setWashPackDescription(String washPackDescription) {
-		this.washPackDescription = washPackDescription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public int getPrice() {
 		return price;
@@ -42,11 +42,11 @@ public class WashPack {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public String getWashPackTitle() {
-		return washPackTitle;
+	public String getTitle() {
+		return title;
 	}
-	public void setWashPackTitle(String washPackTitle) {
-		this.washPackTitle = washPackTitle;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
 }

@@ -8,11 +8,16 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.carwash.washerservice.model.Filter;
 import com.carwash.washerservice.model.WashPack;
 import com.carwash.washerservice.repository.WashPackRepository;
+import com.carwash.washerservice.security.AuthenticationRequest;
+import com.carwash.washerservice.security.MyUserDetails;
 import com.carwash.washerservice.wrapper.StringList;
 import com.carwash.washerservice.wrapper.WashPackList;
 
@@ -24,6 +29,9 @@ public class WashPackServiceImpl implements WashPackService {
 
 	@Autowired
 	MongoTemplate mongoTemplate;
+	
+	@Autowired
+	RestTemplate restTemplate;
 
 	/*
 	 * Method that takes a repository interface as an input and uses it to replace
@@ -49,7 +57,7 @@ public class WashPackServiceImpl implements WashPackService {
 
 	// Method to insert a new wash pack to the database
 	public boolean insertWashPack(WashPack washPack) {
-		if (washPack.getWashPackId() != null)
+		if (washPack.getId() != null)
 			return false;
 		if (this.validateWashPack(washPack)) {
 			washPackRepository.save(washPack);
@@ -66,7 +74,7 @@ public class WashPackServiceImpl implements WashPackService {
 	// Method to replace an existing wash pack with the given wash pack. Everything
 	// but the id can be different
 	public boolean updateWashPack(WashPack washPack) {
-		if (!doesExists(washPack.getWashPackId()))
+		if (!doesExists(washPack.getId()))
 			return false;
 		if (this.validateWashPack(washPack)) {
 			washPackRepository.save(washPack);
@@ -100,6 +108,14 @@ public class WashPackServiceImpl implements WashPackService {
 
 		return new WashPackList(washPackList);
 
+	}
+	
+	public MyUserDetails getUserByUsername(String username) {
+		AuthenticationRequest authRequest = new AuthenticationRequest(username,"secretsarenevertobeshared");
+		MyUserDetails userDetails = restTemplate
+				.exchange( "http://localhost:8100/user/getUserDetails" , HttpMethod.POST, new HttpEntity<Object>(authRequest), MyUserDetails.class)
+				.getBody();
+		return userDetails;
 	}
 
 }

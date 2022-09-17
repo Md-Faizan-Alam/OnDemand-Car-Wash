@@ -16,4 +16,6 @@ public interface CarService {
 
 	public String deleteCars(StringList stringList);
 	
+	public CarList getCarsByUsername(String username);
+	
 }

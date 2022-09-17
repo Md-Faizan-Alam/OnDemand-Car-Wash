@@ -8,8 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @SuppressWarnings("deprecation")
@@ -28,8 +26,15 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
-			.authorizeRequests().antMatchers("/user/authenticate").permitAll()
-			.anyRequest().authenticated()
+			.authorizeRequests()
+			.antMatchers("/user/authenticate","/user/add","/user/pass","/user/demoFilter","/user/car/pass","/user/getUser")
+			.permitAll()
+			.antMatchers("/user/update","user/delete")
+			.hasAnyRole("ADMIN","CUSTOMER","WASHER")
+			.antMatchers("/user/washer/exists","/user/car/exists","/user/car/add","/user/car/update","/user/car/delete")
+			.hasAnyRole("ADMIN","CUSTOMER")
+			.antMatchers("/user/list","/user/filter","/user/find","/user/car/list")
+			.hasAnyRole("ADMIN")
 			.and().sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
@@ -42,11 +47,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
-	}
-
-	@Bean
-	public PasswordEncoder getPasswordEncoder() {
-		return NoOpPasswordEncoder.getInstance();
 	}
 	
 	

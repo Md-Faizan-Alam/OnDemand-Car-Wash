@@ -13,7 +13,7 @@ public class AddOnList {
 	public AddOnList(List<AddOn> addOnList) {
 		this.addOnList = addOnList;
 	}
-	public List<AddOn> getAddOnList() {
+	public List<AddOn> getList() {
 		return addOnList;
 	}
 	public void setAddOnList(List<AddOn> addOnList) {
@@ -24,15 +24,15 @@ public class AddOnList {
 	public boolean equals(Object obj) {
 		if(! (obj instanceof AddOnList) ) return false;
 		AddOnList givenObj = (AddOnList)obj;
-		List<AddOn> allAddOns = givenObj.getAddOnList();
+		List<AddOn> allAddOns = givenObj.getList();
 		if( allAddOns.size() != addOnList.size() ) return false;
 		for(int i=0;i<allAddOns.size();i++) {
 			AddOn myAddOn = addOnList.get(i) , objAddOn = allAddOns.get(i);
-			if(myAddOn.getAddOnId() != null) {
-				if( ! objAddOn.getAddOnId().equals( myAddOn.getAddOnId() ) ) return false;				
+			if(myAddOn.getId() != null) {
+				if( ! objAddOn.getId().equals( myAddOn.getId() ) ) return false;				
 			}
-			if( ! objAddOn.getAddOnTitle().equals( myAddOn.getAddOnTitle() ) ) return false;
-			if( ! objAddOn.getAddOnDescription().equals( myAddOn.getAddOnDescription() ) ) return false;
+			if( ! objAddOn.getTitle().equals( myAddOn.getTitle() ) ) return false;
+			if( ! objAddOn.getDescription().equals( myAddOn.getDescription() ) ) return false;
 			if( objAddOn.getPrice() != myAddOn.getPrice() ) return false;
 		}
 		return true;
