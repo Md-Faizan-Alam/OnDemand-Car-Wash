@@ -17,7 +17,7 @@ const Welcome = (props) => {
                 <Link to={"/packs"} type="button" className="btn btn-outline-success me-5">
                     Book Now
                 </Link>
-                <Link to={localStorage.getItem('JWT').length !== 0 ? "/user/orders" : "/form"} type="button" className="btn btn-outline-success">
+                <Link to={localStorage.getItem('JWT') !== '' ? "/user/orders" : "/form"} type="button" className="btn btn-outline-success">
                     Schedule Later
                 </Link>
             </div>

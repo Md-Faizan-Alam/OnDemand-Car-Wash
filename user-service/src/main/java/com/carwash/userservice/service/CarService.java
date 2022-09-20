@@ -18,4 +18,6 @@ public interface CarService {
 	
 	public CarList getCarsByUsername(String username);
 	
+	public Car getCarById(String id);
+	
 }

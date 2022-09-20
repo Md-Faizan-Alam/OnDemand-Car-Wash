@@ -57,7 +57,6 @@ const RegistrationForm = (props) => {
             "role": "CUSTOMER",
             "carIds": []
         }
-        console.log(newUser)
         await UserService.registerUser(newUser);
         let isValid = await UserService.validateCredentials(email, password)
         .then((response)=>response).catch((error)=>console.log(error));

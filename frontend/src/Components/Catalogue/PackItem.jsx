@@ -2,15 +2,13 @@ import { Link } from "react-router-dom";
 import Toolbox from "../../Services/Toolbox";
 
 const PackItem = (props) => {
-    const description =
-        "This a dummy description for a wash pack that is supposed to be placed here below the title";
 
     return (
         <>
             <div
                 className="container shadow rounded mx-3 my-2 border"
                 style={{
-                    height: "60vh",
+                    height: "max-content",
                     width: "40vh",
                     fontFamily: "Arial",
                 }}
@@ -38,19 +36,16 @@ const PackItem = (props) => {
                 </div>
                 <div className="row fs-5 ps-2 mt-2">{props.pack.title}</div>
                 <div className="row ps-2 mt-1" style={{ fontSize: "13px" }}>
-                    {Toolbox.truncateText(description)}...
-                </div>
-                <div className="row ps-2 mt-1" style={{ fontSize: "13px" }}>
-                    {props.pack.price}
+                    {Toolbox.truncateText(props.pack.description)}...
                 </div>
                 <div className="row justify-content-end">
-                    <Link
-                        to={"/"}
+                    <button
+                        onClick={()=>props.handleAction(props.pack.id)}
                         className="btn btn-outline-success w-50 m-3"
                         style={{ fontSize: "15px" }}
                     >
-                        Book
-                    </Link>
+                        {props.action}
+                    </button>
                 </div>
             </div>
         </>

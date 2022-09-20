@@ -1,13 +1,23 @@
-import { useDispatch } from "react-redux";
-import orderList from "../../Constants/OrderList";
 import OrderBlock from "./OrderBlock";
-import setOrderStage from '../../Actions/OrderStageAction';
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import OrderService from "../../Services/OrderService";
 
 const OrderList = (props) => {
-
-    const dispatch = useDispatch();
+    
+    const [orderList, setOrderList] = useState([]);
 
     let serial = 0;
+
+    const getOrderList = async ()=>{
+        const data = await OrderService.getOrdersByCustomer();
+        setOrderList(data.orderList)
+    }
+
+    useEffect(()=>{
+        getOrderList();
+        console.log(orderList)
+    },[]);
 
     return (
         <div className="container p-5 tab-component">
@@ -31,11 +41,11 @@ const OrderList = (props) => {
 
                 {orderList.map((order) => {
                     serial++;
-                    return <OrderBlock serial={serial} order={order} />;
+                    return <OrderBlock key={serial} serial={serial} order={order} />;
                 })}
 
                 <div className="container-fluid py-2 mt-4 d-flex flex-row-reverse">
-                    <button className="btn btn-outline-success" onClick={()=>dispatch(setOrderStage("book"))}>Book Now</button>
+                    <Link className="btn btn-outline-success" to={"/packs"}>Book Now</Link>
                 </div>
                 
             </div>

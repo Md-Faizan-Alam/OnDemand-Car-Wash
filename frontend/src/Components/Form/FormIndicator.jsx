@@ -1,6 +1,6 @@
 const FormIndicator = (props) => {
 
-    const blank = <div className="row mb-2">&nbsp;</div>;
+    const blank = <div className="row mb-2 w-75">&nbsp;</div>;
 
     const spinner = (
         <div className="row">

@@ -32,7 +32,8 @@ public class OrderController {
 	
 	@GetMapping("/pass")
 	public Order pass(Order order) {
-		order.setBookingTime(LocalDateTime.now());
+//		order.setBookingTime(LocalDateTime.now());
+		
 		return order;
 	}
 	
@@ -46,9 +47,9 @@ public class OrderController {
 	
 	@PostMapping("/add")
 	public ResponseEntity<String> insertOrder(@RequestBody Order order, HttpServletRequest request){
-		String jwt = request.getHeader("Authorization");
+		String auth = request.getHeader("Authorization");
 		HttpHeaders headers = new HttpHeaders();
-		headers.setBearerAuth(jwt);
+		headers.set("Authorization", auth);
 		String saved = orderService.insertOrder(order, headers);
 		if(saved.equals("Order saved successfully")) {
 			return new ResponseEntity<String>(saved,HttpStatus.CREATED);
@@ -59,6 +60,14 @@ public class OrderController {
 	@GetMapping("/list")
 	public OrderList getAllOrders() {
 		return orderService.getAllOrders();
+	}
+	
+	@GetMapping("/getByUser")
+	public OrderList getOrdersByUser(HttpServletRequest request) {
+		String auth = request.getHeader("Authorization");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", auth);
+		return orderService.getOrdersByUser(headers);
 	}
 	
 	@PutMapping("/update")

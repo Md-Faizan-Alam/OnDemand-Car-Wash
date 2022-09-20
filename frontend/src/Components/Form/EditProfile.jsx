@@ -47,7 +47,6 @@ const EditProfile = (props) => {
         newUser.email = email ;
         newUser.gender = gender ;
         newUser.phoneNumber = phoneNumber ;
-        Object.defineProperty(newUser, "gender", {value: "MALE"});
 
         await UserService.updateUser(newUser);
         navigate("/user/profile");

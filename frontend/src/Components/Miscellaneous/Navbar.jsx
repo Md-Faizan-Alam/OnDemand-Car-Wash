@@ -60,7 +60,7 @@ const Navbar = (props) => {
                             <Link
                                 className="nav-link text-dark fs-5"
                                 aria-current="page"
-                                to={"/form"}
+                                to={"/packs"}
                             >
                                 Book Now
                             </Link>

@@ -10,9 +10,9 @@ const AddCar = (props) => {
     const customerId = useSelector((state) => state.user.userId);
     
     const [modelName, setModelName] = useState("");
-    const [color, setColor] = useState("");
+    const [color, setColor] = useState("#ffffff");
     const [registrationNumber, setRegistrationNumber] = useState("");
-    const [carType, setCarType] = useState("NO_TYPE");
+    const [carType, setCarType] = useState("SEDAN");
     
     const dispatch = useDispatch();
     

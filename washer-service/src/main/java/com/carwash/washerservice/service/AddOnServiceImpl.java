@@ -1,5 +1,7 @@
 package com.carwash.washerservice.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -59,6 +61,11 @@ public class AddOnServiceImpl implements AddOnService {
 	// Method to get the list of all add-ons from the database
 	public AddOnList getAllAddOns() {
 		return new AddOnList(addOnRepository.findAll());
+	}
+	
+	public AddOnList getAddOnsById(StringList idList) {
+		List<AddOn> addOnList = (List<AddOn>)addOnRepository.findAllById(idList.getStringList());
+		return new AddOnList(addOnList);
 	}
 
 	// Method to replace an existing add-on with the given add-on. Everything but

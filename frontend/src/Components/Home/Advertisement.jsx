@@ -18,7 +18,7 @@ const Advertisement = (props) => {
                     </div>
                 </div>
 
-                <div className="col advert" style={{ backgroundImage: `url(./advert-1.png)` }}></div>
+                <div className="col advert" style={{ backgroundImage: `url(./images/advert-1.png)` }}></div>
 
             </div>
 
@@ -26,7 +26,7 @@ const Advertisement = (props) => {
 
             <div className="row">
 
-                <div className="col-5 ms-5 advert" style={{ backgroundImage: `url(./advert-2.png)` }}></div>
+                <div className="col-5 ms-5 advert" style={{ backgroundImage: `url(./images/advert-2.png)` }}></div>
 
                 <div className="col">
                 <div className="card-body w-75">

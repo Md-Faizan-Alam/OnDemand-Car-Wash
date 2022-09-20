@@ -19,4 +19,6 @@ public interface AddOnService {
 	
 	public AddOnList getFilteredAddOns(Filter filter);
 	
+	public AddOnList getAddOnsById(StringList idList);
+	
 }

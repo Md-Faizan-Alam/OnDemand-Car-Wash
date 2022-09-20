@@ -2,6 +2,7 @@ package com.carwash.userservice.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -117,6 +118,16 @@ public class CarServiceImpl implements CarService {
 		}
 		List<Car> carList = (List<Car>)carRepository.findAllById(carIds);
 		return new CarList(carList);
+	}
+	
+	public Car getCarById(String id) {
+		Optional<Car> optionalCar = carRepository.findById(id);
+		try {
+			return optionalCar.get();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return new Car(null,"No Car Found",null,null,"#000000",null);
 	}
 
 }

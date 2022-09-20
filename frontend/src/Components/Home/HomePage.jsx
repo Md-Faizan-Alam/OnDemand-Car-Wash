@@ -14,7 +14,6 @@ const HomePage = (props) => {
     useEffect(() => {
         return async ()=>{
             const data = await WashPackService.getAllWashPacks();
-            console.log(data.list);
             setList(data.list);
         }
     },[])

@@ -49,6 +49,11 @@ public class UserController {
 	public User pass() {
 		return new User();
 	}
+	
+	@GetMapping("/stringList")
+	public StringList passStringList() {
+		return new StringList();
+	}
 
 	// Method that returns an empty example of a filter
 	@GetMapping("/demoFilter")
@@ -147,6 +152,24 @@ public class UserController {
 	public CarList getAllCars() {
 		return carService.getAllCars();
 	}
+	
+	@PostMapping("/car/getById")
+	public ResponseEntity<Car> getCarById(@RequestBody String carId){
+		return new ResponseEntity<Car>(carService.getCarById(carId),HttpStatus.OK);
+	}
+	
+	@GetMapping("/car/carIdsByUser")
+	public ResponseEntity<StringList> getCarIdsByUser(HttpServletRequest request){
+		String username = jwtUtil.getUsernameFromRequest(request);
+		User user = new User();
+		try {
+			user = userService.getUserByUsername(username);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<StringList>(new StringList(user.getCarIds()),HttpStatus.OK);
+	}
+	
 
 	// Method to update a user that already exists in the database
 	@PutMapping("/car/update")

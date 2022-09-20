@@ -69,7 +69,7 @@ const SignBox = (props) => {
         </div>
     );
 
-    return <>{localStorage.getItem('JWT').length !== 0 ? logout : login}</>;
+    return <>{localStorage.getItem('JWT') !== '' ? logout : login}</>;
 };
 
 export default SignBox;

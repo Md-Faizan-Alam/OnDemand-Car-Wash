@@ -23,7 +23,7 @@ public class Order {
 	private String orderId;
 	private String carId;			// Id of the car associated with the order
 	private String washPackId;		// Id of the Wash Pack that is in the order
-	private StringList addOnIdList;	// A list of Id(s) of the AddOns that are associated with the List
+	private StringList addOnIdList = new StringList();	// A list of Id(s) of the AddOns that are associated with the List
 	private double amount;			// The total amount that is paid by the customer for the order
 	@Field(targetType = FieldType.DATE_TIME)
 	private LocalDateTime bookingTime;		// The time and date of booking

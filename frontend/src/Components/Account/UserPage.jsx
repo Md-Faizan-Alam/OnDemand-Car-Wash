@@ -14,15 +14,13 @@ const UserPage = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const placeholder = <span className="placeholder px-5"></span>;
-
     const loadingUser = {
-        firstName: placeholder,
-        lastName: placeholder,
-        email: placeholder,
-        phoneNumber: placeholder,
-        gender: placeholder,
-        dateOfBirth: placeholder,
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        gender: "",
+        dateOfBirth: "",
     };
 
     useEffect(() => {
@@ -33,6 +31,7 @@ const UserPage = (props) => {
             if (data !== null && data.userId !== null) {
                 dispatch(setUser(data));
             } else {
+                localStorage.setItem('JWT','')
                 navigate("/form");
             }
         };

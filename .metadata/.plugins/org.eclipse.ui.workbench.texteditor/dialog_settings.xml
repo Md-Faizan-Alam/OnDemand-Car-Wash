@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="et"/>
+		<item key="selection" value="Lng"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="true"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="Longitude"/>
+			<item value="Latitude"/>
+			<item value="longitude"/>
+			<item value="latitude"/>
+			<item value="StringList"/>
+			<item value="MyUserDetails"/>
 			<item value="etAddOn"/>
 			<item value="etWashPack"/>
 			<item value="getAddOn"/>
@@ -17,14 +23,12 @@
 			<item value="AddOnTitle"/>
 			<item value="addOnTitle"/>
 			<item value="AddOnId"/>
-			<item value="addOnId"/>
-			<item value="WashPackTitle"/>
-			<item value="WashPackDescription"/>
-			<item value="WashPackId"/>
-			<item value="washPackDescription"/>
-			<item value="washPackTitle"/>
 		</list>
 		<list key="replacehistory">
+			<item value="Lng"/>
+			<item value="Lat"/>
+			<item value="lng"/>
+			<item value="lat"/>
 			<item value="et"/>
 			<item value="get"/>
 			<item value="Description"/>
@@ -36,10 +40,6 @@
 			<item value=""/>
 			<item value="order"/>
 			<item value="updateOrder(order, headers)"/>
-			<item value="insertOrder(order, headers)"/>
-			<item value="Report"/>
-			<item value="report"/>
-			<item value="reportList"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

@@ -1,3 +1,9 @@
+const Placeholder = () =>{
+    return(
+         <span className="placeholder px-5"></span>
+    )
+}
+
 const Toolbox = {
     snakeToNormal: (str)=>{
         let newStr = ""+str;
@@ -16,6 +22,12 @@ const Toolbox = {
         let newStr = ""+str;
         str = newStr.charAt(0).toUpperCase() + newStr.slice(1)
         return str;
+    },
+    loadString: (str)=>{
+        if(str === ""){
+            return <Placeholder />
+        }
+        return str
     }
 }
 export default Toolbox;

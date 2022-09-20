@@ -8,6 +8,11 @@ const OrderBlock = (props) => {
         "TERMINATED": "rgb(255 0 0)"
     }
 
+    const timeToDate = (str) =>{
+        let time = new Date(str);
+        return time.toLocaleDateString("fr-CH")
+    }
+
     return (
         <div
             className="container-fluid bg-gradient rounded py-3 mb-1"
@@ -18,7 +23,7 @@ const OrderBlock = (props) => {
         >
             <div className="row text-center">
                 <div className="col-1">{props.serial}</div>
-                <div className="col">{props.order.bookingTime}</div>
+                <div className="col">{timeToDate(props.order.bookingTime)}</div>
                 <div className="col">{props.order.washPack}</div>
                 <div className="col">{props.order.car}</div>
                 <div className="col">{props.order.amount}</div>

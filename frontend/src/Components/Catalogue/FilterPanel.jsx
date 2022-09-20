@@ -80,9 +80,9 @@ const FilterPanel = (props) => {
                             role="group"
                             aria-label="Vertical button group"
                         >
-                            {maxPriceButton(500)}
-                            {maxPriceButton(800)}
                             {maxPriceButton(1000)}
+                            {maxPriceButton(2000)}
+                            {maxPriceButton(5000)}
                         </div>
                     </div>
                 </div>

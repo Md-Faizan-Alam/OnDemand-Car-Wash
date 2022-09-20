@@ -1,11 +1,14 @@
-const user = {
-    id: "98u98um98wu09",
-    firstName: "John",
-    lastName: "Doe",
-    email: "johndoe@gmail.com",
-    role: "CUSTOMER",
+const fallbackUser = {
+    userId: null,
+    firstName: null,
+    lastName: null,
+    email: null,
+    phoneNumber: null,
+    password: null,
     carIds: [],
-    phoneNumber: "2345643254"
+    dateOfBirth: null,
+    gender: null,
+    role: null
 }
 
-export default user;
+export default fallbackUser;

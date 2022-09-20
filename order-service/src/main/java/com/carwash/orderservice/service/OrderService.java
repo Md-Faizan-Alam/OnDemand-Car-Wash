@@ -1,10 +1,10 @@
 package com.carwash.orderservice.service;
 
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.carwash.orderservice.model.Filter;
 import com.carwash.orderservice.model.Order;
+import com.carwash.orderservice.security.MyUserDetails;
 import com.carwash.orderservice.wrapper.OrderList;
 import com.carwash.orderservice.wrapper.StringList;
 
@@ -23,6 +23,8 @@ public interface OrderService {
 	
 	public OrderList getOrdersByExample(Order order);
 	
-	public UserDetails getUserByUsername(String username);
+	public MyUserDetails getUserByUsername(String username);
+	
+	public OrderList getOrdersByUser(HttpHeaders headers);
 
 }

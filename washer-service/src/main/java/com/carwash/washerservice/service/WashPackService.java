@@ -22,4 +22,6 @@ public interface WashPackService {
 	
 	public MyUserDetails getUserByUsername(String username);
 	
+	public WashPack getWashPackById(String id);
+	
 }

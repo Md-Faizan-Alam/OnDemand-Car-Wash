@@ -35,6 +35,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 						"/washer/WashPack/filter",
 						"washer/AddOn/list").permitAll()
 				.antMatchers("/washer/WashPack/exists",
+						"washer/WashPack/getById",
+						"washer/AddOn/getByIds",
 						"washer/AddOn/filter").hasAnyRole("ADMIN", "CUSTOMER")
 				.antMatchers("/washer/WashPack/add",
 						"/washer/WashPack/update",

@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -35,7 +36,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 						"order/find").hasAnyRole("ADMIN","CUSTOMER","WASHER")
 				.antMatchers("/order/add",
 						"/order/delete",
-						"/order/filter").hasAnyRole("ADMIN", "CUSTOMER")
+						"/order/filter",
+						"/order/getByUser").hasAnyRole("ADMIN", "CUSTOMER")
 				.and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
@@ -52,5 +54,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder(4);
 	}
+	
+	@Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/order/swagger-ui/**", "/bus/v3/api-docs/**");
+    }
 
 }

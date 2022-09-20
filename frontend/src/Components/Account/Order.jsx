@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import BookWash from "../Form/BookWash";
+import CarSelection from "./CarSelection";
 import OrderList from "./OrderList";
 
 const Order = (props) => {
@@ -7,7 +8,8 @@ const Order = (props) => {
 
     const body = {
         "view": <OrderList />,
-        "book": <BookWash />
+        "book": <BookWash />,
+        "car": <CarSelection />
     }
 
     return(

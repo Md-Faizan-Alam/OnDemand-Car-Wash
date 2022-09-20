@@ -1,6 +1,8 @@
+import Toolbox from "../../Services/Toolbox";
 import NewTabs from "./Tabs";
 
 const UserHeader = (props) => {
+
     return(
     <>
         <div className="container-fluid pt-5 shadow">
@@ -8,7 +10,7 @@ const UserHeader = (props) => {
 
                 <div className="row fs-2">
                     <div className="col">
-                        {props.user.firstName} {props.user.lastName}
+                        {Toolbox.loadString(props.user.firstName)} {Toolbox.loadString(props.user.lastName)}
                     </div>
                 </div>
 

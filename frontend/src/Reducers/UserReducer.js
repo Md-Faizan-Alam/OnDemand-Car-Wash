@@ -1,17 +1,6 @@
-const fallbackUser = {
-    userId: null,
-    firstName: null,
-    lastName: null,
-    email: null,
-    phoneNumber: null,
-    password: null,
-    carIds: [],
-    dateOfBirth: null,
-    gender: null,
-    role: null
-}
+import Fallback from "../Constants/Fallback";
 
-const UserReducer = (user = fallbackUser, action) =>{
+const UserReducer = (user = Fallback.fallbackUser, action) =>{
     switch (action.type) {
         case 'SET_USER':
             if(action.payload===undefined || action.payload===null){

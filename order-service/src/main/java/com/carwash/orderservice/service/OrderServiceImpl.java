@@ -6,13 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,6 +23,7 @@ import com.carwash.orderservice.model.Order;
 import com.carwash.orderservice.model.UrlCollection;
 import com.carwash.orderservice.repository.OrderRepository;
 import com.carwash.orderservice.security.AuthenticationRequest;
+import com.carwash.orderservice.security.MyUserDetails;
 import com.carwash.orderservice.wrapper.OrderList;
 import com.carwash.orderservice.wrapper.StringList;
 
@@ -32,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	UrlCollection urlCollection;
-	
+
 	@Autowired
 	OrderRepository orderRepository;
 
@@ -45,14 +47,16 @@ public class OrderServiceImpl implements OrderService {
 	public void setRepository(OrderRepository orderRepository) {
 		this.orderRepository = orderRepository;
 	}
+
 	public void setRestTemplate(RestTemplate restTemplate) {
 		this.restTemplate = restTemplate;
 	}
+
 	public void setCollection(UrlCollection urlCollection) {
 		this.urlCollection = urlCollection;
 	}
 
-	@CircuitBreaker(name = "validationBreaker" , fallbackMethod = "fallbackValidateExistence")
+	@CircuitBreaker(name = "validationBreaker", fallbackMethod = "fallbackValidateExistence")
 	public void validateExistence(String url, Object id, String objectName, HttpHeaders headers) throws Exception {
 		boolean exists = restTemplate
 				.exchange(url + "/exists", HttpMethod.POST, new HttpEntity<Object>(id, headers), Boolean.class)
@@ -60,18 +64,27 @@ public class OrderServiceImpl implements OrderService {
 		if (!exists)
 			throw new NonExistentIdException(objectName);
 	}
-	
+
 	public void fallbackValidateExistence(String url, Object id, String objectName) throws Exception {
 		throw new Exception("Other services are also required for insertion or updation");
 	}
 
 	public void validateExistenceOfIds(Order order, HttpHeaders headers) throws Exception {
+		validateExistence(urlCollection.getCar(), order.getCarId(), "Car", headers);
 		validateExistence(urlCollection.getWashPack(), order.getWashPackId(), "Wash Pack", headers);
 		validateExistence(urlCollection.getAddOn(), order.getAddOnIdList(), "Add-On", headers);
-		validateExistence(urlCollection.getCar(), order.getCarId(), "Car", headers);
-		if(order.getWasherId() != null) {
-			validateExistence(urlCollection.getWasher(), order.getWasherId(), "Washer", headers);		
+		if (order.getWasherId() != null) {
+			validateExistence(urlCollection.getWasher(), order.getWasherId(), "Washer", headers);
 		}
+	}
+
+	public OrderList getOrdersByUser(HttpHeaders headers) {
+		StringList carList = restTemplate.exchange(urlCollection.getCar() + "/carIdsByUser", HttpMethod.GET,
+				new HttpEntity<Object>(headers), StringList.class).getBody();
+		Query query = new Query().addCriteria(Criteria.where("carId").in(carList.getStringList()))
+				.with(Sort.by(Direction.DESC, "bookingTime"));
+		List<Order> orderList = mongoTemplate.find(query, Order.class);
+		return new OrderList(orderList);
 	}
 
 	public void validateOrder(Order order, HttpHeaders headers) throws Exception {
@@ -144,15 +157,12 @@ public class OrderServiceImpl implements OrderService {
 		List<Order> orderList = orderRepository.findAll(example);
 		return new OrderList(orderList);
 	}
-	
-	public UserDetails getUserByUsername(String username) {
-		AuthenticationRequest authRequest = new AuthenticationRequest(username,"secretsarenevertobeshared");
-		UserDetails userDetails = restTemplate
-				.exchange( "http://localhost:8100/user/getUserDetails" , HttpMethod.POST, new HttpEntity<Object>(authRequest), UserDetails.class)
-				.getBody();
+
+	public MyUserDetails getUserByUsername(String username) {
+		AuthenticationRequest authRequest = new AuthenticationRequest(username, "secretsarenevertobeshared");
+		MyUserDetails userDetails = restTemplate.exchange("http://api-gateway/user/getUserDetails", HttpMethod.POST,
+				new HttpEntity<Object>(authRequest), MyUserDetails.class).getBody();
 		return userDetails;
 	}
-	
-	
 
 }

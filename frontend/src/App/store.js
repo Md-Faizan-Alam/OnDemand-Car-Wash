@@ -7,9 +7,18 @@ import ProfileStageReducer from "../Reducers/ProfileStageReducer";
 import SignedReducer from "../Reducers/SignedReducer";
 import UserReducer from "../Reducers/UserReducer";
 import OrderStageReducer from "../Reducers/OrderStageReducer";
+import CurrentOrderReducer from "../Reducers/CurrentOrderReducer";
 
 export default configureStore({
-    reducer: {profileStage: ProfileStageReducer, user: UserReducer, signed: SignedReducer, carStage: CarStageReducer, orderStage: OrderStageReducer},
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk).concat(logger),
-    devTools: [composeWithDevTools]
-})
+    reducer: {
+        profileStage: ProfileStageReducer,
+        user: UserReducer,
+        signed: SignedReducer,
+        carStage: CarStageReducer,
+        orderStage: OrderStageReducer,
+        currentOrder: CurrentOrderReducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(thunk).concat(logger),
+    devTools: [composeWithDevTools],
+});

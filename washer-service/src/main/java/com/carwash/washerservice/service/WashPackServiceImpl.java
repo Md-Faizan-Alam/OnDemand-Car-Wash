@@ -1,6 +1,7 @@
 package com.carwash.washerservice.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -70,6 +71,16 @@ public class WashPackServiceImpl implements WashPackService {
 	public WashPackList getAllWashPacks() {
 		return new WashPackList(washPackRepository.findAll());
 	}
+	
+	public WashPack getWashPackById(String id) {
+		Optional<WashPack> optionalWashPack = washPackRepository.findById(id);
+		try {
+			return optionalWashPack.get();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return new WashPack(null,"No Pack selected","There is no description available",0);
+	}
 
 	// Method to replace an existing wash pack with the given wash pack. Everything
 	// but the id can be different
@@ -113,7 +124,7 @@ public class WashPackServiceImpl implements WashPackService {
 	public MyUserDetails getUserByUsername(String username) {
 		AuthenticationRequest authRequest = new AuthenticationRequest(username,"secretsarenevertobeshared");
 		MyUserDetails userDetails = restTemplate
-				.exchange( "http://localhost:8100/user/getUserDetails" , HttpMethod.POST, new HttpEntity<Object>(authRequest), MyUserDetails.class)
+				.exchange( "http://api-gateway/user/getUserDetails" , HttpMethod.POST, new HttpEntity<Object>(authRequest), MyUserDetails.class)
 				.getBody();
 		return userDetails;
 	}

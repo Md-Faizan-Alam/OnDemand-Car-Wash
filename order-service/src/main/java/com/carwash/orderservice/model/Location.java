@@ -5,33 +5,33 @@ import com.carwash.orderservice.exceptions.LongitudeOutOfRangeException;
 
 public class Location {
 	
-	private double latitude;
-	private double longitude;
+	private double lat;
+	private double lng;
 	
 	public Location() {
 	}
-	public Location(double latitude, double longitude) {
-		this.latitude = latitude;
-		this.longitude = longitude;
+	public Location(double lat, double lng) {
+		this.lat = lat;
+		this.lng = lng;
 	}
-	public double getLatitude() {
-		return latitude;
+	public double getLat() {
+		return lat;
 	}
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
+	public void setLat(double lat) {
+		this.lat = lat;
 	}
-	public double getLongitude() {
-		return longitude;
+	public double getLng() {
+		return lng;
 	}
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+	public void setLng(double lng) {
+		this.lng = lng;
 	}
 	
 	public void validate() throws LatitudeOutOfRangeException,LongitudeOutOfRangeException{
-		if( this.latitude > 90 || this.latitude < -90 ) {
+		if( this.lat > 90 || this.lat < -90 ) {
 			throw new LatitudeOutOfRangeException();
 		}
-		if( this.longitude > 180 || this.longitude < -180 ) {
+		if( this.lng > 180 || this.lng < -180 ) {
 			throw new LongitudeOutOfRangeException();
 		}
 	}
