@@ -1,12 +1,24 @@
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setWashPackId } from "../../Actions/CurrentOrderAction";
+import setOrderStage from "../../Actions/OrderStageAction";
+
 const FeaturedCard = (props) => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-
+    const handleBook = ()=>{
+        dispatch(setWashPackId(props.pack.id));
+        dispatch(setOrderStage("book"));
+        navigate("/user/orders");
+    }
 
     return (
         <div
             className="card wash-pack-card"
             style={{ backgroundImage: `url(./pack-images/${props.pack.title.replaceAll(' ','_')}.jpg)` }}
             key={props.pack.id}
+            onClick={handleBook}
         >
             <div className="card-body">
                 <h5 className="card-title">{props.pack.title}</h5>

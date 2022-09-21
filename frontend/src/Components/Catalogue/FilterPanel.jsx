@@ -44,7 +44,7 @@ const FilterPanel = (props) => {
     return (
         <>
             <div
-                className="container border position-sticky w-75 m-auto border-2 border-success rounded-3 shadow-lg shadow-success mt-2"
+                className="container bg-light border position-sticky w-75 m-auto border-2 border-success rounded-3 shadow-lg shadow-success mt-2 mb-5"
                 style={{ height: "80vh", top: "10vh" }}
             >
                 <div className="container bg mt-1" style={{ height: "40vh" }}>

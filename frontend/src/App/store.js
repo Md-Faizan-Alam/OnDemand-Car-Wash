@@ -8,6 +8,7 @@ import SignedReducer from "../Reducers/SignedReducer";
 import UserReducer from "../Reducers/UserReducer";
 import OrderStageReducer from "../Reducers/OrderStageReducer";
 import CurrentOrderReducer from "../Reducers/CurrentOrderReducer";
+import PackStageReducer from "../Reducers/PackStageReducer";
 
 export default configureStore({
     reducer: {
@@ -17,6 +18,7 @@ export default configureStore({
         carStage: CarStageReducer,
         orderStage: OrderStageReducer,
         currentOrder: CurrentOrderReducer,
+        packStage: PackStageReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(thunk).concat(logger),

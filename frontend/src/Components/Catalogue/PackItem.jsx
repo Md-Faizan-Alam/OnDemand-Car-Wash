@@ -6,7 +6,7 @@ const PackItem = (props) => {
     return (
         <>
             <div
-                className="container shadow rounded mx-3 my-2 border"
+                className="container bg-light shadow rounded mx-3 my-2 border"
                 style={{
                     height: "max-content",
                     width: "40vh",
@@ -17,7 +17,7 @@ const PackItem = (props) => {
                     className="row"
                     style={{
                         height: "25vh",
-                        backgroundImage: `url(./pack-images/${props.pack.title.replaceAll(
+                        backgroundImage: `url(/pack-images/${props.pack.title.replaceAll(
                             " ",
                             "_"
                         )}.jpg)`,

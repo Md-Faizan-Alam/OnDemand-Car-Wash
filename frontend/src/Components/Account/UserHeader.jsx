@@ -1,5 +1,5 @@
 import Toolbox from "../../Services/Toolbox";
-import NewTabs from "./Tabs";
+import TabsPanel from "./TabsPanel";
 
 const UserHeader = (props) => {
 
@@ -22,7 +22,7 @@ const UserHeader = (props) => {
 
                 <div className="row mt-5">
                     <div className="col">
-                        <NewTabs />
+                        <TabsPanel role={props.user.role} />
                     </div>
                 </div>
 

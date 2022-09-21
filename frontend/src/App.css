@@ -52,6 +52,7 @@
 }
 
 .wash-pack-card {
+    cursor: pointer;
     background-size: cover;
     width: 30vw;
     height: 18vw;
@@ -215,4 +216,10 @@ input:disabled {
 }
 .delete-button:hover{
     opacity: initial;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

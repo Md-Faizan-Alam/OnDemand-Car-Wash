@@ -1,17 +1,34 @@
+import { useEffect, useState } from "react";
+import Mapping from "../../Constants/Mapping";
+import CarService from "../../Services/CarService";
+import WashPackService from "../../Services/WashPackService";
+
 const OrderBlock = (props) => {
+    const [packName, setPackName] = useState();
+    const [carModel, setCarModel] = useState();
 
-    const color = {
-        "PENDING": "rgb(240 235 30)",
-        "IN-PROCESS": "#1d7cc9",
-        "COMPLETED": "rgb(100 231 45)",
-        "CANCELLED": "rgb(255, 49, 49)",
-        "TERMINATED": "rgb(255 0 0)"
-    }
-
-    const timeToDate = (str) =>{
+    const timeToDate = (str) => {
         let time = new Date(str);
-        return time.toLocaleDateString("fr-CH")
-    }
+        return time.toLocaleDateString("fr-CH");
+    };
+
+    const getNames = async () => {
+        let name = null
+
+        name = await WashPackService.getWashPackById(props.order.washPackId)
+            .then((response) => response.title)
+            .catch((error) => console.log(error));
+        setPackName(name)
+
+        name = await CarService.getCarById(props.order.carId)
+            .then((response) => response.modelName)
+            .catch((error) => console.log(error));
+        setCarModel(name)
+    };
+
+    useEffect(() => {
+        getNames();
+    }, []);
 
     return (
         <div
@@ -24,11 +41,19 @@ const OrderBlock = (props) => {
             <div className="row text-center">
                 <div className="col-1">{props.serial}</div>
                 <div className="col">{timeToDate(props.order.bookingTime)}</div>
-                <div className="col">{props.order.washPack}</div>
-                <div className="col">{props.order.car}</div>
+                <div className="col">{packName}</div>
+                <div className="col">{carModel}</div>
                 <div className="col">{props.order.amount}</div>
                 <div className="col-2">
-                    <div className="py-1 rounded" style={{backgroundColor: color[props.order.status]}}>{props.order.status}</div>
+                    <div
+                        className="py-1 rounded"
+                        style={{
+                            backgroundColor:
+                                Mapping.statusColor[props.order.status],
+                        }}
+                    >
+                        {props.order.status}
+                    </div>
                 </div>
             </div>
         </div>

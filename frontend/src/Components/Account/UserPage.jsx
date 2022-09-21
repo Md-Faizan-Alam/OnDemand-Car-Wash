@@ -8,9 +8,8 @@ import Navbar from "../Miscellaneous/Navbar";
 import UserHeader from "./UserHeader";
 
 const UserPage = (props) => {
-    
     const user = useSelector((state) => state.user);
-    const profileStage = useSelector(state=>state.profileStage);
+    const profileStage = useSelector((state) => state.profileStage);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -23,27 +22,29 @@ const UserPage = (props) => {
         dateOfBirth: "",
     };
 
+    const loadUser = async () => {
+        dispatch(setUser(loadingUser));
+        let data = await UserService.getUser();
+        if (data !== null && data.userId !== null) {
+            dispatch(setUser(data));
+        } else {
+            localStorage.setItem("JWT", "");
+            navigate("/form");
+        }
+    };
+
     useEffect(() => {
-
-        return async () => {
-            dispatch(setUser(loadingUser));
-            let data = await UserService.getUser();
-            if (data !== null && data.userId !== null) {
-                dispatch(setUser(data));
-            } else {
-                localStorage.setItem('JWT','')
-                navigate("/form");
-            }
-        };
+        loadUser();
     }, [profileStage]);
-
 
     return (
         <>
             <Navbar condition={"logout"} />
             <UserHeader user={user} />
             <div className="container-fluid p-5" id="tab-background">
+                <div className="container tab-component">
                     <Outlet />
+                </div>
             </div>
             <Footer />
         </>

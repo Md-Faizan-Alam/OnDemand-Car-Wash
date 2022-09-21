@@ -1,5 +1,4 @@
 const FormIndicator = (props) => {
-
     const blank = <div className="row mb-2 w-75">&nbsp;</div>;
 
     const spinner = (
@@ -9,27 +8,23 @@ const FormIndicator = (props) => {
             </div>
         </div>
     );
-    
+
     const message = (
         <div
             className="row mb-2 text-danger fw-semibold"
             style={{ fontFamily: "sans-serif" }}
         >
-            {props.message}
+            <div className="container-fluid text-center">{props.message}</div>
         </div>
     );
 
     const body = {
-        "blank": blank,
-        "spinner": spinner,
-        "message": message
-    }
-    
-    return(
-        <>
-        {body[props.indicator]}
-        </>
-    );
-}
+        blank: blank,
+        spinner: spinner,
+        message: message,
+    };
+
+    return <>{body[props.indicator]}</>;
+};
 
 export default FormIndicator;

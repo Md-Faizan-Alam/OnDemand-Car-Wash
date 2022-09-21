@@ -5,8 +5,9 @@ import Car from './Components/Account/Car';
 import Order from "./Components/Account/Order";
 import Profile from "./Components/Account/Profile";
 import UserPage from "./Components/Account/UserPage";
+import WashPack from "./Components/Account/WashPack";
 import AddOns from "./Components/Catalogue/AddOns";
-import Packs from "./Components/Catalogue/Packs";
+import PackPage from "./Components/Catalogue/PackPage";
 import FormPage from "./Components/Form/FormPage";
 import LoginForm from "./Components/Form/LoginForm";
 import RegistrationForm from "./Components/Form/RegistrationForm";
@@ -27,7 +28,7 @@ function App() {
         <>
             <Routes>
                 <Route exact path="/" element={<HomePage />} />
-                <Route exact path="/packs" element={<Packs/>}/>
+                <Route exact path="/packs" element={<PackPage/>}/>
                 <Route exact path="/addOns" element={<AddOns/>}/>
 
                 <Route exact path="/form" element={<FormPage />}>
@@ -39,6 +40,7 @@ function App() {
                     <Route exact path="profile" element={<Profile />} />
                     <Route exact path="cars" element={ <Car stage={"add"}/> } />
                     <Route exact path="orders" element={<Order />} />
+                    <Route exact path="packs" element={<WashPack />} />
                 </Route>
 
                 <Route path="*" element={<NotFound />} />

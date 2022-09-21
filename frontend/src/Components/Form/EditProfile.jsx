@@ -36,17 +36,27 @@ const EditProfile = (props) => {
         setConfirmPassword(event.target.value);
     }
     const handleGender = (event)=>{
+        console.log("Gender changed to "+event.target.value)
         setGender(event.target.value);
     }
 
     const saveEdit = async ()=>{
 
-        let newUser = Object.assign({},props.user);
-        newUser.firstName = firstName ;
-        newUser.lastName = lastName ;
-        newUser.email = email ;
-        newUser.gender = gender ;
-        newUser.phoneNumber = phoneNumber ;
+        // let newUser = Object.assign({},props.user);
+        // newUser.firstName = firstName ;
+        // newUser.lastName = lastName ;
+        // newUser.email = email ;
+        // newUser.gender = gender ;
+        // newUser.phoneNumber = phoneNumber ;
+
+        const newUser = {
+            ...props.user,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            gender: gender,
+            phoneNumber: phoneNumber
+        }
 
         await UserService.updateUser(newUser);
         navigate("/user/profile");
