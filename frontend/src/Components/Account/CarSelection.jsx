@@ -8,23 +8,33 @@ const CarSelection = (props) => {
 
     const dispatch = useDispatch();
 
+    const getCars = async () => {
+        const data = await CarService.getCarsByCustomer()
+            .then((response) => response.carList)
+            .catch((error) => console.log(error));
+        console.log(data);
+        setCarList(data);
+    };
+
     useEffect(() => {
-        return async () => {
-            const data = await CarService.getCarsByCustomer()
-                .then((response) => response.carList)
-                .catch((error) => console.log(error));
-            setCarList(data);
-        };
+        getCars();
     }, []);
-    return(
-    <>
-        <div className="container p-5 tab-component d-flex justify-content-between flex-wrap">
-            {carList.map((element) => {
-                return <CarBlock key={element.carId} car={element} select={true} delete={false} />;
-            })}
-        </div>
-    </>
+    return (
+        <>
+            <div className="container my-5 d-flex justify-content-between flex-wrap">
+                {carList.map((element) => {
+                    return (
+                        <CarBlock
+                            key={element.carId}
+                            car={element}
+                            select={true}
+                            delete={false}
+                        />
+                    );
+                })}
+            </div>
+        </>
     );
-}
+};
 
 export default CarSelection;

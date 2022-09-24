@@ -16,9 +16,12 @@ import Map from "./Map";
 import OrderTotal from "./OrderTotal";
 import FormIndicator from "./FormIndicator";
 import OrderService from "../../Services/OrderService";
+import { Link, useNavigate } from "react-router-dom";
 
 const BookWash = (props) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const user = useSelector((state) => state.user);
     const currentOrder = useSelector((state) => state.currentOrder);
     const [addOnList, setAddOnList] = useState([]);
     const [location, setlocation] = useState({
@@ -93,8 +96,6 @@ const BookWash = (props) => {
         } else if (currentOrder.washPackId === null) {
             setMessage("Please select a Wash Pack to proceed");
         } else {
-            // dispatch(setBookingTime())
-            // dispatch(setOrderLocation(location))
             let event = new Date(Date.now());
             const order = {
                 ...currentOrder,
@@ -103,14 +104,28 @@ const BookWash = (props) => {
                 amount: calculateTotal(),
             };
             await OrderService.insertOrder(order);
+            printInvoice();
             dispatch(cancelOrder());
             dispatch(setOrderStage("view"));
         }
-        setIndicator("message")
+        setIndicator("message");
+    };
+
+    const printInvoice = () => {
+        const order = {
+            date: new Date(Date.now()).toLocaleDateString("fr-CH"),
+            customerName: `${user.firstName} ${user.lastName}`,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+            list: [pack,...addOnList],
+            amount: calculateTotal(),
+        }
+        localStorage.setItem('order',JSON.stringify(order))
+        document.getElementById("print").click();
     };
 
     return (
-        <div className="container p-5 tab-component">
+        <div className="container my-5">
             <div className="container m-auto w-75">
                 <SelectedCar car={car} />
                 <SelectedPack pack={pack} />
@@ -132,6 +147,14 @@ const BookWash = (props) => {
                         >
                             Cancel
                         </button>
+                        <Link
+                            id={"print"}
+                            to={"/invoice"}
+                            target={"_blank"}
+                            style={{ display: "none" }}
+                        >
+                            Print
+                        </Link>
                     </div>
                 </div>
             </div>

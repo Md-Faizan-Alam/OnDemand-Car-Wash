@@ -12,8 +12,6 @@ const UserService = {
             .then((response) => response.data)
             .catch((error) => console.log(error));
 
-        if (username === "username" && password === "password") return true;
-
         if (data === undefined) return false;
         if (data.jwt === "Failed") return false;
 

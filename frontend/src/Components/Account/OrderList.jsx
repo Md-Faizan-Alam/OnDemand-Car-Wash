@@ -2,8 +2,8 @@ import OrderBlock from "./OrderBlock";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import OrderService from "../../Services/OrderService";
-import OrderListHead from "../Static/OrderListHead";
 import FormIndicator from "../Form/FormIndicator";
+import OrderListHead from "../Static/OrderListHead";
 
 const OrderList = (props) => {
     const [orderList, setOrderList] = useState([]);
@@ -41,8 +41,7 @@ const OrderList = (props) => {
     };
 
     return (
-        <div className="container p-5 tab-component">
-            <div className="container-fluid p-0 rounded">
+            <div className="container-fluid p-0 rounded my-5">
                 <OrderListHead />
                 {indicator === "blank" ? "" : <Indicator />}
                 {orderList.map((order) => {
@@ -62,7 +61,6 @@ const OrderList = (props) => {
                     </Link>
                 </div>
             </div>
-        </div>
     );
 };
 

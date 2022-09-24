@@ -8,7 +8,7 @@ const PackPage = (props) => {
     return (
         <>
             <Navbar condition={signed} />
-            <Packs />
+            <Packs addButton={false} />
         </>
     );
 };

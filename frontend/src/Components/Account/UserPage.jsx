@@ -42,7 +42,7 @@ const UserPage = (props) => {
             <Navbar condition={"logout"} />
             <UserHeader user={user} />
             <div className="container-fluid p-5" id="tab-background">
-                <div className="container tab-component">
+                <div className="container tab-component px-5">
                     <Outlet />
                 </div>
             </div>

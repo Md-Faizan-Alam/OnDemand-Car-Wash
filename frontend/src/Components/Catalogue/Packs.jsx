@@ -69,7 +69,7 @@ const Packs = (props) => {
                                 />
                             );
                         })}
-                        <AddPackButton />
+                        {props.addButton ? <AddPackButton /> : null}
                     </div>
                 </div>
             </div>

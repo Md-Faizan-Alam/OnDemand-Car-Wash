@@ -19,17 +19,19 @@ const CarList = (props) => {
         dispatch(setCarStage("add"));
     };
 
+    const getCarList = async () => {
+        const data = await CarService.getCarsByCustomer()
+            .then((response) => response.carList)
+            .catch((error) => console.log(error));
+        setCarList(data);
+    };
+
     useEffect(() => {
-        return async () => {
-            const data = await CarService.getCarsByCustomer()
-                .then((response) => response.carList)
-                .catch((error) => console.log(error));
-            setCarList(data);
-        };
+        getCarList();
     }, [refState]);
 
     return (
-        <div className="container p-5 tab-component d-flex justify-content-start flex-wrap">
+        <div className="container mt-5 d-flex justify-content-start flex-wrap">
             {carList.map((element) => {
                 return (
                     <CarBlock

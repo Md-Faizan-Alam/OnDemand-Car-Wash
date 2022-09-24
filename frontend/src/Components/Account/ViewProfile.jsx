@@ -43,7 +43,7 @@ const ViewProfile = (props) => {
                     <div className="row fs-4 placeholder-glow">{Toolbox.loadString(props.user.dateOfBirth)}</div>
                 </div> */}
 
-            <div className="container-fluid py-2 mt-4 d-flex flex-row-reverse">
+            <div className="container-fluid mb-4 py-2 mt-4 d-flex flex-row-reverse">
                 <button onClick={goToEdit} className="btn btn-outline-success">
                     Edit Profile
                 </button>

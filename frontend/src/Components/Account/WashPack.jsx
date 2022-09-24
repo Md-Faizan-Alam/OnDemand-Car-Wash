@@ -6,7 +6,7 @@ const WashPack = (props) => {
     const packStage = useSelector(state => state.packStage)
 
     const body = {
-        "view": <Packs />,
+        "view": <Packs addButton={true} />,
         "add": <AddPack /> 
     }
 

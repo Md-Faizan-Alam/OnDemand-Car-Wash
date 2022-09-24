@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import '../../App.css';
 import SignBox from "./SignBox";
-
 const Navbar = (props) => {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-white green-shadow">

@@ -33,7 +33,7 @@ const AddCar = (props) => {
 
     return (
         <>
-            <div className="container p-5 tab-component">
+            <div className="container my-5">
                 <div className="conatainer m-auto" style={{ width: "40%" }}>
                     <div className="row mb-4">
                         <div className="col">

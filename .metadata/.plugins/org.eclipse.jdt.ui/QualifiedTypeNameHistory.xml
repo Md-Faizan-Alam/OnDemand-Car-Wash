@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="org.springframework.data.mongodb.core.mapping.Field"/>
     <fullyQualifiedTypeName name="org.springframework.data.annotation.AccessType"/>
     <fullyQualifiedTypeName name="com.mongodb.annotations.Immutable"/>
     <fullyQualifiedTypeName name="org.springframework.data.annotation.Immutable"/>
@@ -12,7 +11,6 @@
     <fullyQualifiedTypeName name="org.springframework.data.mongodb.core.query.Query"/>
     <fullyQualifiedTypeName name="io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker"/>
     <fullyQualifiedTypeName name="com.carwash.adminservice.exceptions.InvalidReportException"/>
-    <fullyQualifiedTypeName name="com.carwash.adminservice.wrapper.StringList"/>
     <fullyQualifiedTypeName name="com.carwash.adminservice.model.Filter"/>
     <fullyQualifiedTypeName name="com.carwash.adminservice.model.Order"/>
     <fullyQualifiedTypeName name="com.carwash.adminservice.model.Location"/>
@@ -60,4 +58,6 @@
     <fullyQualifiedTypeName name="org.springframework.http.HttpHeaders"/>
     <fullyQualifiedTypeName name="org.springframework.data.domain.Sort"/>
     <fullyQualifiedTypeName name="org.springframework.data.domain.Sort.Direction"/>
+    <fullyQualifiedTypeName name="com.carwash.first.DemoInterface"/>
+    <fullyQualifiedTypeName name="com.carwash.adminservice.wrapper.StringList"/>
 </qualifiedTypeNameHistroy>

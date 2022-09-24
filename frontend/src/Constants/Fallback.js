@@ -34,6 +34,11 @@ const Fallback = {
         color: "#000000",
         registrationNumber: "",
     },
+    idleModal: {
+        header: 'Title',
+        body: 'No body set for this modal',
+        task: () => {},
+    },
 };
 
 export default Fallback;

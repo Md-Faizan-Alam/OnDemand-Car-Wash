@@ -1,3 +1,12 @@
+@media print {
+    @page{
+        
+        size: 30cm 40cm;
+        margin: 0cm 0cm 0cm 0cm;
+    }
+}
+
+
 .nav-link:hover {
     font-weight: 500;
 }
@@ -223,3 +232,16 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+/* .border-bottom{
+    border-color: black !important;
+}
+.border{
+    border-color: black !important;
+}
+.border-end{
+    border-color: black !important;
+}
+.border-start{
+    border-color: black !important;
+} */
