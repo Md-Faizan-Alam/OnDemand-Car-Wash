@@ -6,6 +6,18 @@ const Mapping = {
         CANCELLED: "rgb(255, 49, 49)",
         TERMINATED: "rgb(255 0 0)",
     },
+    typeList: [
+        "SEDAN",
+        "HATCHBACK",
+        "CONVERTIBLE",
+        "COUPE",
+        "MINIVAN",
+        "STATION_WAGON",
+        "PICK_UP_TRUCK",
+        "TRUCK",
+        "OFF_ROAD",
+        "VAN",
+    ],
 };
 
 export default Mapping;

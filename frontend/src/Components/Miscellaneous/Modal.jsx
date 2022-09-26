@@ -1,7 +1,20 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { refreshPage } from "../../Actions/RefreshAction";
+import CarService from "../../Services/CarService";
 
 const Modal = (props) => {
     const modalState = useSelector(state=>state.modalState)
+    const dispatch = useDispatch();
+
+    const handleDelete = async () => {
+        await CarService.deleteCarById(modalState.id);
+        dispatch(refreshPage());
+    };
+
+    const handler = {
+        deleteCar: handleDelete,
+    }
 
     return (
         <>
@@ -24,7 +37,7 @@ const Modal = (props) => {
                             <button
                                 type="button"
                                 className="btn btn-outline-danger me-3"
-                                onClick={modalState.task}
+                                onClick={handler[modalState.task]}
                                 data-bs-dismiss="modal"
                             >
                                 Delete

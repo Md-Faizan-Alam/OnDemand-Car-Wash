@@ -75,6 +75,15 @@ public class WasherController {
 	public WashPack getWashPackById(@RequestBody String id) {
 		return washPackService.getWashPackById(id);
 	}
+	
+	@PostMapping("/WashPack/getTitle")
+	public ResponseEntity<String> getTitleById(@RequestBody String id) {
+		WashPack washPack = washPackService.getWashPackById(id);
+		if(washPack.getId() == null) {
+			return new ResponseEntity<String>("", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(washPack.getTitle(), HttpStatus.OK);
+	}
 
 	// Method to update an existing wash pack by sending the replacement through
 	// Request Body

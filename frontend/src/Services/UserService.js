@@ -1,4 +1,5 @@
 import axios from "axios";
+import Gateway from "../Constants/Gateway";
 
 const UserService = {
     validateCredentials: async (username, password) => {
@@ -8,7 +9,7 @@ const UserService = {
         };
 
         const data = await axios
-            .post("http://localhost:8100/user/authenticate", request)
+            .post(Gateway.makePath("user","authenticate"), request)
             .then((response) => response.data)
             .catch((error) => console.log(error));
 
@@ -26,7 +27,7 @@ const UserService = {
             },
         };
         const data = await axios
-            .get("http://localhost:8100/user/getUser", config)
+            .get(Gateway.makePath("user","getUser"), config)
             .then((response) => response.data)
             .catch((error) => console.log(error));
 
@@ -41,20 +42,15 @@ const UserService = {
         };
         // console.log(user)
         const data = await axios
-            .put("http://localhost:8100/user/update", user, config)
+            .put(Gateway.makePath("user","update"), user, config)
             .then((response) => response.data)
             .catch((error) => console.log(`Error during updation ${error}`));
         console.log(`Update message : ${data}`);
     },
-
-
-
-
-
     registerUser: async (user) => {
         console.log(user);
         const data = await axios
-            .post("http://localhost:8100/user/add", user)
+            .post(Gateway.makePath("user","add"), user)
             .then((response) => response.data)
             .catch((error) => console.log(`Error during updation ${error}`));
         console.log(`Registration message : ${data}`);

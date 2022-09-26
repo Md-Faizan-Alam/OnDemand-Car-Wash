@@ -54,7 +54,7 @@ public class OrderController {
 		if(saved.equals("Order saved successfully")) {
 			return new ResponseEntity<String>(saved,HttpStatus.CREATED);
 		}
-		return new ResponseEntity<String>(saved,HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>(saved,HttpStatus.OK);
 	}
 	
 	@GetMapping("/list")

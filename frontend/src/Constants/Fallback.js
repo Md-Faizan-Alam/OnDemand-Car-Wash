@@ -13,7 +13,7 @@ const Fallback = {
     },
     emptyOrder: {
         carId: null,
-        washPackId: null,
+        washPackId: "0",
         addOnIdList: {
             stringList: [],
         },
@@ -37,7 +37,8 @@ const Fallback = {
     idleModal: {
         header: 'Title',
         body: 'No body set for this modal',
-        task: () => {},
+        task: "",
+        id: null,
     },
 };
 

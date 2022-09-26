@@ -6,7 +6,7 @@ const Carousel = (props) => {
     const getCarouselItem = () =>{
         let items = [];
         for(let i=0 ; i < props.list.length ; i+=3){
-            items.push(<CarouselItem key={i} active={i===0 ? "active" : ""} list={props.list.slice(i,i+3)} />);
+            items.push(<CarouselItem key={i} active={i===0 ? "active" : ""} list={props.list.slice(i,i+3)} handleAction={props.handleAction} />);
         }
         return items;
     }

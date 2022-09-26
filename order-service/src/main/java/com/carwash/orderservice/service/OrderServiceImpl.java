@@ -69,6 +69,18 @@ public class OrderServiceImpl implements OrderService {
 		throw new Exception("Other services are also required for insertion or updation");
 	}
 
+	@CircuitBreaker(name = "validationBreaker", fallbackMethod = "fallbackValidateExistence")
+	public Order setNamesById(Order order, HttpHeaders headers) {
+		String washPackTitle = restTemplate.exchange(urlCollection.getWashPack()+"/getTitle", HttpMethod.POST,
+				new HttpEntity<String>(order.getWashPackId(), headers), String.class).getBody();
+		order.setWashPackTitle(washPackTitle);
+		String carName = restTemplate.exchange(urlCollection.getCar()+"/getTitle", HttpMethod.POST,
+				new HttpEntity<String>(order.getCarId(), headers), String.class).getBody();
+		order.setCarName(carName);
+		return order;
+	}
+
+	
 	public void validateExistenceOfIds(Order order, HttpHeaders headers) throws Exception {
 		validateExistence(urlCollection.getCar(), order.getCarId(), "Car", headers);
 		validateExistence(urlCollection.getWashPack(), order.getWashPackId(), "Wash Pack", headers);
@@ -109,6 +121,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		try {
 			validateOrder(order, headers);
+			order = setNamesById(order, headers);
 			orderRepository.save(order);
 			return "Order saved successfully";
 		} catch (Exception e) {
@@ -127,6 +140,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		try {
 			validateOrder(order, headers);
+			order = setNamesById(order, headers);
 			orderRepository.save(order);
 			return "Order updated successfully";
 		} catch (Exception e) {

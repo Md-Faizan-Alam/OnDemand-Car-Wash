@@ -10,6 +10,7 @@ import OrderStageReducer from "../Reducers/OrderStageReducer";
 import CurrentOrderReducer from "../Reducers/CurrentOrderReducer";
 import PackStageReducer from "../Reducers/PackStageReducer";
 import ModalStateReducer from "../Reducers/ModalStateReducer";
+import RefreshReducer from "../Reducers/RefreshReducer";
 
 export default configureStore({
     reducer: {
@@ -21,6 +22,7 @@ export default configureStore({
         currentOrder: CurrentOrderReducer,
         packStage: PackStageReducer,
         modalState: ModalStateReducer,
+        refresh: RefreshReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(thunk),

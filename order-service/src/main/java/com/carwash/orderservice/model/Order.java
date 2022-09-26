@@ -22,7 +22,9 @@ public class Order {
 	@Id
 	private String orderId;
 	private String carId;			// Id of the car associated with the order
+	private String carName;			// Model Name of the car
 	private String washPackId;		// Id of the Wash Pack that is in the order
+	private String washPackTitle;	// Title of the Wash Pack
 	private StringList addOnIdList = new StringList();	// A list of Id(s) of the AddOns that are associated with the List
 	private double amount;			// The total amount that is paid by the customer for the order
 	@Field(targetType = FieldType.DATE_TIME)
@@ -47,10 +49,12 @@ public class Order {
 	private static List<String> validStatus =  Arrays.asList( "PENDING" , "IN_PROCESS" , "COMPLETED" , "CANCELLED" , "TERMINATED" );
 
 	// Custom Constructor
-	public Order(String carId, String washPackId, StringList addOnIdList, double amount, Location location , LocalDateTime completionTime) {
+	public Order(String carId, String carName, String washPackId, String washPackTitle, StringList addOnIdList, double amount, Location location , LocalDateTime completionTime) {
 		
 		this.carId = carId;
+		this.carName = carName;
 		this.washPackId = washPackId;
+		this.washPackTitle = washPackTitle;
 		this.addOnIdList = addOnIdList;
 		this.amount = amount;
 		this.location = location;
@@ -220,6 +224,26 @@ public class Order {
 		if(this.status.equals("COMPLETED") && this.completionTime == null) {
 			throw new NoCompletionDateException();
 		}
+	}
+
+
+	public String getCarName() {
+		return carName;
+	}
+
+
+	public void setCarName(String carName) {
+		this.carName = carName;
+	}
+
+
+	public String getWashPackTitle() {
+		return washPackTitle;
+	}
+
+
+	public void setWashPackTitle(String washPackTitle) {
+		this.washPackTitle = washPackTitle;
 	}
 	
 	

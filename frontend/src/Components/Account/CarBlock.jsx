@@ -36,15 +36,15 @@ const CarBlock = (props) => {
                     fill="currentColor"
                     className="bi bi-trash3"
                     viewBox="0 0 16 16"
-                    onClick={(event) => {
+                    onClick={ async (event) => {
                         dispatch(
                             setModalState({
                                 header: "Confirm Deletion",
                                 body: "Are you sure you want to delete this car ?",
-                                task: handleDelete,
+                                task: "deleteCar",
+                                id: props.car.carId,
                             })
                         );
-                        event.target.click();
                     }}
                     data-bs-toggle="modal"
                     data-bs-target="#myModal"
@@ -55,10 +55,7 @@ const CarBlock = (props) => {
         );
     };
 
-    const handleDelete = async () => {
-        await CarService.deleteCarById(props.car.carId);
-        props.setRefState((prevState) => !prevState);
-    };
+    
 
     return (
         <div

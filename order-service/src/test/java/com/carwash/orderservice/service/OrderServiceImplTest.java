@@ -54,6 +54,8 @@ class OrderServiceImplTest {
 		when(orderService.orderRepository.save(order)).thenReturn(order);
 		when(orderService.restTemplate.exchange(isA(String.class), eq(HttpMethod.POST), isA(HttpEntity.class),
 				eq(Boolean.class))).thenReturn(new ResponseEntity<Boolean>(true, HttpStatus.OK));
+		when(orderService.restTemplate.exchange(isA(String.class), eq(HttpMethod.POST), isA(HttpEntity.class),
+				eq(String.class))).thenReturn(new ResponseEntity<String>("Title", HttpStatus.OK));
 		
 		order.setStatus("PENDING");
 		order.setLocation(new Location(45, 120));
@@ -115,6 +117,8 @@ class OrderServiceImplTest {
 		when(orderService.orderRepository.save(order)).thenReturn(order);
 		when(orderService.restTemplate.exchange(isA(String.class), eq(HttpMethod.POST), isA(HttpEntity.class),
 				eq(Boolean.class))).thenReturn(new ResponseEntity<Boolean>(true, HttpStatus.OK));
+		when(orderService.restTemplate.exchange(isA(String.class), eq(HttpMethod.POST), isA(HttpEntity.class),
+				eq(String.class))).thenReturn(new ResponseEntity<String>("Title", HttpStatus.OK));
 
 		order.setStatus("PENDING");
 		order.setLocation(new Location(45, 120));

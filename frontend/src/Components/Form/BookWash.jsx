@@ -1,26 +1,20 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { cancelOrder } from "../../Actions/CurrentOrderAction";
 import setOrderStage from "../../Actions/OrderStageAction";
+import CarService from "../../Services/CarService";
+import OrderService from "../../Services/OrderService";
 import WashPackService from "../../Services/WashPackService";
 import SelectedAddOns from "../Catalogue/SelectedAddOns";
-import SelectedPack from "../Catalogue/SelectedPack";
 import SelectedCar from "../Catalogue/SelectedCar";
-import CarService from "../../Services/CarService";
-import {
-    cancelOrder,
-    setBookingTime,
-    setLocation,
-    setOrderLocation,
-} from "../../Actions/CurrentOrderAction";
+import SelectedPack from "../Catalogue/SelectedPack";
+import FormIndicator from "./FormIndicator";
 import Map from "./Map";
 import OrderTotal from "./OrderTotal";
-import FormIndicator from "./FormIndicator";
-import OrderService from "../../Services/OrderService";
-import { Link, useNavigate } from "react-router-dom";
 
 const BookWash = (props) => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const user = useSelector((state) => state.user);
     const currentOrder = useSelector((state) => state.currentOrder);
     const [addOnList, setAddOnList] = useState([]);
@@ -93,7 +87,7 @@ const BookWash = (props) => {
         setIndicator("spinner");
         if (currentOrder.carId === null) {
             setMessage("Please select a car to proceed");
-        } else if (currentOrder.washPackId === null) {
+        } else if (currentOrder.washPackId === "0") {
             setMessage("Please select a Wash Pack to proceed");
         } else {
             let event = new Date(Date.now());
@@ -117,10 +111,10 @@ const BookWash = (props) => {
             customerName: `${user.firstName} ${user.lastName}`,
             email: user.email,
             phoneNumber: user.phoneNumber,
-            list: [pack,...addOnList],
+            list: [pack, ...addOnList],
             amount: calculateTotal(),
-        }
-        localStorage.setItem('order',JSON.stringify(order))
+        };
+        localStorage.setItem("order", JSON.stringify(order));
         document.getElementById("print").click();
     };
 

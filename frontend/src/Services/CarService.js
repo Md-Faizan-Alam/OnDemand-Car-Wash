@@ -1,5 +1,6 @@
 import axios from "axios";
 import Fallback from "../Constants/Fallback";
+import Gateway from "../Constants/Gateway";
 
 const CarService = {
     insertCar: async (car) => {
@@ -11,7 +12,7 @@ const CarService = {
         console.log(car);
 
         const data = await axios
-            .post("http://localhost:8100/user/car/add", car, config)
+            .post(Gateway.makePath("user","car","add"), car, config)
             .then((response) => response.data)
             .catch((error) => console.log(error));
 
@@ -26,7 +27,7 @@ const CarService = {
         };
 
         const data = await axios
-            .get("http://localhost:8100/user/car/byCustomer", config)
+            .get(Gateway.makePath("user","car","byCustomer"), config)
             .then((response) => response.data)
             .catch((error) => console.log(error));
 
@@ -45,7 +46,7 @@ const CarService = {
             },
         };
         const data = await axios
-            .post("http://localhost:8100/user/car/getById", id, config)
+            .post(Gateway.makePath("user","car","getById"), id, config)
             .then((response) => response.data)
             .catch((error) => {
                 console.log(error);
@@ -64,7 +65,7 @@ const CarService = {
         };
         console.log(config);
         const message = await axios
-            .delete("http://localhost:8100/user/car/delete", config)
+            .delete(Gateway.makePath("user","car","delete"), config)
             .then((response) => response.data)
             .catch((error) => {
                 console.log(error);

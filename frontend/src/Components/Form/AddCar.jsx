@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import setCarStage from "../../Actions/CarStageAction";
-import TypeList from "../../Constants/TypeList";
+import Mapping from "../../Constants/Mapping";
 import CarService from "../../Services/CarService";
 import Toolbox from "../../Services/Toolbox";
 
@@ -53,10 +53,6 @@ const AddCar = (props) => {
                         <div className="col-3">
                             <input
                                 type="text"
-                                value={color}
-                                onChange={(event) =>
-                                    setColor(event.target.value)
-                                }
                                 className="login-input d-block m-auto"
                                 placeholder="Color :"
                                 disabled
@@ -97,7 +93,7 @@ const AddCar = (props) => {
                                     setCarType(event.target.value)
                                 }
                                 >
-                                {TypeList.map((element) => {
+                                {Mapping.typeList.map((element) => {
                                     return (
                                         <option key={element} value={element}>
                                             {Toolbox.snakeToNormal(element)}

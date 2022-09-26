@@ -136,6 +136,11 @@ public class UserController {
 	public ResponseEntity<Boolean> checkExistence(@RequestBody String carId){
 		return new ResponseEntity<Boolean>( carService.doesExist(carId) ,HttpStatus.OK);
 	}
+	
+	@PostMapping("/car/getTitle")
+	public ResponseEntity<String> getTitleById(@RequestBody String carId){
+		return new ResponseEntity<String>( carService.getCarById(carId).getModelName() ,HttpStatus.OK);
+	}
 
 	// Method to insert a new User into the database
 	@PostMapping("/car/add")
@@ -144,7 +149,7 @@ public class UserController {
 		if (saved.equals("Car saved successfully")) {
 			return new ResponseEntity<String>(saved, HttpStatus.CREATED);
 		}
-		return new ResponseEntity<String>(saved, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>(saved, HttpStatus.OK);
 	}
 
 	// Method that returns the list of all users from the database

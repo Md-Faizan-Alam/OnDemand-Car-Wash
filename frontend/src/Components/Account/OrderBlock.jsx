@@ -27,7 +27,7 @@ const OrderBlock = (props) => {
     };
 
     useEffect(() => {
-        getNames();
+        // getNames();
     }, []);
 
     return (
@@ -41,8 +41,8 @@ const OrderBlock = (props) => {
             <div className="row text-center">
                 <div className="col-1">{props.serial}</div>
                 <div className="col">{timeToDate(props.order.bookingTime)}</div>
-                <div className="col">{packName}</div>
-                <div className="col">{carModel}</div>
+                <div className="col">{props.order.washPackTitle}</div>
+                <div className="col">{props.order.carName}</div>
                 <div className="col">{props.order.amount}</div>
                 <div className="col-2">
                     <div

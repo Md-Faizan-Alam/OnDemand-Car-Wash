@@ -5,6 +5,7 @@ import FormIndicator from "./FormIndicator";
 
 const RegistrationForm = (props) => {
 
+    const [role,setRole] = useState("CUSTOMER");
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
@@ -40,6 +41,14 @@ const RegistrationForm = (props) => {
         return true;
     }
 
+    const switchRole = ()=>{
+        if(role ==="CUSTOMER"){
+            setRole("WASHER")
+        }else{
+            setRole("CUSTOMER")
+        }
+    }
+
     const handleSubmit = async () =>{
         setIndicator("spinner");
         if(inputIsInvalid()){
@@ -54,7 +63,7 @@ const RegistrationForm = (props) => {
             "phoneNumber": phoneNumber,
             "gender": gender,
             "password": password,
-            "role": "CUSTOMER",
+            "role": role,
             "carIds": []
         }
         await UserService.registerUser(newUser);
@@ -179,6 +188,13 @@ const RegistrationForm = (props) => {
                     <Link className="hyper-link" to="/form">
                         Already have an account? Login instead
                     </Link>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col text-center">
+                    <a className="hyper-link" onClick={switchRole}>
+                        {`Register as a ${role==="CUSTOMER" ? "washer" : "customer"} instead`}
+                    </a>
                 </div>
             </div>
         </div>

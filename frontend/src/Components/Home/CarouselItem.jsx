@@ -11,7 +11,7 @@ const CarouselItem = (props) => {
                     serial++;
                     return (
                         <div key={serial}>
-                            <FeaturedCard pack={element} />
+                            <FeaturedCard pack={element} handleAction={props.handleAction} />
                         </div>
                     );
                 })}

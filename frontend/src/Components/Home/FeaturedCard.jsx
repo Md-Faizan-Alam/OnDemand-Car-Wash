@@ -7,18 +7,12 @@ const FeaturedCard = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleBook = ()=>{
-        dispatch(setWashPackId(props.pack.id));
-        dispatch(setOrderStage("book"));
-        navigate("/user/orders");
-    }
-
     return (
         <div
             className="card wash-pack-card"
             style={{ backgroundImage: `url(./pack-images/${props.pack.title.replaceAll(' ','_')}.jpg)` }}
             key={props.pack.id}
-            onClick={handleBook}
+            onClick={()=>props.handleAction(props.pack.id)}
         >
             <div className="card-body">
                 <h5 className="card-title">{props.pack.title}</h5>

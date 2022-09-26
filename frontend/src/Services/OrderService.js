@@ -1,4 +1,5 @@
 import axios from "axios";
+import Gateway from "../Constants/Gateway";
 
 const OrderService = {
     insertOrder: async (order) => {
@@ -8,7 +9,7 @@ const OrderService = {
             },
         };
         const data = await axios
-            .post("http://localhost:8100/order/add", order, config)
+            .post(Gateway.makePath("order","add"), order, config)
             .then((response) => response.data)
             .catch((error) => console.log(error));
         console.log("Order Insertion: ", data);
@@ -20,7 +21,7 @@ const OrderService = {
             },
         };
         const data = await axios
-            .get("http://localhost:8100/order/getByUser", config)
+            .get(Gateway.makePath("order","getByUser"), config)
             .then((response) => response.data)
             .catch((error) => console.log(error));
         console.log(data)

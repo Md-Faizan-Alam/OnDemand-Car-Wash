@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="Lng"/>
+		<item key="selection" value="DEFAULT_PATH_SEPARATOR"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="true"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="DEFAULT_PATH_SEPARATOR"/>
 			<item value="Longitude"/>
 			<item value="Latitude"/>
 			<item value="longitude"/>
@@ -22,7 +23,6 @@
 			<item value="addOnDescription"/>
 			<item value="AddOnTitle"/>
 			<item value="addOnTitle"/>
-			<item value="AddOnId"/>
 		</list>
 		<list key="replacehistory">
 			<item value="Lng"/>

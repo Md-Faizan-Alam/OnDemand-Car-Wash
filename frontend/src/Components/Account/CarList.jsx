@@ -8,10 +8,7 @@ import CarBlock from "./CarBlock";
 
 const CarList = (props) => {
     const [carList, setCarList] = useState([]);
-
-    /* A reference state that is toggeled whenever a car is deleted
-    so that the CarList component can reload and show the updated list */
-    const [refState, setRefState] = useState(true);
+    const refresh = useSelector(state=>state.refresh);
 
     const dispatch = useDispatch();
 
@@ -28,7 +25,7 @@ const CarList = (props) => {
 
     useEffect(() => {
         getCarList();
-    }, [refState]);
+    }, [refresh]);
 
     return (
         <div className="container mt-5 d-flex justify-content-start flex-wrap">
@@ -39,7 +36,6 @@ const CarList = (props) => {
                         car={element}
                         select={false}
                         delete={true}
-                        setRefState={setRefState}
                     />
                 );
             })}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import setUser from "../../Actions/UserAction";
+import Gateway from "../../Constants/Gateway";
 import UserService from "../../Services/UserService";
 import Footer from "../Miscellaneous/Footer";
 import Navbar from "../Miscellaneous/Navbar";
@@ -35,6 +36,7 @@ const UserPage = (props) => {
 
     useEffect(() => {
         loadUser();
+        console.log(Gateway.makePath("user","authenticate"))
     }, [profileStage]);
 
     return (

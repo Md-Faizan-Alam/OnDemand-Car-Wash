@@ -45,7 +45,7 @@ const FilterPanel = (props) => {
         <>
             <div
                 className="container bg-light border position-sticky w-75 m-auto border-2 border-success rounded-3 shadow-lg shadow-success mt-2 mb-5"
-                style={{ height: "80vh", top: "10vh" }}
+                style={{ height: "80vh", top: "10vh", maxWidth: "15vw"}}
             >
                 <div className="container bg mt-1" style={{ height: "40vh" }}>
                     <div className="row ps-3 fw-bold py-2">Sort By:</div>

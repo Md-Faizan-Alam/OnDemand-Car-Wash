@@ -46,9 +46,9 @@ const Packs = (props) => {
     return (
         <>
             <FormIndicator indicator={indicator} />
-            <div className="container-fluid pt-1">
+            <div className="container-fluid pt-1 pe-5 ps-0">
                 <div className="row" style={{ minHeight: "100vh" }}>
-                    <div className="col-3 pt-5">
+                    <div className="col-4 pt-5">
                         <FilterPanel
                             field={field}
                             minPrice={minPrice}
@@ -66,6 +66,7 @@ const Packs = (props) => {
                                     pack={element}
                                     action={"Book"}
                                     handleAction={handleBook}
+                                    delete={props.delete}
                                 />
                             );
                         })}
