@@ -26,10 +26,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
-				.antMatchers("/user/authenticate", "/user/add", "/user/pass", "/user/demoFilter", "/user/car/pass",
+				.antMatchers("/user/car/getCount","/user/getNoOfCustomers", "/user/getNoOfWashers","/user/authenticate", "/user/add", "/user/pass", "/user/demoFilter", "/user/car/pass",
 						"/user/getUser", "/user/stringList")
-				.permitAll().antMatchers("/user/update", "user/delete").hasAnyRole("ADMIN", "CUSTOMER", "WASHER")
-				.antMatchers("/user/washer/exists", "/user/car/exists", "/user/car/add", "/user/car/update",
+				.permitAll().antMatchers("/user/washer/exists", "/user/update", "user/delete","/user/car/exists").hasAnyRole("ADMIN", "CUSTOMER", "WASHER")
+				.antMatchers("/user/car/add", "/user/car/update",
 						"/user/car/delete","/user/car/carIdsByUser")
 				.hasAnyRole("ADMIN", "CUSTOMER")
 				.antMatchers("/user/list", "/user/filter", "/user/find", "/user/car/list").hasAnyRole("ADMIN").and()

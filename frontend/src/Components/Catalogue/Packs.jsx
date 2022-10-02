@@ -8,8 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { setWashPackId } from "../../Actions/CurrentOrderAction";
 import FormIndicator from "../Form/FormIndicator";
 import AddPackButton from "./AddPackButton";
+import { setPackStage } from "../../Actions/PackStageAction";
+import { setCurrentPack } from "../../Actions/CurrentPackAction";
 
 const Packs = (props) => {
+    const user = useSelector(state=>state.user)
+    const refresh = useSelector(state=>state.refresh);
     const [list, setList] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,7 +29,6 @@ const Packs = (props) => {
             maxPrice: maxPrice,
             sortBy: field,
         };
-        console.log(filter);
         const data = await WashPackService.getFilteredWashPacks(filter);
         setList(data.list);
     };
@@ -34,14 +37,19 @@ const Packs = (props) => {
        setIndicator("spinner");
         getTheList();
        setIndicator("blank");
-    }, [field, minPrice, maxPrice]);
+    }, [field, minPrice, maxPrice,refresh]);
 
     const handleBook = (id) => {
         console.log("entered handleBook");
         dispatch(setWashPackId(id));
         dispatch(setOrderStage("book"));
-        navigate("/user/orders");
+        navigate("/user/myOrders");
     };
+
+    const handleEdit = (id)=>{
+        dispatch(setCurrentPack(list.filter((pack)=>pack["id"] === id)[0]))
+        dispatch(setPackStage("edit"));
+    }
 
     return (
         <>
@@ -64,8 +72,8 @@ const Packs = (props) => {
                                 <PackItem
                                     key={element.id}
                                     pack={element}
-                                    action={"Book"}
-                                    handleAction={handleBook}
+                                    action={user.role==="ADMIN" ? "Edit" : "Book"}
+                                    handleAction={user.role==="ADMIN" ? handleEdit : handleBook}
                                     delete={props.delete}
                                 />
                             );

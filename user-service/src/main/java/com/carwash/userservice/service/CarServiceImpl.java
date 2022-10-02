@@ -130,4 +130,9 @@ public class CarServiceImpl implements CarService {
 		return new Car(null,"No Car Found",null,null,"#000000",null);
 	}
 
+	public long getNoOfCars() {
+		long noOfCars = carRepository.count();
+		return noOfCars;
+	}
+
 }

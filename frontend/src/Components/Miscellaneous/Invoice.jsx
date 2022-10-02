@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const Invoice = (props) => {
-    const order = JSON.parse(localStorage.getItem('order'))
+    const order = JSON.parse(localStorage.getItem("order"));
     let serial = 0;
 
     useEffect(() => {
+        window.addEventListener('afterprint',()=>{
+            window.close();
+            localStorage.removeItem("order");
+        })
         window.print();
-        window.close();
-        localStorage.removeItem('order')
     }, []);
 
     return (
@@ -28,16 +30,18 @@ const Invoice = (props) => {
 
                 <div className="row fs-4 pe-5 mt-3">
                     <div className="col text-end">
-                        Date: <div className="d-inline" id="date">{order.date}</div>
+                        Date:{" "}
+                        <div className="d-inline" id="date">
+                            {order.date}
+                        </div>
                     </div>
                 </div>
 
                 <div className="row fs-3 pe-5 mt-3">
                     <div className="col-1">Name:</div>
-                    <div
-                        className="col"
-                        id="name"
-                    >{order.customerName}</div>
+                    <div className="col" id="name">
+                        {order.customerName}
+                    </div>
                 </div>
                 <div className="row fs-3 pe-5">
                     <div className="col-1">Email:</div>

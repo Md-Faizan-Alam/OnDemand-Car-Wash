@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import setUser from "../../Actions/UserAction";
-import Gateway from "../../Constants/Gateway";
 import UserService from "../../Services/UserService";
-import Footer from "../Miscellaneous/Footer";
 import Navbar from "../Miscellaneous/Navbar";
+import Footer from "../Static/Footer";
 import UserHeader from "./UserHeader";
 
 const UserPage = (props) => {
@@ -30,13 +29,13 @@ const UserPage = (props) => {
             dispatch(setUser(data));
         } else {
             localStorage.setItem("JWT", "");
+            console.log("Go to the form");
             navigate("/form");
         }
     };
 
     useEffect(() => {
         loadUser();
-        console.log(Gateway.makePath("user","authenticate"))
     }, [profileStage]);
 
     return (

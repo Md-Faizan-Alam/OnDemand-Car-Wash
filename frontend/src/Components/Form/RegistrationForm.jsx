@@ -4,90 +4,90 @@ import UserService from "../../Services/UserService";
 import FormIndicator from "./FormIndicator";
 
 const RegistrationForm = (props) => {
-
-    const [role,setRole] = useState("CUSTOMER");
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
-    const [email, setEmail] = useState("")
-    const [phoneNumber, setPhoneNumber] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
-    const [gender, setGender] = useState("")
-    const [dateOfBirth, setDateOfBirth] = useState("2020-09-20")
+    const [role, setRole] = useState("CUSTOMER");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [gender, setGender] = useState("");
+    const [dateOfBirth, setDateOfBirth] = useState("2020-09-20");
 
     const [indicator, setIndicator] = useState("blank");
     const [message, setMessage] = useState("");
 
     const navigate = useNavigate();
 
-    const inputIsInvalid = () =>{
+    const inputIsInvalid = () => {
         let newMessage = "";
-        if(firstName === ""){
-            newMessage = "First name is mandatory"
-        }else if(lastName === ""){
-            newMessage = "Last name is mandatory"
-        }else if(email === ""){
-            newMessage = "Email is mandatory"
-        }else if(phoneNumber === ""){
-            newMessage = "Phone Number is mandatory"
-        }else if(password === ""){
-            newMessage = "Password is mandatory"
-        }else if(password !== confirmPassword){
-            newMessage = "Passwords do not match"
-        }else{
+        if (firstName === "") {
+            newMessage = "First name is mandatory";
+        } else if (lastName === "") {
+            newMessage = "Last name is mandatory";
+        } else if (email === "") {
+            newMessage = "Email is mandatory";
+        } else if (phoneNumber === "") {
+            newMessage = "Phone Number is mandatory";
+        } else if (phoneNumber.length !== 10) {
+            newMessage = "Phone Number must have 10 digits";
+        } else if (password === "") {
+            newMessage = "Password is mandatory";
+        } else if (password !== confirmPassword) {
+            newMessage = "Passwords do not match";
+        } else {
             return false;
         }
         setMessage(newMessage);
         return true;
-    }
+    };
 
-    const switchRole = ()=>{
-        if(role ==="CUSTOMER"){
-            setRole("WASHER")
-        }else{
-            setRole("CUSTOMER")
+    const switchRole = () => {
+        if (role === "CUSTOMER") {
+            setRole("WASHER");
+        } else {
+            setRole("CUSTOMER");
         }
-    }
+    };
 
-    const handleSubmit = async () =>{
+    const handleSubmit = async () => {
         setIndicator("spinner");
-        if(inputIsInvalid()){
+        if (inputIsInvalid()) {
             setIndicator("message");
             return;
         }
         // setIndicator("blank")
         const newUser = {
-            "firstName": firstName,
-            "lastName": lastName,
-            "email": email,
-            "phoneNumber": phoneNumber,
-            "gender": gender,
-            "password": password,
-            "role": role,
-            "carIds": []
-        }
+            firstName,
+            lastName,
+            email,
+            phoneNumber,
+            gender,
+            password,
+            role,
+            carIds: [],
+        };
         await UserService.registerUser(newUser);
         let isValid = await UserService.validateCredentials(email, password)
-        .then((response)=>response).catch((error)=>console.log(error));
+            .then((response) => response)
+            .catch((error) => console.log(error));
 
-        if(isValid){
-            navigate("/user/profile")
+        if (isValid) {
+            navigate("/user/profile");
         }
 
-        setIndicator("blank")
-
-    }
-
+        setIndicator("blank");
+    };
 
     return (
         <div className="conatainer">
-            <FormIndicator indicator={indicator} message={message}/>
+            <FormIndicator indicator={indicator} message={message} />
             <div className="row mb-3 mt-3">
                 <div className="col">
                     <input
                         type="text"
                         value={firstName}
-                        onChange={(event)=>setFirstName(event.target.value)}
+                        onChange={(event) => setFirstName(event.target.value)}
                         className="login-input d-block m-auto"
                         placeholder="First Name"
                         required={true}
@@ -97,7 +97,7 @@ const RegistrationForm = (props) => {
                     <input
                         type="text"
                         value={lastName}
-                        onChange={(event)=>setLastName(event.target.value)}
+                        onChange={(event) => setLastName(event.target.value)}
                         className="login-input d-block m-auto"
                         placeholder="Last Name"
                         required={true}
@@ -110,7 +110,7 @@ const RegistrationForm = (props) => {
                     <input
                         type="email"
                         value={email}
-                        onChange={(event)=>setEmail(event.target.value)}
+                        onChange={(event) => setEmail(event.target.value)}
                         className="login-input d-block m-auto"
                         placeholder="Email"
                         required={true}
@@ -121,7 +121,7 @@ const RegistrationForm = (props) => {
                         className="form-select login-input"
                         aria-label="Default select example"
                         value={gender}
-                        onChange={(event)=>setGender(event.target.value)}
+                        onChange={(event) => setGender(event.target.value)}
                     >
                         <option value={null}>Gender</option>
                         <option value="MALE">Male</option>
@@ -136,15 +136,23 @@ const RegistrationForm = (props) => {
                     <input
                         type="number"
                         value={phoneNumber}
-                        onChange={(event)=>setPhoneNumber(event.target.value)}
+                        onChange={(event) => setPhoneNumber(event.target.value)}
                         className="login-input d-block m-auto"
                         placeholder="Phone Number"
                         required={true}
                     />
                 </div>
                 <div className="col">
-                    <label htmlFor="dob" className="d-inline">Date of Birth : </label>
-                    <input type="date" value={dateOfBirth} onChange={(event)=>setDateOfBirth(event.target.value)} id="dob" className="login-input"/>
+                    <label htmlFor="dob" className="d-inline">
+                        Date of Birth :{" "}
+                    </label>
+                    <input
+                        type="date"
+                        value={dateOfBirth}
+                        onChange={(event) => setDateOfBirth(event.target.value)}
+                        id="dob"
+                        className="login-input"
+                    />
                 </div>
             </div>
 
@@ -153,7 +161,7 @@ const RegistrationForm = (props) => {
                     <input
                         type="password"
                         value={password}
-                        onChange={(event)=>setPassword(event.target.value)}
+                        onChange={(event) => setPassword(event.target.value)}
                         className="login-input d-block m-auto"
                         placeholder="Password"
                         required={true}
@@ -163,7 +171,9 @@ const RegistrationForm = (props) => {
                     <input
                         type="password"
                         value={confirmPassword}
-                        onChange={(event)=>setConfirmPassword(event.target.value)}
+                        onChange={(event) =>
+                            setConfirmPassword(event.target.value)
+                        }
                         className="login-input d-block m-auto"
                         placeholder="Confirm Password"
                         required={true}
@@ -193,7 +203,9 @@ const RegistrationForm = (props) => {
             <div className="row">
                 <div className="col text-center">
                     <a className="hyper-link" onClick={switchRole}>
-                        {`Register as a ${role==="CUSTOMER" ? "washer" : "customer"} instead`}
+                        {`Register as a ${
+                            role === "CUSTOMER" ? "washer" : "customer"
+                        } instead`}
                     </a>
                 </div>
             </div>

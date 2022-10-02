@@ -2,11 +2,13 @@ package com.carwash.adminservice.model;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("REPORTS")
 public class Report {
-	
+
+	@Id
 	private String reportId;
 	private LocalDateTime computedOn;
 	private long increaseInCustomers;
@@ -17,13 +19,22 @@ public class Report {
 	private String leastPopularWashPack;
 	private String mostPopularAddOn;
 	private String leastPopularAddOn;
-	private long revenue;
-	
-	public Report() {}
+	private double revenue;
+
+	@Override
+	public String toString() {
+		String object = "{ " + increaseInCars + ", " + increaseInCustomers + ", " + increaseInWashers + ", "
+				+ ordersPlaced + ", " + revenue + ", " + mostPopularWashPack + ", " + leastPopularWashPack + ", "
+				+ mostPopularAddOn + ", " + leastPopularAddOn + "  }";
+		return object;
+	}
+
+	public Report() {
+	}
 
 	public Report(String reportId, LocalDateTime computedOn, long increaseInCustomers, long increaseInCars,
 			long increaseInWashers, long ordersPlaced, String mostPopularWashPack, String leastPopularWashPack,
-			String mostPopularAddOn, String leastPopularAddOn, long revenue) {
+			String mostPopularAddOn, String leastPopularAddOn, double revenue) {
 		super();
 		this.reportId = reportId;
 		this.computedOn = computedOn;
@@ -118,11 +129,11 @@ public class Report {
 		this.leastPopularAddOn = leastPopularAddOn;
 	}
 
-	public long getRevenue() {
+	public double getRevenue() {
 		return revenue;
 	}
 
-	public void setRevenue(long revenue) {
+	public void setRevenue(double revenue) {
 		this.revenue = revenue;
 	}
 

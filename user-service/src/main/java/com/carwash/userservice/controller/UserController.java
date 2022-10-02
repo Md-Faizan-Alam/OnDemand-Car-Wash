@@ -30,7 +30,6 @@ import com.carwash.userservice.wrapper.CarList;
 import com.carwash.userservice.wrapper.StringList;
 import com.carwash.userservice.wrapper.UserList;
 
-//@CrossOrigin(originPatterns = "*")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -73,7 +72,7 @@ public class UserController {
 		if (saved.equals("User saved successfully")) {
 			return new ResponseEntity<String>(saved, HttpStatus.CREATED);
 		}
-		return new ResponseEntity<String>(saved, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>(saved, HttpStatus.OK);
 	}
 
 	// Method that returns the list of all users from the database
@@ -89,7 +88,7 @@ public class UserController {
 		if (updated == "User updated successfully") {
 			return new ResponseEntity<String>(updated, HttpStatus.OK);
 		}
-		return new ResponseEntity<String>(updated, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>(updated, HttpStatus.OK);
 	}
 
 	// Method to delete a user from the database
@@ -113,6 +112,17 @@ public class UserController {
 	@GetMapping("/find")
 	public UserList getUsersByExample(@RequestBody User user) {
 		return userService.getUsersByExample(user);
+	}
+	
+	@GetMapping("/getNoOfCustomers")
+	public ResponseEntity<Long> getNoOfCustomers(){
+		Long count = userService.getNumberOfCustomers();
+		return new ResponseEntity<Long>(count,HttpStatus.OK);
+	}
+	@GetMapping("/getNoOfWashers")
+	public ResponseEntity<Long> getNoOfWashers(){
+		Long count = userService.getNumberOfWashers();
+		return new ResponseEntity<Long>(count,HttpStatus.OK);
 	}
 
 	/*
@@ -158,6 +168,12 @@ public class UserController {
 		return carService.getAllCars();
 	}
 	
+	@GetMapping("/car/getCount")
+	public ResponseEntity<Long> getNoOfCars(){
+		Long count = carService.getNoOfCars();
+		return new ResponseEntity<Long>(count,HttpStatus.OK);
+	}
+	
 	@PostMapping("/car/getById")
 	public ResponseEntity<Car> getCarById(@RequestBody String carId){
 		return new ResponseEntity<Car>(carService.getCarById(carId),HttpStatus.OK);
@@ -183,7 +199,7 @@ public class UserController {
 		if (updated == "Car updated successfully") {
 			return new ResponseEntity<String>(updated, HttpStatus.OK);
 		}
-		return new ResponseEntity<String>(updated, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>(updated, HttpStatus.OK);
 	}
 
 	// Method to delete a user from the database
@@ -255,6 +271,18 @@ public class UserController {
 			e.printStackTrace();
 		}
 		return new ResponseEntity<User>(user,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getId")
+	public ResponseEntity<String> getId(HttpServletRequest request){
+		String username = jwtUtil.getUsernameFromRequest(request);
+		User user = new User();
+		try {
+			user = userService.getUserByUsername(username);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<String>(user.getUserId(),HttpStatus.OK);
 	}
 
 }

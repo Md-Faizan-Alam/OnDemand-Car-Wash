@@ -1,48 +1,31 @@
-import CarouselItem from "./CarouselItem";
-import FeaturedCard from "./FeaturedCard";
+import Toolbox from "../../Services/Toolbox";
 
 const Carousel = (props) => {
-    
-    const getCarouselItem = () =>{
-        let items = [];
-        for(let i=0 ; i < props.list.length ; i+=3){
-            items.push(<CarouselItem key={i} active={i===0 ? "active" : ""} list={props.list.slice(i,i+3)} handleAction={props.handleAction} />);
-        }
-        return items;
-    }
 
+    const SlideButton = (localProps) => {
+        return (
+            <button
+                className={`carousel-control-${localProps.direction}`}
+                type="button"
+                data-bs-target={`#${props.id}`}
+                data-bs-slide={localProps.direction}
+            >
+                <span
+                    className={`carousel-control-${localProps.direction}-icon`}
+                    aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">{localProps.direction}</span>
+            </button>
+        );
+    };
 
     return (
         <div id={props.id} className="carousel slide" data-bs-ride="carousel">
             <div className="carousel-inner">
-                
-                {getCarouselItem()}
-
+                {Toolbox.getCarouselItem(props.list, props.handleAction)}
             </div>
-            <button
-                className="carousel-control-prev"
-                type="button"
-                data-bs-target={`#${props.id}`}
-                data-bs-slide="prev"
-            >
-                <span
-                    className="carousel-control-prev-icon"
-                    aria-hidden="true"
-                ></span>
-                <span className="visually-hidden">Previous</span>
-            </button>
-            <button
-                className="carousel-control-next"
-                type="button"
-                data-bs-target={`#${props.id}`}
-                data-bs-slide="next"
-            >
-                <span
-                    className="carousel-control-next-icon"
-                    aria-hidden="true"
-                ></span>
-                <span className="visually-hidden">Next</span>
-            </button>
+            <SlideButton direction={"prev"} />
+            <SlideButton direction={"next"} />
         </div>
     );
 };

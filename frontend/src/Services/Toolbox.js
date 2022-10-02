@@ -1,3 +1,5 @@
+import CarouselItem from "../Components/Home/CarouselItem";
+
 const Placeholder = () =>{
     return(
          <span className="placeholder px-5"></span>
@@ -28,6 +30,25 @@ const Toolbox = {
             return <Placeholder />
         }
         return str
-    }
+    },
+    timeToDate: (str) => {
+        let time = new Date(str);
+        return time.toLocaleDateString("fr-CH");
+    },
+
+    getCarouselItem: (packList,handleAction) => {
+        let items = [];
+        for (let i = 0; i < packList.length; i += 3) {
+            items.push(
+                <CarouselItem
+                    key={i}
+                    active={i === 0 ? "active" : ""}
+                    list={packList.slice(i, i + 3)}
+                    handleAction={handleAction}
+                />
+            );
+        }
+        return items;
+    },
 }
 export default Toolbox;

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import WashPackService from "../../Services/WashPackService";
-import Advertisement from "./Advertisement";
+import Advertisement from "../Static/Advertisement";
 import Carousel from "./Carousel";
 import HomeCard from "./HomeCard";
-import Footer from "../Miscellaneous/Footer";
+import Footer from "../Static/Footer";
 import Navbar from "../Miscellaneous/Navbar";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { insertAddOnId, setWashPackId } from "../../Actions/CurrentOrderAction";
 import setOrderStage from "../../Actions/OrderStageAction";
@@ -21,13 +21,13 @@ const HomePage = (props) => {
         console.log("entered handleBook");
         dispatch(setWashPackId(id));
         dispatch(setOrderStage("book"));
-        navigate("/user/orders");
+        navigate("/user/myOrders");
     };
 
     const selectAddOn = (id)=>{
         dispatch(insertAddOnId(id));
         dispatch(setOrderStage("book"));
-        navigate("/user/orders");
+        navigate("/user/myOrders");
     }
 
     const getPacks = async () => {

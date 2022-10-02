@@ -20,4 +20,7 @@ public interface CarService {
 	
 	public Car getCarById(String id);
 	
+	public long getNoOfCars();
+	
+	
 }

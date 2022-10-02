@@ -29,7 +29,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
-				.antMatchers("/order/pass",
+				.antMatchers("/order/revenue","/order/getCount","/order/pass",
 						"/order/demoFilter").permitAll()
 				.antMatchers("/order/list",
 						"order/update",
@@ -37,7 +37,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 				.antMatchers("/order/add",
 						"/order/delete",
 						"/order/filter",
-						"/order/getByUser").hasAnyRole("ADMIN", "CUSTOMER")
+						"/order/getByUser",
+						"/order/getPayOrder").hasAnyRole("ADMIN", "CUSTOMER")
 				.and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

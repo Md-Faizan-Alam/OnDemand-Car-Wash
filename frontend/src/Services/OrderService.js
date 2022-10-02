@@ -9,10 +9,36 @@ const OrderService = {
             },
         };
         const data = await axios
-            .post(Gateway.makePath("order","add"), order, config)
+            .post(Gateway.makePath("order", "add"), order, config)
             .then((response) => response.data)
             .catch((error) => console.log(error));
         console.log("Order Insertion: ", data);
+    },
+    getAllOrders: async () => {
+        const config = {
+            headers: {
+                Authorization: localStorage.getItem("JWT"),
+            },
+        };
+        const data = await axios
+            .get(Gateway.makePath("order", "list"), config)
+            .then((response) => response.data)
+            .catch((error) => console.log(error));
+        console.log(data);
+        return data;
+    },
+    getAllUnacceptedOrders: async () => {
+        const config = {
+            headers: {
+                Authorization: localStorage.getItem("JWT"),
+            },
+        };
+        const data = await axios
+            .get(Gateway.makePath("order", "getUnaccepted"), config)
+            .then((response) => response.data)
+            .catch((error) => console.log(error));
+        console.log(data);
+        return data;
     },
     getOrdersByCustomer: async () => {
         const config = {
@@ -21,7 +47,37 @@ const OrderService = {
             },
         };
         const data = await axios
-            .get(Gateway.makePath("order","getByUser"), config)
+            .get(Gateway.makePath("order", "getByUser"), config)
+            .then((response) => response.data)
+            .catch((error) => console.log(error));
+        console.log(data);
+        return data;
+    },
+    updateOrder: async (updatedOrder) => {
+        const config = {
+            headers: {
+                Authorization: localStorage.getItem("JWT"),
+            },
+        };
+        const data = await axios
+            .put(Gateway.makePath("order", "update"), updatedOrder, config)
+            .then((response) => response.data)
+            .catch((error) => console.log(error));
+        console.log(data);
+    },
+    getRazorPayOrder: async (amount) => {
+        const config = {
+            headers: {
+                Authorization: localStorage.getItem("JWT"),
+                Accept: "application/json",
+            },
+        };
+        const request = {
+            amount: parseInt(amount),
+            currency: 'INR'
+        }
+        const data = await axios
+            .post(Gateway.makePath("order","getPayOrder"), request, config)
             .then((response) => response.data)
             .catch((error) => console.log(error));
         console.log(data)

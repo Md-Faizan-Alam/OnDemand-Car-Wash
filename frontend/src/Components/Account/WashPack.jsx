@@ -7,7 +7,8 @@ const WashPack = (props) => {
 
     const body = {
         "view": <Packs addButton={true} delete={true} />,
-        "add": <AddPack /> 
+        "add": <AddPack /> ,
+        "edit": <AddPack />
     }
 
     return(

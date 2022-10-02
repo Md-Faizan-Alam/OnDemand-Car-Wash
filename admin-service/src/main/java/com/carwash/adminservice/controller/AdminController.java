@@ -26,8 +26,7 @@ public class AdminController {
 	@GetMapping("/pass")
 	public Report pass(Report report) {
 		return report;
-	}
-	
+	}	
 	
 	@PostMapping("/add")
 	public ResponseEntity<String> insertReport(@RequestBody Report report){
@@ -36,6 +35,11 @@ public class AdminController {
 			return new ResponseEntity<String>(saved,HttpStatus.CREATED);
 		}
 		return new ResponseEntity<String>(saved,HttpStatus.BAD_REQUEST);
+	}
+	
+	@GetMapping("/generate")
+	public void generateReport() {
+		reportService.generateReport();
 	}
 	
 	@GetMapping("/list")
@@ -70,21 +74,6 @@ public class AdminController {
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

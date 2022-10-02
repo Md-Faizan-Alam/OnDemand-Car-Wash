@@ -37,7 +37,7 @@ const CarService = {
         return data;
     },
     getCarById: async (id) => {
-        if (id === null || id === undefined) return Fallback.emptyCar;
+        if (id === null || id === undefined) return Fallback.fallbackCar;
 
         const config = {
             headers: {
@@ -50,7 +50,7 @@ const CarService = {
             .then((response) => response.data)
             .catch((error) => {
                 console.log(error);
-                return Fallback.emptyCar;
+                return Fallback.fallbackCar;
             });
         return data;
     },
@@ -63,7 +63,6 @@ const CarService = {
                 stringList: [id]
             }
         };
-        console.log(config);
         const message = await axios
             .delete(Gateway.makePath("user","car","delete"), config)
             .then((response) => response.data)

@@ -46,7 +46,7 @@ public class Order {
 	
 	
 	// List of acceptable values that the status field can have
-	private static List<String> validStatus =  Arrays.asList( "PENDING" , "IN_PROCESS" , "COMPLETED" , "CANCELLED" , "TERMINATED" );
+	private static List<String> validStatus =  Arrays.asList( "PENDING" , "ACCEPTED", "IN_PROCESS" , "COMPLETED" , "CANCELLED" , "TERMINATED" );
 
 	// Custom Constructor
 	public Order(String carId, String carName, String washPackId, String washPackTitle, StringList addOnIdList, double amount, Location location , LocalDateTime completionTime) {

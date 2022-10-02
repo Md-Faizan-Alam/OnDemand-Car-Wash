@@ -25,6 +25,7 @@ import com.carwash.userservice.wrapper.UserList;
 @Service
 public class UserServiceImpl implements UserService {
 
+
 	@Autowired
 	UserRepository userRepository;
 
@@ -103,11 +104,13 @@ public class UserServiceImpl implements UserService {
 		if (!doesExist(user.getUserId())) {
 			return "User with this Id does not Exist";
 		}
-		String password = getPasswordById(user.getUserId());
+		String oldPassword = getPasswordById(user.getUserId());
 		try {
 			validateUser(user);
-			if(!password.equals(user.getPassword())) {
-				user.setPassword(passwordEncoder.encode(user.getPassword()));
+			if( user.getPassword().isBlank() ) {
+				user.setPassword(oldPassword);
+			}else {
+				user.setPassword(passwordEncoder.encode(user.getPassword()));				
 			}
 			userRepository.save(user);
 			return "User updated successfully";
@@ -166,6 +169,18 @@ public class UserServiceImpl implements UserService {
 	public MyUserDetails getUserDetailsByUsername(String username) throws Exception{
 		User user = getUserByUsername(username);
 		return new MyUserDetails(user.getEmail(),user.getPassword(),user.getRole());
+	}
+	
+	public long getNumberOfCustomers() {
+		Query query = new Query(Criteria.where("role").is("CUSTOMER"));
+		long noOfCustomers = mongoTemplate.count(query, User.class);
+		return noOfCustomers;
+	}
+	
+	public long getNumberOfWashers() {
+		Query query = new Query(Criteria.where("role").is("WASHER"));
+		long noOfWashers = mongoTemplate.count(query, User.class);
+		return noOfWashers;
 	}
 
 }

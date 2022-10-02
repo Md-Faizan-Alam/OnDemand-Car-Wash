@@ -1,22 +1,32 @@
 package com.carwash.adminservice.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.carwash.adminservice.model.Report;
+import com.carwash.adminservice.model.UrlCollection;
 import com.carwash.adminservice.repository.ReportRepository;
 import com.carwash.adminservice.wrapper.ReportList;
 import com.carwash.adminservice.wrapper.StringList;
 
 @Service
 public class ReportServiceImpl implements ReportService {
-	
+
+//	private static Logger logger = LoggerFactory.getLogger(ReportServiceImpl.class);
+
+	@Autowired
+	UrlCollection urlCollection;
+
 	@Autowired
 	ReportRepository reportRepository;
 
@@ -80,6 +90,49 @@ public class ReportServiceImpl implements ReportService {
 		Example<Report> example = Example.of(report, matcher);
 		List<Report> reportList = reportRepository.findAll(example);
 		return new ReportList(reportList);
+	}
+
+	public Long getLongEntity(String url, HttpHeaders headers) {
+		return restTemplate.exchange(url, HttpMethod.GET,
+				new HttpEntity<>(headers), Long.class).getBody();
+	}
+
+	public Report setReportLongs(Report report) {
+		HttpHeaders headers = new HttpHeaders();
+		Long noOfCustomers = getLongEntity(urlCollection.getUser() + "/getNoOfCustomers", headers);
+		Long noOfWashers = getLongEntity(urlCollection.getUser() + "/getNoOfWashers", headers);
+		Long noOfCars = getLongEntity(urlCollection.getCar() + "/getCount", headers);
+		Long ordersPlaced = getLongEntity(urlCollection.getOrder() + "/count", headers);
+		report.setIncreaseInCustomers(noOfCustomers);
+		report.setIncreaseInWashers(noOfWashers);
+		report.setIncreaseInCars(noOfCars);
+		report.setOrdersPlaced(ordersPlaced);
+		return report;
+	}
+	
+	public Report setPopulars(Report report) {
+		StringList popularsList = restTemplate.exchange(urlCollection.getOrder() + "/popular", HttpMethod.GET,
+				new HttpEntity<>(new HttpHeaders()), StringList.class).getBody();
+		
+		report.setMostPopularWashPack(popularsList.getStringList().get(0));
+		report.setLeastPopularWashPack(popularsList.getStringList().get(1));
+		report.setMostPopularAddOn(popularsList.getStringList().get(2));
+		report.setLeastPopularAddOn(popularsList.getStringList().get(3));
+		
+		return report;
+	}
+
+	public void generateReport() {
+		HttpHeaders headers = new HttpHeaders();
+		Report report = new Report();
+		report.setComputedOn(LocalDateTime.now());
+		report = setReportLongs(report);
+		report = setPopulars(report);
+		double revenue = restTemplate.exchange(urlCollection.getOrder() + "/revenue", HttpMethod.GET,
+				new HttpEntity<>(headers), Double.class).getBody();
+		report.setRevenue(revenue);
+
+		reportRepository.save(report);
 	}
 
 }

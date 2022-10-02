@@ -1,5 +1,7 @@
 package com.carwash.orderservice.service;
 
+import java.util.List;
+
 import org.springframework.http.HttpHeaders;
 
 import com.carwash.orderservice.model.Filter;
@@ -26,5 +28,15 @@ public interface OrderService {
 	public MyUserDetails getUserByUsername(String username);
 	
 	public OrderList getOrdersByUser(HttpHeaders headers);
+	
+	public OrderList getUnaccepted(HttpHeaders headers);
+	
+	public long getCount();
+	
+	public double getRevenue();
+	
+	public List<String> getBoundaryPacks();
 
+	public List<String> getBoundaryAddOns();
+	
 }

@@ -137,6 +137,16 @@ public class WasherController {
 		AddOnList addOnList = addOnService.getAddOnsById(stringList);
 		return new ResponseEntity<AddOnList>(addOnList, HttpStatus.OK);
 	}
+	
+	@PostMapping("/AddOn/getTitlesById")
+	public ResponseEntity<StringList> getAddOnTitlesByIds(@RequestBody StringList stringList) {
+		StringList titleList = new StringList();
+		AddOnList addOnList = addOnService.getAddOnsById(stringList);
+		for(AddOn addOn : addOnList.getList()) {
+			titleList.add(addOn.getTitle());
+		}
+		return new ResponseEntity<StringList>(titleList, HttpStatus.OK);
+	}
 
 	// Method to insert a new add-on to the Database
 	@PostMapping("/AddOn/add")

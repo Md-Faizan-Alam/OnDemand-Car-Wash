@@ -15,6 +15,10 @@
     box-shadow: 0 0.5rem 1rem var(--bs-success);
 }
 
+.font-sans-serif{
+    font-family: sans-serif;
+}
+
 .home-card {
     height: 40vw;
     background-image: url(../public/images/Background.jpg);
@@ -38,6 +42,7 @@
 .btn-outline-success:hover {
     box-shadow: 0px 3px 3px var(--bs-success);
 }
+
 .btn-outline-danger {
     font-size: large;
     padding-inline: 25px;
@@ -84,6 +89,12 @@
     background-color: #d0d0d0;
     padding: 20vh 20vh;
     font-size: 18px;
+}
+
+#not-found{
+    background-image: url(../public/images/NotFound.png);
+    background-size: cover;
+    height: 100vh;
 }
 
 #login-background {
@@ -155,7 +166,7 @@
     margin-left: 10vh;
     padding: 1vh 5vh;
     border-bottom: 2px solid var(--bs-success);
-    width: max-content;
+    width: fit-content;
 }
 
 .tab-component {
@@ -163,12 +174,6 @@
     border: 5px solid var(--bs-success);
     border-radius: 2vh;
     box-shadow: 0px 0px 50px var(--bs-success);
-}
-
-.showPassword {
-    background-color: white;
-    border: none;
-    outline: none;
 }
 
 .add-slot {
@@ -196,7 +201,7 @@ input:disabled {
 }
 
 .filter-tab {
-    border: 2px solid var(--bs-success);
+    border: 2px solid var(--bs-success) !important;
 }
 .filter-tab:focus {
     border-color: var(--bs-success);
@@ -234,15 +239,16 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* .border-bottom{
-    border-color: black !important;
+.dropdown-toggle::after{
+    display: none;
 }
-.border{
-    border-color: black !important;
+
+.drop-block{
+    background-color: rgba(0, 0, 0, 0.4);
 }
-.border-end{
-    border-color: black !important;
+
+#map{
+    aspect-ratio: 1/1;
+    background-image: url(../public/Map.png);
+    background-size: contain;
 }
-.border-start{
-    border-color: black !important;
-} */

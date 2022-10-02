@@ -27,18 +27,39 @@ const Fallback = {
         washerFeedback: null,
         bucketsOfWaterUsed: 0,
     },
-    emptyCar: {
+    fallbackCar: {
         carId: "0000",
-        modelName: "No Car Found",
+        modelName: "No Car Selected",
         carType: "",
         color: "#000000",
         registrationNumber: "",
     },
+    emptyCar: {
+        modelName: "",
+        carType: "SEDAN",
+        color: "#000000",
+        registrationNumber: "",
+    },
     idleModal: {
-        header: 'Title',
-        body: 'No body set for this modal',
-        task: "",
+        header: "Title",
+        body: "No body set for this modal",
+        task: "doNothing",
+        payload: null,
+    },
+    fallbackPack: {
+        title: "No Pack Selected",
+        description: "No description available",
+        price: 0,
+    },
+    emptyPack: {
         id: null,
+        title: "",
+        description: "",
+        price: 0,
+    },
+    emptyLocation: {
+        lat: 0,
+        lng: 0,
     },
 };
 

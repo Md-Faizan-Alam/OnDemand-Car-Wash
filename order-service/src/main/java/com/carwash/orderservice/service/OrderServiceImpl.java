@@ -1,7 +1,14 @@
 package com.carwash.orderservice.service;
 
 import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -71,16 +78,15 @@ public class OrderServiceImpl implements OrderService {
 
 	@CircuitBreaker(name = "validationBreaker", fallbackMethod = "fallbackValidateExistence")
 	public Order setNamesById(Order order, HttpHeaders headers) {
-		String washPackTitle = restTemplate.exchange(urlCollection.getWashPack()+"/getTitle", HttpMethod.POST,
+		String washPackTitle = restTemplate.exchange(urlCollection.getWashPack() + "/getTitle", HttpMethod.POST,
 				new HttpEntity<String>(order.getWashPackId(), headers), String.class).getBody();
 		order.setWashPackTitle(washPackTitle);
-		String carName = restTemplate.exchange(urlCollection.getCar()+"/getTitle", HttpMethod.POST,
+		String carName = restTemplate.exchange(urlCollection.getCar() + "/getTitle", HttpMethod.POST,
 				new HttpEntity<String>(order.getCarId(), headers), String.class).getBody();
 		order.setCarName(carName);
 		return order;
 	}
 
-	
 	public void validateExistenceOfIds(Order order, HttpHeaders headers) throws Exception {
 		validateExistence(urlCollection.getCar(), order.getCarId(), "Car", headers);
 		validateExistence(urlCollection.getWashPack(), order.getWashPackId(), "Wash Pack", headers);
@@ -130,7 +136,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	public OrderList getAllOrders() {
-		List<Order> orderList = orderRepository.findAll();
+		List<Order> orderList = orderRepository.findAll(Sort.by(Direction.DESC, "bookingTime"));
 		return new OrderList(orderList);
 	}
 
@@ -174,9 +180,90 @@ public class OrderServiceImpl implements OrderService {
 
 	public MyUserDetails getUserByUsername(String username) {
 		AuthenticationRequest authRequest = new AuthenticationRequest(username, "secretsarenevertobeshared");
-		MyUserDetails userDetails = restTemplate.exchange("http://api-gateway/user/getUserDetails", HttpMethod.POST,
+		MyUserDetails userDetails = restTemplate.exchange(urlCollection.getUser() + "/getUserDetails", HttpMethod.POST,
 				new HttpEntity<Object>(authRequest), MyUserDetails.class).getBody();
 		return userDetails;
+	}
+
+	public OrderList getUnaccepted(HttpHeaders headers) {
+		String washerId = restTemplate.exchange(urlCollection.getUser() + "/getId", HttpMethod.GET,
+				new HttpEntity<Object>(headers), String.class).getBody();
+		Query query = new Query().addCriteria(Criteria.where("washerId").in(Arrays.asList(washerId, null)))
+				.with(Sort.by(Direction.DESC, "bookingTime"));
+		List<Order> orderList = mongoTemplate.find(query, Order.class);
+		return new OrderList(orderList);
+	}
+
+	public long getCount() {
+		long count = orderRepository.count();
+		return count;
+	}
+
+	public double getRevenue() {
+		Query query = new Query();
+		query.fields().include("amount");
+		List<Order> orderList = mongoTemplate.find(query, Order.class);
+		double sum = 0;
+		for (Order order : orderList) {
+			sum += order.getAmount();
+		}
+		return sum;
+	}
+
+	public List<String> getBoundaryPacks() {
+		List<String> populars = new ArrayList<String>();
+		Query query;
+		List<String> packList = mongoTemplate.findDistinct("washPackTitle", Order.class, String.class);
+		List<Long> countList = new ArrayList<>();
+		long count;
+		for (String pack : packList) {
+			query = new Query(Criteria.where("washPackTitle").is(pack));
+			count = mongoTemplate.count(query, Order.class);
+			countList.add(count);
+		}
+		int index;
+		count = countList.stream().max(Long::compare).get();
+		index = countList.indexOf(count);
+		populars.add(packList.get(index));
+
+		count = countList.stream().min(Long::compare).get();
+		index = countList.indexOf(count);
+		populars.add(packList.get(index));
+
+		return populars;
+	}
+
+	public List<String> getBoundaryAddOns() {
+		Query query = new Query();
+		query.fields().include("addOnIdList");
+		List<Order> orderList = mongoTemplate.find(query, Order.class);
+		
+		List<String> idList = new ArrayList<>();
+		Set<String> idSet = new HashSet<>();
+		for (Order order : orderList) {
+			idList.addAll(order.getAddOnIdList().getStringList());
+			idSet.addAll(order.getAddOnIdList().getStringList());
+		}
+		
+		Map<String, Long> countMap = new HashMap<>();
+		idSet.stream().forEach((id) -> {
+			long count = idList.stream().filter((element) -> element.equals(id)).count();
+			countMap.put(id, count);
+		});
+		
+		long maxCount = countMap.values().stream().max(Long::compare).get();
+		long minCount = countMap.values().stream().min(Long::compare).get();
+		String mostPopular = countMap.keySet().stream().filter((key) -> countMap.get(key) == maxCount)
+				.collect(Collectors.toList()).get(0);
+		String leastPopular = countMap.keySet().stream().filter((key) -> countMap.get(key) == minCount)
+				.collect(Collectors.toList()).get(0);
+		
+		StringList idPair = new StringList(new ArrayList<>(Arrays.asList(mostPopular, leastPopular)));
+		
+		StringList addOnTitles = restTemplate.exchange(urlCollection.getAddOn() + "/getTitlesById", HttpMethod.POST,
+				new HttpEntity<Object>(idPair, new HttpHeaders()), StringList.class).getBody();
+		
+		return addOnTitles.getStringList();
 	}
 
 }

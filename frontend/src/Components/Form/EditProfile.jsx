@@ -1,113 +1,72 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import setProfileStage from "../../Actions/ProfileStageAction";
 import UserService from "../../Services/UserService";
+import ActionRow from "../Minors/ActionRow";
+import TextColumn from "../Minors/TextColumn";
 
 const EditProfile = (props) => {
+    const dispatch = useDispatch();
 
-    const [firstName, setFirstName] = useState(props.user.firstName);
-    const [lastName, setLastName] = useState(props.user.lastName);
-    const [email, setEmail] = useState(props.user.email);
-    const [gender, setGender] = useState(props.user.gender);
-    const [phoneNumber, setPhoneNumber] = useState(props.user.phoneNumber);
-    const [password, setPassword] = useState("");
+    const [user, setUser] = useState({
+        ...props.user,
+        password: "",
+    });
+
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const handleChange = (event) => {
+        setUser((prevUser) => {
+            return {
+                ...prevUser,
+                [event.target.name]: event.target.value,
+            };
+        });
+    };
 
-    const handleFirstName = (event)=>{
-        setFirstName(event.target.value);
-    }
-    const handleLastName = (event)=>{
-        setLastName(event.target.value);
-    }
-    const handleEmail = (event)=>{
-        setEmail(event.target.value);
-    }
-    const handlePhoneNumber = (event)=>{
-        setPhoneNumber(event.target.value);
-    }
-    const handlePassword = (event)=>{
-        setPassword(event.target.value);
-    }
-    const handleConfirmPassword = (event)=>{
-        setConfirmPassword(event.target.value);
-    }
-    const handleGender = (event)=>{
-        console.log("Gender changed to "+event.target.value)
-        setGender(event.target.value);
-    }
-
-    const saveEdit = async ()=>{
-
-        // let newUser = Object.assign({},props.user);
-        // newUser.firstName = firstName ;
-        // newUser.lastName = lastName ;
-        // newUser.email = email ;
-        // newUser.gender = gender ;
-        // newUser.phoneNumber = phoneNumber ;
-
-        const newUser = {
-            ...props.user,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            gender: gender,
-            phoneNumber: phoneNumber
-        }
-
-        await UserService.updateUser(newUser);
-        navigate("/user/profile");
+    const saveEdit = async () => {
+        if (!(user.password === confirmPassword)) return;
+        await UserService.updateUser(user);
         dispatch(setProfileStage("view"));
-    }
+    };
 
-    const cancelEdit = ()=>{
+    const cancelEdit = () => {
         dispatch(setProfileStage("view"));
-    }
+    };
 
     return (
         <>
-        <div className="container p-5 tab-component">
-            <div className="conatainer w-50 m-auto">
+            <div className="conatainer w-50 m-auto py-4">
                 <div className="row mb-3 mt-3">
-                    <div className="col">
-                        <input
-                            onChange={handleFirstName}
-                            type="text"
-                            value={firstName}
-                            className="login-input d-block m-auto"
-                            placeholder="First Name"
-                        />
-                    </div>
-                    <div className="col">
-                        <input
-                            onChange={handleLastName}
-                            type="text"
-                            value={lastName}
-                            className="login-input d-block m-auto"
-                            placeholder="Last Name"
-                        />
-                    </div>
+                    <TextColumn
+                        value={user.firstName}
+                        name={"firstName"}
+                        onChange={handleChange}
+                        placeholder={"First Name"}
+                    />
+                    <TextColumn
+                        value={user.lastName}
+                        name={"lastName"}
+                        onChange={handleChange}
+                        placeholder={"Last Name"}
+                    />
                 </div>
 
                 <div className="row mb-3">
-                    <div className="col-8">
-                        <input
-                            onChange={handleEmail}
-                            type="email"
-                            value={email}
-                            className="login-input d-block m-auto"
-                            placeholder="Email"
-                        />
-                    </div>
+                    <TextColumn
+                        col={"col-8"}
+                        value={user.email}
+                        name={"email"}
+                        onChange={handleChange}
+                        placeholder={"Email"}
+                    />
                     <div className="col">
                         <select
                             className="form-select login-input"
                             aria-label="Default select example"
-                            value={gender}
-                            onChange={handleGender}
+                            value={user.gender}
+                            name={"gender"}
+                            onChange={handleChange}
                         >
                             <option value="MALE">Male</option>
                             <option value="FEMALE">Female</option>
@@ -117,15 +76,14 @@ const EditProfile = (props) => {
                 </div>
 
                 <div className="row mb-3">
-                    <div className="col-6">
-                        <input
-                            onChange={handlePhoneNumber}
-                            type="number"
-                            value={phoneNumber}
-                            className="login-input d-block m-auto"
-                            placeholder="Phone Number"
-                        />
-                    </div>
+                    <TextColumn
+                        col={"col-8"}
+                        type={"number"}
+                        value={user.phoneNumber}
+                        name={"phoneNumber"}
+                        onChange={handleChange}
+                        placeholder={"Phone Number"}
+                    />
                     <div className="col">
                         <label htmlFor="dob" className="d-inline">
                             Date of Birth :
@@ -135,44 +93,29 @@ const EditProfile = (props) => {
                 </div>
 
                 <div className="row mb-4">
-                    <div className="col">
-                        <input
-                            onChange={handlePassword}
-                            type="password"
-                            value={password}
-                            className="login-input d-block m-auto"
-                            placeholder="Password"
-                        />
-                    </div>
-                    <div className="col">
-                        <input
-                            onChange={handleConfirmPassword}
-                            type="password"
-                            value={confirmPassword}
-                            className="login-input d-block m-auto"
-                            placeholder="Confirm Password"
-                        />
-                    </div>
+                    <TextColumn
+                        type={"password"}
+                        value={user.password}
+                        name={"password"}
+                        onChange={handleChange}
+                        placeholder={"Password"}
+                    />
+                    <TextColumn
+                        type={"password"}
+                        value={confirmPassword}
+                        onChange={(event) => {
+                            setConfirmPassword(event.target.value);
+                        }}
+                        placeholder={"Confirm Password"}
+                    />
                 </div>
 
-                <div className="row mb-3">
-                    <div className="col d-flex justify-content-center">
-                        <button
-                            onClick={saveEdit}
-                            className="btn btn-outline-success me-4"
-                        >
-                            Save
-                        </button>
-                        <button
-                            onClick={cancelEdit}
-                            className="btn btn-outline-success"
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </div>
+                <ActionRow
+                    actionName={"Save"}
+                    handleAction={saveEdit}
+                    handleCancel={cancelEdit}
+                />
             </div>
-        </div>
         </>
     );
 };

@@ -16,13 +16,23 @@ const TabsPanel = (props) => {
                     visible={ ["CUSTOMER"].includes(props.role) }
                 />
                 <Tab
-                    to={"/user/orders"}
+                    to={"/user/myOrders"}
                     name={"Orders"}
                     visible={ ["CUSTOMER"].includes(props.role) }
                 />
                 <Tab
                     to={"/user/packs"}
                     name={"Wash Packs"}
+                    visible={ ["ADMIN"].includes(props.role) }
+                />
+                <Tab
+                    to={"/user/allOrders"}
+                    name={"Orders"}
+                    visible={ ["ADMIN","WASHER"].includes(props.role) }
+                />
+                <Tab
+                    to={"/user/report"}
+                    name={"Analysis"}
                     visible={ ["ADMIN"].includes(props.role) }
                 />
             </div>

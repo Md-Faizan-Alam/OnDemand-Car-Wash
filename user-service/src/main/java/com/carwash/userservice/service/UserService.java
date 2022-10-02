@@ -33,5 +33,9 @@ public interface UserService {
 	public MyUserDetails getUserDetailsByUsername(String username) throws Exception;
 	
 	public Optional<User> getUserById(String userId);
+	
+	public long getNumberOfCustomers();
+	
+	public long getNumberOfWashers();
 
 }

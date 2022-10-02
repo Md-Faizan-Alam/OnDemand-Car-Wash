@@ -16,5 +16,7 @@ public interface ReportService {
 	public boolean deleteReports(StringList stringList);
 
 	public ReportList getReportsByExample(Report order);
+	
+	public void generateReport();
 
 }

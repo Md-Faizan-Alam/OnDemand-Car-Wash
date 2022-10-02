@@ -7,4 +7,5 @@ import com.carwash.orderservice.model.Order;
 
 @Repository
 public interface OrderRepository extends MongoRepository<Order, String> {
+	
 }

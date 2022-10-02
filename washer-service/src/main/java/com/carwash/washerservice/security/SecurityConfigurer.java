@@ -28,24 +28,14 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
-				.antMatchers("/washer/WashPack/pass",
-						"/washer/WashPack/demoFilter",
-						"/washer/WashPack/list",
-						"washer/AddOn/pass",
-						"/washer/WashPack/filter",
-						"washer/AddOn/list").permitAll()
-				.antMatchers("/washer/WashPack/exists",
-						"washer/WashPack/getById",
-						"washer/AddOn/getByIds",
-						"washer/AddOn/filter").hasAnyRole("ADMIN", "CUSTOMER")
-				.antMatchers("/washer/WashPack/add",
-						"/washer/WashPack/update",
-						"/washer/WashPack/delete",
-						"washer/AddOn/add",
-						"washer/AddOn/update",
-						"washer/AddOn/delete").hasAnyRole("ADMIN")
-				.and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				.antMatchers("/washer/AddOn/getTitlesById", "/washer/WashPack/exists", "/washer/WashPack/pass",
+						"/washer/WashPack/demoFilter", "/washer/WashPack/list", "washer/AddOn/pass",
+						"/washer/WashPack/filter", "washer/AddOn/list")
+				.permitAll().antMatchers("washer/WashPack/getById", "washer/AddOn/getByIds", "washer/AddOn/filter")
+				.hasAnyRole("ADMIN", "CUSTOMER")
+				.antMatchers("/washer/WashPack/add", "/washer/WashPack/update", "/washer/WashPack/delete",
+						"washer/AddOn/add", "washer/AddOn/update", "washer/AddOn/delete")
+				.hasAnyRole("ADMIN").and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}

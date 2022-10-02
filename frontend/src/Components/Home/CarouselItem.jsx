@@ -1,17 +1,20 @@
+import { useRef } from "react";
 import FeaturedCard from "./FeaturedCard";
 
 const CarouselItem = (props) => {
-
-    let serial = 0;
+    const serial = useRef(0);
 
     return (
         <div className={`carousel-item ${props.active}`}>
             <div className="container-fluid py-5 d-flex justify-content-evenly">
-                {props.list.map((element)=>{
-                    serial++;
+                {props.list.map((element) => {
+                    serial.current++;
                     return (
-                        <div key={serial}>
-                            <FeaturedCard pack={element} handleAction={props.handleAction} />
+                        <div key={serial.current}>
+                            <FeaturedCard
+                                pack={element}
+                                handleAction={props.handleAction}
+                            />
                         </div>
                     );
                 })}

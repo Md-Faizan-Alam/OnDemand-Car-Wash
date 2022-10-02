@@ -8,7 +8,7 @@ import CarBlock from "./CarBlock";
 
 const CarList = (props) => {
     const [carList, setCarList] = useState([]);
-    const refresh = useSelector(state=>state.refresh);
+    const refresh = useSelector((state) => state.refresh);
 
     const dispatch = useDispatch();
 

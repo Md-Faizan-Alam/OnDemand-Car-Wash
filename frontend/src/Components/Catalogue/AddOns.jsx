@@ -34,7 +34,7 @@ const AddOns = (props) => {
     
     const insertThisAddOn = (id) =>{
         dispatch(insertAddOnId(id))
-        navigate("/user/orders")
+        navigate("/user/myOrders")
     }
 
     useEffect(() => {

@@ -1,11 +1,4 @@
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { setWashPackId } from "../../Actions/CurrentOrderAction";
-import setOrderStage from "../../Actions/OrderStageAction";
-
 const FeaturedCard = (props) => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     return (
         <div
@@ -25,9 +18,3 @@ const FeaturedCard = (props) => {
 };
 
 export default FeaturedCard;
-
-FeaturedCard.defaultProps = {
-    image: "WashPack_01",
-    title: "Wash Pack Title",
-    description: "This is where the description of the given Add On will appear"
-}

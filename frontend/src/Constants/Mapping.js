@@ -1,6 +1,7 @@
 const Mapping = {
     statusColor: {
         PENDING: "rgb(240 235 30)",
+        ACCEPTED: "rgb(199, 81, 189)",
         "IN-PROCESS": "#1d7cc9",
         COMPLETED: "rgb(100 231 45)",
         CANCELLED: "rgb(255, 49, 49)",

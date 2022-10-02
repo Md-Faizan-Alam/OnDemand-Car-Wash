@@ -38,7 +38,7 @@ class OrderServiceImplTest {
 	void init() {
 		OrderRepository mockOrderRepository = mock(OrderRepository.class);
 		RestTemplate mockRestTemplate = mock(RestTemplate.class);
-		urlCollection = new UrlCollection("random/url","random/url","random/url","random/url");
+		urlCollection = new UrlCollection("random/url","random/url","random/url","random/url","random/url");
 		orderService = new OrderServiceImpl();
 		orderService.setRepository(mockOrderRepository);
 		orderService.setRestTemplate(mockRestTemplate);
