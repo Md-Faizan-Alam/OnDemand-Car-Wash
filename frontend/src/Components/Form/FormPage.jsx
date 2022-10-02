@@ -1,6 +1,4 @@
 import { Link, Outlet } from "react-router-dom";
-import LoginForm from "./LoginForm";
-import RegistrationForm from "./RegistrationForm";
 
 const FormPage = (props) => {
     return (

@@ -10,19 +10,12 @@ const FormIndicator = (props) => {
     );
 
     const message = (
-        <div
-            className="row mb-2 text-danger fw-semibold"
-            style={{ fontFamily: "sans-serif" }}
-        >
+        <div className="row mb-2 text-danger fw-semibold font-sans-serif">
             <div className="container-fluid text-center">{props.message}</div>
         </div>
     );
 
-    const body = {
-        blank: blank,
-        spinner: spinner,
-        message: message,
-    };
+    const body = { blank, spinner, message };
 
     return <>{body[props.indicator]}</>;
 };

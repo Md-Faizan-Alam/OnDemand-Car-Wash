@@ -1,108 +1,70 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import setSigned from "../../Actions/SignedAction";
+import { useNavigate } from "react-router-dom";
 import UserService from "../../Services/UserService";
+import ActionRow from "../Minors/ActionRow";
+import HyperLink from "../Minors/HyperLink";
+import TextColumn from "../Minors/TextColumn";
 import FormIndicator from "./FormIndicator";
 import ShowPassword from "./ShowPassword";
 
 const LoginForm = (props) => {
-
-    const [visible, setVisible] = useState(false);
-    const [indicator, setIndicator] = useState("blank");
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const [credentials, setCredentials] = useState({
+        username: "",
+        password: "",
+    });
+    const [indicator, setIndicator] = useState("blank");
+    const [visible, setVisible] = useState(false);
 
-    const switchVisibility = () => {
-        setVisible(!visible);
-    };
-
-    const handleUsername = (event) => {
-        setUsername(event.target.value);
-    };
-    const handlePassword = (event) => {
-        setPassword(event.target.value);
+    const handleChange = (event) => {
+        setCredentials((prevCredentials) => {
+            return {
+                ...prevCredentials,
+                [event.target.name]: event.target.value,
+            };
+        });
     };
 
     const handleLogin = async () => {
         setIndicator("spinner");
-        let isValid = await UserService.validateCredentials(username, password);
+        let isValid = await UserService.validateCredentials(credentials);
         if (isValid) {
-            dispatch(setSigned(true));
             navigate("/user/profile");
-        } else {
-            setIndicator("message");
-            setUsername("");
-            setPassword("");
+            return;
         }
+        setIndicator("message");
     };
 
     return (
         <div className="container">
-
-            <FormIndicator indicator={indicator} message={"Invalid username or password"}/>
-
-            <div className="row mb-3">
-                <div className="col-11">
-                    <input
-                        onChange={handleUsername}
-                        value={username}
-                        type="text"
-                        className="login-input d-block m-auto"
-                        placeholder="Username"
-                    />
-                </div>
-            </div>
-
+            <FormIndicator
+                indicator={indicator}
+                message={"Invalid username or password"}
+            />
+            <TextColumn
+                col={"col-11 mb-3"}
+                value={credentials.username}
+                name={"username"}
+                onChange={handleChange}
+                placeholder={"Username"}
+            />
             <div className="row mb-4">
-                <div className="col">
-                    <input
-                        onChange={handlePassword}
-                        value={password}
-                        type={visible ? "text" : "password"}
-                        className="login-input d-block m-auto"
-                        placeholder="Password"
-                    />
-                </div>
-
-                <div className="col-1">
-                    <button className="showPassword" onClick={switchVisibility}>
-                        <ShowPassword visible={visible} />
-                    </button>
-                </div>
-                
+                <TextColumn
+                    col={"col-11 mb-3"}
+                    type={visible ? "text" : "password"}
+                    value={credentials.password}
+                    name={"password"}
+                    onChange={handleChange}
+                    placeholder={"Password"}
+                />
+                <ShowPassword visible={visible} setVisible={setVisible} />
             </div>
-
-            <div className="row mb-3">
-                <div className="col">
-                    <button
-                        onClick={handleLogin}
-                        type="submit"
-                        className="btn btn-outline-success d-block m-auto"
-                    >
-                        Login
-                    </button>
-                </div>
-            </div>
-
-            <div className="row">
-                <div className="col text-center">
-                    <Link className="hyper-link" to={""}>
-                        Forgot Password
-                    </Link>
-                </div>
-            </div>
-
-            <div className="row">
-                <div className="col text-center">
-                    <Link className="hyper-link" to={"/form/register"}>
-                        New user? Create an account
-                    </Link>
-                </div>
-            </div>
-
+            <ActionRow actionName={"Login"} handleAction={handleLogin} />
+            <HyperLink to={""} text={"Forgot Password"} />
+            <HyperLink
+                to={"/form/register"}
+                text={"New user? Create an account"}
+            />
         </div>
     );
 };

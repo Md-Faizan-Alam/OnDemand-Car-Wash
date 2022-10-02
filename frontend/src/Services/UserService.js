@@ -2,14 +2,9 @@ import axios from "axios";
 import Gateway from "../Constants/Gateway";
 
 const UserService = {
-    validateCredentials: async (username, password) => {
-        const request = {
-            username: username,
-            password: password,
-        };
-
+    validateCredentials: async (credentials) => {
         const data = await axios
-            .post(Gateway.makePath("user","authenticate"), request)
+            .post(Gateway.makePath("user","authenticate"), credentials)
             .then((response) => response.data)
             .catch((error) => console.log(error));
 
