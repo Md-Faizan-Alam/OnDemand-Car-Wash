@@ -1,81 +1,55 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Fallback from "../../Constants/Fallback";
+import Mapping from "../../Constants/Mapping";
+import Toolbox from "../../Services/Toolbox";
 import UserService from "../../Services/UserService";
+import ActionRow from "../Minors/ActionRow";
+import HyperLink from "../Minors/HyperLink";
+import SelectColumn from "../Minors/SelectColumn";
+import TextColumn from "../Minors/TextColumn";
 import FormIndicator from "./FormIndicator";
 
 const RegistrationForm = (props) => {
-    const [role, setRole] = useState("CUSTOMER");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [gender, setGender] = useState("");
-    const [dateOfBirth, setDateOfBirth] = useState("2020-09-20");
-
+    const [user, setUser] = useState(Fallback.emptyUser);
     const [indicator, setIndicator] = useState("blank");
     const [message, setMessage] = useState("");
-
+    const [confirmPassword, setConfirmPassword] = useState("");
     const navigate = useNavigate();
 
-    const inputIsInvalid = () => {
-        let newMessage = "";
-        if (firstName === "") {
-            newMessage = "First name is mandatory";
-        } else if (lastName === "") {
-            newMessage = "Last name is mandatory";
-        } else if (email === "") {
-            newMessage = "Email is mandatory";
-        } else if (phoneNumber === "") {
-            newMessage = "Phone Number is mandatory";
-        } else if (phoneNumber.length !== 10) {
-            newMessage = "Phone Number must have 10 digits";
-        } else if (password === "") {
-            newMessage = "Password is mandatory";
-        } else if (password !== confirmPassword) {
-            newMessage = "Passwords do not match";
-        } else {
-            return false;
-        }
-        setMessage(newMessage);
-        return true;
+    const handleChange = (event) => {
+        setUser((prevUser) => {
+            return {
+                ...prevUser,
+                [event.target.name]: event.target.value,
+            };
+        });
     };
 
     const switchRole = () => {
-        if (role === "CUSTOMER") {
-            setRole("WASHER");
-        } else {
-            setRole("CUSTOMER");
+        if (user.role === "CUSTOMER") {
+            setUser((prevUser) => ({ ...prevUser, role: "WASHER" }));
+            return;
         }
+        setUser((prevUser) => ({ ...prevUser, role: "CUSTOMER" }));
     };
 
     const handleSubmit = async () => {
         setIndicator("spinner");
-        if (inputIsInvalid()) {
+        if (
+            Toolbox.registrationDataIsInvalid(user, confirmPassword, setMessage)
+        ) {
             setIndicator("message");
             return;
         }
-        // setIndicator("blank")
-        const newUser = {
-            firstName,
-            lastName,
-            email,
-            phoneNumber,
-            gender,
-            password,
-            role,
-            carIds: [],
-        };
-        await UserService.registerUser(newUser);
-        let isValid = await UserService.validateCredentials(email, password)
-            .then((response) => response)
-            .catch((error) => console.log(error));
-
+        await UserService.registerUser(user);
+        let isValid = await UserService.validateCredentials({
+            username: user.email,
+            password: user.password,
+        });
         if (isValid) {
             navigate("/user/profile");
         }
-
         setIndicator("blank");
     };
 
@@ -83,73 +57,55 @@ const RegistrationForm = (props) => {
         <div className="conatainer">
             <FormIndicator indicator={indicator} message={message} />
             <div className="row mb-3 mt-3">
-                <div className="col">
-                    <input
-                        type="text"
-                        value={firstName}
-                        onChange={(event) => setFirstName(event.target.value)}
-                        className="login-input d-block m-auto"
-                        placeholder="First Name"
-                        required={true}
-                    />
-                </div>
-                <div className="col">
-                    <input
-                        type="text"
-                        value={lastName}
-                        onChange={(event) => setLastName(event.target.value)}
-                        className="login-input d-block m-auto"
-                        placeholder="Last Name"
-                        required={true}
-                    />
-                </div>
+                <TextColumn
+                    value={user.firstName}
+                    name={"firstName"}
+                    onChange={handleChange}
+                    placeholder={"First Name"}
+                />
+                <TextColumn
+                    value={user.lastName}
+                    name={"lastName"}
+                    onChange={handleChange}
+                    placeholder={"Last Name"}
+                />
             </div>
 
             <div className="row mb-3">
-                <div className="col-8">
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                        className="login-input d-block m-auto"
-                        placeholder="Email"
-                        required={true}
-                    />
-                </div>
-                <div className="col">
-                    <select
-                        className="form-select login-input"
-                        aria-label="Default select example"
-                        value={gender}
-                        onChange={(event) => setGender(event.target.value)}
-                    >
-                        <option value={null}>Gender</option>
-                        <option value="MALE">Male</option>
-                        <option value="FEMALE">Female</option>
-                        <option value="OTHER">Other</option>
-                    </select>
-                </div>
+                <TextColumn
+                    col={"col-8"}
+                    type={"email"}
+                    value={user.email}
+                    name={"email"}
+                    onChange={handleChange}
+                    placeholder={"Email"}
+                />
+                <SelectColumn
+                    value={user.gender}
+                    name={"gender"}
+                    onChange={handleChange}
+                    optionList={Mapping.genderList}
+                />
             </div>
 
             <div className="row mb-3">
-                <div className="col-6">
-                    <input
-                        type="number"
-                        value={phoneNumber}
-                        onChange={(event) => setPhoneNumber(event.target.value)}
-                        className="login-input d-block m-auto"
-                        placeholder="Phone Number"
-                        required={true}
-                    />
-                </div>
+                <TextColumn
+                    col={"col-6"}
+                    type={"number"}
+                    value={user.phoneNumber}
+                    name={"phoneNumber"}
+                    onChange={handleChange}
+                    placeholder={"Phone Number"}
+                />
                 <div className="col">
                     <label htmlFor="dob" className="d-inline">
                         Date of Birth :{" "}
                     </label>
                     <input
                         type="date"
-                        value={dateOfBirth}
-                        onChange={(event) => setDateOfBirth(event.target.value)}
+                        value={user.dateOfBirth}
+                        name={"dateOfBirth"}
+                        onChange={handleChange}
                         id="dob"
                         className="login-input"
                     />
@@ -157,58 +113,34 @@ const RegistrationForm = (props) => {
             </div>
 
             <div className="row mb-4">
-                <div className="col">
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                        className="login-input d-block m-auto"
-                        placeholder="Password"
-                        required={true}
-                    />
-                </div>
-                <div className="col">
-                    <input
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(event) =>
-                            setConfirmPassword(event.target.value)
-                        }
-                        className="login-input d-block m-auto"
-                        placeholder="Confirm Password"
-                        required={true}
-                    />
-                </div>
+                <TextColumn
+                    type={"password"}
+                    value={user.password}
+                    name={"password"}
+                    onChange={handleChange}
+                    placeholder={"Password"}
+                />
+                <TextColumn
+                    type={"password"}
+                    value={confirmPassword}
+                    onChange={(event) => setConfirmPassword(event.target.value)}
+                    placeholder={"Confirm Password"}
+                />
             </div>
 
-            <div className="row mb-3">
-                <div className="col">
-                    <button
-                        type="submit"
-                        className="btn btn-outline-success d-block m-auto"
-                        onClick={handleSubmit}
-                    >
-                        Register
-                    </button>
-                </div>
-            </div>
+            <ActionRow actionName={"Register"} handleAction={handleSubmit} />
 
-            <div className="row">
-                <div className="col text-center">
-                    <Link className="hyper-link" to="/form">
-                        Already have an account? Login instead
-                    </Link>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col text-center">
-                    <a className="hyper-link" onClick={switchRole}>
-                        {`Register as a ${
-                            role === "CUSTOMER" ? "washer" : "customer"
-                        } instead`}
-                    </a>
-                </div>
-            </div>
+            <HyperLink
+                text={"Already have an account? Login instead"}
+                to={"/form"}
+            />
+            <HyperLink
+                text={`Register as a ${
+                    user.role === "CUSTOMER" ? "washer" : "customer"
+                } instead`}
+                to={""}
+                onClick={switchRole}
+            />
         </div>
     );
 };

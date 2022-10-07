@@ -6,7 +6,7 @@ const CarouselItem = (props) => {
 
     return (
         <div className={`carousel-item ${props.active}`}>
-            <div className="container-fluid py-5 d-flex justify-content-evenly">
+            <div className="container-fluid my-5 d-flex justify-content-evenly">
                 {props.list.map((element) => {
                     serial.current++;
                     return (

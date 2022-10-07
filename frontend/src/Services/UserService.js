@@ -4,7 +4,7 @@ import Gateway from "../Constants/Gateway";
 const UserService = {
     validateCredentials: async (credentials) => {
         const data = await axios
-            .post(Gateway.makePath("user","authenticate"), credentials)
+            .post(Gateway.makePath("user", "authenticate"), credentials)
             .then((response) => response.data)
             .catch((error) => console.log(error));
 
@@ -22,14 +22,14 @@ const UserService = {
             },
         };
         const data = await axios
-            .get(Gateway.makePath("user","getUser"), config)
+            .get(Gateway.makePath("user", "getUser"), config)
             .then((response) => response.data)
             .catch((error) => console.log(error));
 
-        if (data == null) return null;
+        if (data?.userId === null) return null;
         return data;
     },
-     updateUser: async (user) => {
+    updateUser: async (user) => {
         const config = {
             headers: {
                 Authorization: localStorage.getItem("JWT"),
@@ -37,7 +37,7 @@ const UserService = {
         };
         // console.log(user)
         const data = await axios
-            .put(Gateway.makePath("user","update"), user, config)
+            .put(Gateway.makePath("user", "update"), user, config)
             .then((response) => response.data)
             .catch((error) => console.log(`Error during updation ${error}`));
         console.log(`Update message : ${data}`);
@@ -45,7 +45,7 @@ const UserService = {
     registerUser: async (user) => {
         console.log(user);
         const data = await axios
-            .post(Gateway.makePath("user","add"), user)
+            .post(Gateway.makePath("user", "add"), user)
             .then((response) => response.data)
             .catch((error) => console.log(`Error during updation ${error}`));
         console.log(`Registration message : ${data}`);

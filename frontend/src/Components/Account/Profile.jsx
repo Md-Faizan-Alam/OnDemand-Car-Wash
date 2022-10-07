@@ -3,19 +3,15 @@ import EditProfile from "../Form/EditProfile";
 import ViewProfile from "./ViewProfile";
 
 const Profile = (props) => {
-    const user = useSelector( state => state.user);
-    const profileStage = useSelector(state => state.profileStage);
+    const user = useSelector((state) => state.user);
+    const profileStage = useSelector((state) => state.profileStage);
 
     const body = {
-        "view": <ViewProfile user={user} />,
-        "edit": <EditProfile user={user} /> 
-    }
+        view: <ViewProfile user={user} />,
+        edit: <EditProfile user={user} />,
+    };
 
-    return (
-        <>
-        {body[profileStage]}
-        </>
-    );
+    return <>{body[profileStage]}</>;
 };
 
 export default Profile;

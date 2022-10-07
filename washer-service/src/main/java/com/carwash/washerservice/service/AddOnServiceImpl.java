@@ -98,7 +98,7 @@ public class AddOnServiceImpl implements AddOnService {
 
 		Query query = new Query()
 				.addCriteria(Criteria.where("price").gte(filter.getMinPrice()).lte(filter.getMaxPrice()))
-				.with(Sort.by(Direction.ASC, filter.getSortBy()));
+				.with(Sort.by(Direction.ASC, filter.getField()));
 
 		return new AddOnList(mongoTemplate.find(query, AddOn.class));
 	}

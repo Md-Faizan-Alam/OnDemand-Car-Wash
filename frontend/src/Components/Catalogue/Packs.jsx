@@ -1,43 +1,32 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import WashPackService from "../../Services/WashPackService";
-import FilterPanel from "./FilterPanel";
-import PackItem from "./PackItem";
-import setOrderStage from "../../Actions/OrderStageAction";
 import { useNavigate } from "react-router-dom";
 import { setWashPackId } from "../../Actions/CurrentOrderAction";
+import { setCurrentPack } from "../../Actions/CurrentPackAction";
+import setOrderStage from "../../Actions/OrderStageAction";
+import { setPackStage } from "../../Actions/PackStageAction";
+import Fallback from "../../Constants/Fallback";
+import WashPackService from "../../Services/WashPackService";
 import FormIndicator from "../Form/FormIndicator";
 import AddPackButton from "./AddPackButton";
-import { setPackStage } from "../../Actions/PackStageAction";
-import { setCurrentPack } from "../../Actions/CurrentPackAction";
+import FilterPanel from "./FilterPanel";
+import PackItem from "./PackItem";
 
 const Packs = (props) => {
-    const user = useSelector(state=>state.user)
-    const refresh = useSelector(state=>state.refresh);
+    const role = useSelector((state) => state.user.role);
+    const refresh = useSelector((state) => state.refresh);
     const [list, setList] = useState([]);
+    const [filter, setFilter] = useState(Fallback.washPackFilter);
+    const [indicator, setIndicator] = useState("blank");
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [field, setField] = useState("price");
-    const [minPrice, setMinPrice] = useState(300);
-    const [maxPrice, setMaxPrice] = useState(5000);
-    const [indicator, setIndicator] = useState("blank")
-
     const getTheList = async () => {
-        const filter = {
-            minPrice: minPrice,
-            maxPrice: maxPrice,
-            sortBy: field,
-        };
+        setIndicator("spinner");
         const data = await WashPackService.getFilteredWashPacks(filter);
+        setIndicator("blank");
         setList(data.list);
     };
-    
-    useEffect(() => {
-       setIndicator("spinner");
-        getTheList();
-       setIndicator("blank");
-    }, [field, minPrice, maxPrice,refresh]);
 
     const handleBook = (id) => {
         console.log("entered handleBook");
@@ -46,34 +35,35 @@ const Packs = (props) => {
         navigate("/user/myOrders");
     };
 
-    const handleEdit = (id)=>{
-        dispatch(setCurrentPack(list.filter((pack)=>pack["id"] === id)[0]))
+    const handleEdit = (id) => {
+        dispatch(setCurrentPack(list.filter((pack) => pack["id"] === id)[0]));
         dispatch(setPackStage("edit"));
-    }
+    };
+
+    useEffect(() => {
+        getTheList();
+    }, [filter, refresh]);
 
     return (
         <>
             <FormIndicator indicator={indicator} />
+
             <div className="container-fluid pt-1 pe-5 ps-0">
-                <div className="row" style={{ minHeight: "100vh" }}>
-                    <div className="col-4 pt-5">
-                        <FilterPanel
-                            field={field}
-                            minPrice={minPrice}
-                            maxPrice={maxPrice}
-                            setField={setField}
-                            setMinPrice={setMinPrice}
-                            setMaxPrice={setMaxPrice}
-                        />
-                    </div>
+                <div className="row min-vh-100">
+                    <FilterPanel filter={filter} setFilter={setFilter} />
+
                     <div className="col-8 py-5 d-flex justify-content-start flex-wrap">
                         {list.map((element) => {
                             return (
                                 <PackItem
                                     key={element.id}
                                     pack={element}
-                                    action={user.role==="ADMIN" ? "Edit" : "Book"}
-                                    handleAction={user.role==="ADMIN" ? handleEdit : handleBook}
+                                    action={role === "ADMIN" ? "Edit" : "Book"}
+                                    handleAction={
+                                        role === "ADMIN"
+                                            ? handleEdit
+                                            : handleBook
+                                    }
                                     delete={props.delete}
                                 />
                             );

@@ -18,6 +18,8 @@ import Modal from "./Components/Miscellaneous/Modal";
 import NotFound from "./Components/Miscellaneous/NotFound";
 import Analysis from "./Components/Report/Analysis";
 
+// TODO: Design a common Delete Button for all the Components
+
 function App() {
     const { profileStage, carStage, orderStage, packStage } = useSelector(
         (state) => state
@@ -25,9 +27,8 @@ function App() {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        if (localStorage.getItem("JWT") === undefined) {
+        if (localStorage.getItem("JWT") === undefined)
             localStorage.setItem("JWT", "");
-        }
     }, []);
 
     useEffect(() => {

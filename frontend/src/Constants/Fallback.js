@@ -1,15 +1,16 @@
+import Toolbox from "../Services/Toolbox";
+
 const Fallback = {
-    fallbackUser: {
-        userId: null,
-        firstName: null,
-        lastName: null,
-        email: null,
-        phoneNumber: null,
-        password: null,
+    emptyUser: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
         carIds: [],
-        dateOfBirth: null,
-        gender: null,
-        role: null,
+        dateOfBirth: Toolbox.timeToDate(new Date()),
+        gender: "",
+        role: "CUSTOMER",
     },
     emptyOrder: {
         carId: null,
@@ -60,6 +61,24 @@ const Fallback = {
     emptyLocation: {
         lat: 0,
         lng: 0,
+    },
+    addOnFilter: {
+        field: "price",
+        minPrice: 300,
+        maxPrice: 5000,
+    },
+    washPackFilter: {
+        field: "price",
+        minPrice: 300,
+        maxPrice: 5000,
+    },
+    loadingUser: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        gender: "",
+        dateOfBirth: "",
     },
 };
 

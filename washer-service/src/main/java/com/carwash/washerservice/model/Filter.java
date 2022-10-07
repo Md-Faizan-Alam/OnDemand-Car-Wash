@@ -12,16 +12,16 @@ public class Filter {
 	
 	// It takes the name of the field w.r.t which the list is to be sorted in ascending order
 	// If the string does not match the name of any field then it is sorted by price
-	private String sortBy;
+	private String field;
 	
 	private List<String> validFields = Arrays.asList("title","description","price");
 	
 	public Filter() {
 	}
-	public Filter(int minPrice, int maxPrice, String sortBy) {
+	public Filter(int minPrice, int maxPrice, String field) {
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
-		this.sortBy = sortBy;
+		this.field = field;
 	}
 	public int getMinPrice() {
 		return minPrice;
@@ -35,16 +35,16 @@ public class Filter {
 	public void setMaxPrice(int maxPrice) {
 		this.maxPrice = maxPrice;
 	}
-	public String getSortBy() {
-		return sortBy;
+	public String getField() {
+		return field;
 	}
-	public void setSortBy(String sortBy) {
-		this.sortBy = sortBy;
+	public void setField(String field) {
+		this.field = field;
 	}
 	
 	public void validateField() {
-		if(this.validFields.contains(this.sortBy)) return;
-		this.sortBy = "price";
+		if(this.validFields.contains(this.field)) return;
+		this.field = "price";
 	}
 	
 }

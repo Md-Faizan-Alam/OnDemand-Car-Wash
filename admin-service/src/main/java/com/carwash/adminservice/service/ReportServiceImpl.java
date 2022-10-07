@@ -44,8 +44,8 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	public String insertReport(Report report) {
-		if (report.getReportId() != null) {
-			if (reportRepository.existsById(report.getReportId())) {
+		if (report.getId() != null) {
+			if (reportRepository.existsById(report.getId())) {
 				return "Report Already Exists";
 			}
 		}
@@ -64,7 +64,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	public String updateReport(Report report) {
-		if (!reportRepository.existsById(report.getReportId())) {
+		if (!reportRepository.existsById(report.getId())) {
 			return "Report with this Id does not Exist";
 		}
 		try {
@@ -103,9 +103,9 @@ public class ReportServiceImpl implements ReportService {
 		Long noOfWashers = getLongEntity(urlCollection.getUser() + "/getNoOfWashers", headers);
 		Long noOfCars = getLongEntity(urlCollection.getCar() + "/getCount", headers);
 		Long ordersPlaced = getLongEntity(urlCollection.getOrder() + "/count", headers);
-		report.setIncreaseInCustomers(noOfCustomers);
-		report.setIncreaseInWashers(noOfWashers);
-		report.setIncreaseInCars(noOfCars);
+		report.setCustomers(noOfCustomers);
+		report.setWashers(noOfWashers);
+		report.setCars(noOfCars);
 		report.setOrdersPlaced(ordersPlaced);
 		return report;
 	}
@@ -114,8 +114,8 @@ public class ReportServiceImpl implements ReportService {
 		StringList popularsList = restTemplate.exchange(urlCollection.getOrder() + "/popular", HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders()), StringList.class).getBody();
 		
-		report.setMostPopularWashPack(popularsList.getStringList().get(0));
-		report.setLeastPopularWashPack(popularsList.getStringList().get(1));
+		report.setMostPopularPack(popularsList.getStringList().get(0));
+		report.setLeastPopularPack(popularsList.getStringList().get(1));
 		report.setMostPopularAddOn(popularsList.getStringList().get(2));
 		report.setLeastPopularAddOn(popularsList.getStringList().get(3));
 		
@@ -125,7 +125,7 @@ public class ReportServiceImpl implements ReportService {
 	public void generateReport() {
 		HttpHeaders headers = new HttpHeaders();
 		Report report = new Report();
-		report.setComputedOn(LocalDateTime.now());
+		report.setDate(LocalDateTime.now());
 		report = setReportLongs(report);
 		report = setPopulars(report);
 		double revenue = restTemplate.exchange(urlCollection.getOrder() + "/revenue", HttpMethod.GET,

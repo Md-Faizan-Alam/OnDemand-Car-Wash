@@ -11,9 +11,9 @@ import SelectedAddOns from "../Catalogue/SelectedAddOns";
 import SelectedCar from "../Catalogue/SelectedCar";
 import SelectedPack from "../Catalogue/SelectedPack";
 import ActionRow from "../Minors/ActionRow";
+import OrderTotal from "../Static/OrderTotal";
 import FormIndicator from "./FormIndicator";
 import Map from "./Map";
-import OrderTotal from "./OrderTotal";
 
 const BookWash = (props) => {
     const dispatch = useDispatch();

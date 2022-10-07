@@ -2,9 +2,10 @@ const FeaturedCard = (props) => {
 
     return (
         <div
-            className="card wash-pack-card"
+            className="card mx-2 border-0 text-white fw-semibold wash-pack-card"
             style={{ backgroundImage: `url(./pack-images/${props.pack.title.replaceAll(' ','_')}.jpg)` }}
             key={props.pack.id}
+            role={"button"}
             onClick={()=>props.handleAction(props.pack.id)}
         >
             <div className="card-body">

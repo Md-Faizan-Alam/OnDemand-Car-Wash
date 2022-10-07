@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import setCarStage from "../../Actions/CarStageAction";
 import CarService from "../../Services/CarService";
-import AddCarButton from "./AddCarButton";
-import AddSlotButton from "./AddSlotButton";
+import AddSlotButton from "../Minors/AddSlotButton";
 import CarBlock from "./CarBlock";
 
 const CarList = (props) => {
     const [carList, setCarList] = useState([]);
     const refresh = useSelector((state) => state.refresh);
-
     const dispatch = useDispatch();
 
     const addCar = () => {
@@ -17,10 +15,8 @@ const CarList = (props) => {
     };
 
     const getCarList = async () => {
-        const data = await CarService.getCarsByCustomer()
-            .then((response) => response.carList)
-            .catch((error) => console.log(error));
-        setCarList(data);
+        const data = await CarService.getCarsByCustomer();
+        setCarList(data.carList);
     };
 
     useEffect(() => {

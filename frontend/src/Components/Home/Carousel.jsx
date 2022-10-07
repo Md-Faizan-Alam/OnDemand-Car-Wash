@@ -1,13 +1,12 @@
 import Toolbox from "../../Services/Toolbox";
 
 const Carousel = (props) => {
-
     const SlideButton = (localProps) => {
         return (
             <button
                 className={`carousel-control-${localProps.direction}`}
                 type="button"
-                data-bs-target={`#${props.id}`}
+                data-bs-target={`#${localProps.id}`}
                 data-bs-slide={localProps.direction}
             >
                 <span
@@ -24,8 +23,8 @@ const Carousel = (props) => {
             <div className="carousel-inner">
                 {Toolbox.getCarouselItem(props.list, props.handleAction)}
             </div>
-            <SlideButton direction={"prev"} />
-            <SlideButton direction={"next"} />
+            <SlideButton direction={"prev"} id={props.id} />
+            <SlideButton direction={"next"} id={props.id} />
         </div>
     );
 };

@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="DEFAULT_PATH_SEPARATOR"/>
+		<item key="selection" value=""/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="true"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="IncreaseIn"/>
+			<item value="ComputedOn"/>
+			<item value="setReportId"/>
+			<item value="reportId"/>
+			<item value="PopularWashPack"/>
+			<item value="increaseInWashers"/>
+			<item value="increaseInCars"/>
+			<item value="increaseInCustomers"/>
+			<item value="increaseInCustomer"/>
+			<item value="computedOn"/>
+			<item value="SortBy"/>
+			<item value="sortBy"/>
 			<item value="DEFAULT_PATH_SEPARATOR"/>
 			<item value="Longitude"/>
 			<item value="Latitude"/>
-			<item value="longitude"/>
-			<item value="latitude"/>
-			<item value="StringList"/>
-			<item value="MyUserDetails"/>
-			<item value="etAddOn"/>
-			<item value="etWashPack"/>
-			<item value="getAddOn"/>
-			<item value="getWashPack"/>
-			<item value="AddOnDescription"/>
-			<item value="addOnDescription"/>
-			<item value="AddOnTitle"/>
-			<item value="addOnTitle"/>
 		</list>
 		<list key="replacehistory">
+			<item value=""/>
+			<item value="Date"/>
+			<item value="setId"/>
+			<item value="id"/>
+			<item value="PopularPack"/>
+			<item value="washers"/>
+			<item value="cars"/>
+			<item value="customers"/>
+			<item value="date"/>
+			<item value="Field"/>
+			<item value="field"/>
 			<item value="Lng"/>
 			<item value="Lat"/>
 			<item value="lng"/>
 			<item value="lat"/>
-			<item value="et"/>
-			<item value="get"/>
-			<item value="Description"/>
-			<item value="description"/>
-			<item value="Title"/>
-			<item value="title"/>
-			<item value="Id"/>
-			<item value="id"/>
-			<item value=""/>
-			<item value="order"/>
-			<item value="updateOrder(order, headers)"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

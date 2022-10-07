@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import setCarStage from "../../Actions/CarStageAction";
 import Fallback from "../../Constants/Fallback";
+import Mapping from "../../Constants/Mapping";
 import CarService from "../../Services/CarService";
 import ActionRow from "../Minors/ActionRow";
 import ColorRow from "../Minors/ColorRow";
+import SelectColumn from "../Minors/SelectColumn";
 import TextColumn from "../Minors/TextColumn";
-import TypeColumn from "../Minors/TypeColumn";
 
 const AddCar = (props) => {
     const customerId = useSelector((state) => state.user.userId);
@@ -58,10 +59,11 @@ const AddCar = (props) => {
                         onChange={handleChange}
                         placeholder={"Registration Number"}
                     />
-                    <TypeColumn
+                    <SelectColumn
                         value={car.carType}
                         name={"carType"}
                         onChange={handleChange}
+                        optionList={Mapping.typeList}
                     />
                 </div>
                 <ActionRow

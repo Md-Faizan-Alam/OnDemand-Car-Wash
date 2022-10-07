@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import Navbar from "../Miscellaneous/Navbar";
 import Packs from "./Packs";
 

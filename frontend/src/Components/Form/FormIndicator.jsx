@@ -15,7 +15,7 @@ const FormIndicator = (props) => {
         </div>
     );
 
-    const body = { blank, spinner, message };
+    const body = { blank, spinner, message, null: null };
 
     return <>{body[props.indicator]}</>;
 };

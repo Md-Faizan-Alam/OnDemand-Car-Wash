@@ -1,93 +1,39 @@
-import Toolbox from "../../Services/Toolbox";
+import FieldButton from "../Minors/FieldButton";
+import PriceButton from "../Minors/PriceButton";
 
 const FilterPanel = (props) => {
-    const minPriceButton = (price) => {
-        return (
-            <button
-                onClick={() => props.setMinPrice(price)}
-                type="button"
-                className={`btn filter-tab py-0 ${
-                    props.minPrice === price ? "bg-success text-light" : ""
-                }`}
-            >
-                Rs. {price}
-            </button>
-        );
-    };
-    const maxPriceButton = (price) => {
-        return (
-            <button
-                onClick={() => props.setMaxPrice(price)}
-                type="button"
-                className={`btn filter-tab py-0 ${
-                    props.maxPrice === price ? "bg-success text-light" : ""
-                }`}
-            >
-                Rs. {price}
-            </button>
-        );
-    };
-    const fieldButton = (fieldName) => {
-        return (
-            <button
-                onClick={() => props.setField(fieldName)}
-                type="button"
-                className={`btn filter-tab py-0 ${
-                    props.field === fieldName ? "bg-success text-light" : ""
-                }`}
-            >
-                {Toolbox.capitalizeFirst(fieldName)}
-            </button>
-        );
-    };
-
     return (
-        <>
+        <div className="col-4 pt-5">
             <div
                 className="container bg-light border position-sticky w-75 m-auto border-2 border-success rounded-3 shadow-lg shadow-success mt-2 mb-5"
-                style={{ height: "80vh", top: "10vh", maxWidth: "15vw"}}
+                style={{ height: "80vh", top: "10vh", maxWidth: "15vw" }}
             >
                 <div className="container bg mt-1" style={{ height: "40vh" }}>
                     <div className="row ps-3 fw-bold py-2">Sort By:</div>
-                    <div className="row w-75 m-auto">
-                        <div
-                            className="btn-group-vertical"
-                            role="group"
-                            aria-label="Vertical button group"
-                        >
-                            {fieldButton("title")}
-                            {fieldButton("price")}
-                        </div>
-                    </div>
+                    <FieldButton
+                        filter={props.filter}
+                        fieldList={["title", "description", "price"]}
+                        setFilter={props.setFilter}
+                    />
 
                     <div className="row ps-3 mt-4 fw-bold py-2">Min Price:</div>
-                    <div className="row w-75 m-auto">
-                        <div
-                            className="btn-group-vertical"
-                            role="group"
-                            aria-label="Vertical button group"
-                        >
-                            {minPriceButton(300)}
-                            {minPriceButton(500)}
-                            {minPriceButton(800)}
-                        </div>
-                    </div>
+                    <PriceButton
+                        name={"minPrice"}
+                        filter={props.filter}
+                        priceList={[300, 500, 800]}
+                        setFilter={props.setFilter}
+                    />
 
                     <div className="row ps-3 mt-4 fw-bold py-2">Max Price:</div>
-                    <div className="row w-75 m-auto">
-                        <div
-                            className="btn-group-vertical"
-                            role="group"
-                            aria-label="Vertical button group"
-                        >
-                            {maxPriceButton(1000)}
-                            {maxPriceButton(2000)}
-                            {maxPriceButton(5000)}
-                        </div>
-                    </div>
+                    <PriceButton
+                        name={"maxPrice"}
+                        filter={props.filter}
+                        priceList={[1000, 2000, 5000]}
+                        setFilter={props.setFilter}
+                    />
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

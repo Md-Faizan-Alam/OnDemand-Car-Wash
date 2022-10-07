@@ -1,9 +1,10 @@
 import { useDispatch } from "react-redux";
 import { setCarId } from "../../Actions/CurrentOrderAction";
+import { setModalState } from "../../Actions/ModalStateAction";
 import setOrderStage from "../../Actions/OrderStageAction";
 import Toolbox from "../../Services/Toolbox";
-import { setModalState } from "../../Actions/ModalStateAction";
-import DeleteSymbol from "../Static/DeleteSymbol";
+import DeleteButton from "../Minors/DeleteButton";
+import SelectCar from "../Minors/SelectCar";
 
 const CarBlock = (props) => {
     const dispatch = useDispatch();
@@ -13,38 +14,14 @@ const CarBlock = (props) => {
         dispatch(setOrderStage("book"));
     };
 
-    const SelectButton = () => {
-        return (
-            <div className="row justify-content-end pe-5">
-                <button
-                    className="btn btn-success w-25 text-center p-0 mb-3"
-                    onClick={selectCar}
-                >
-                    Select
-                </button>
-            </div>
-        );
-    };
-
-    const DeleteButton = () => {
-        return (
-            <button
-                className="btn btn-outline-danger px-2 py-0 pb-1 mb-1 d-block mt-2 delete-button"
-                onClick={async (event) => {
-                    dispatch(
-                        setModalState({
-                            header: "Confirm Deletion",
-                            body: "Are you sure you want to delete this car ?",
-                            task: "deleteCar",
-                            payload: props.car.carId,
-                        })
-                    );
-                }}
-                data-bs-toggle="modal"
-                data-bs-target="#myModal"
-            >
-                <DeleteSymbol />
-            </button>
+    const handleDelete = async (event) => {
+        dispatch(
+            setModalState({
+                header: "Confirm Deletion",
+                body: "Are you sure you want to delete this car ?",
+                task: "deleteCar",
+                payload: props.car.carId,
+            })
         );
     };
 
@@ -68,9 +45,11 @@ const CarBlock = (props) => {
                 <div className="col">
                     <div className="row fs-4 ps-3 my-1">
                         <div className="col p-0">{props.car.modelName}</div>
-                        <div className="col-3">
-                            {props.delete ? <DeleteButton /> : ""}
-                        </div>
+                        <DeleteButton
+                            onClick={handleDelete}
+                            visible={props.delete}
+                            className={"me-2"}
+                        />
                     </div>
                     <div
                         className="row fs-6 mb-1 ms-1 "
@@ -102,7 +81,7 @@ const CarBlock = (props) => {
                             />
                         </div>
                     </div>
-                    {props.select ? <SelectButton /> : null}
+                    <SelectCar onClick={selectCar} visible={props.select} />
                 </div>
             </div>
         </div>

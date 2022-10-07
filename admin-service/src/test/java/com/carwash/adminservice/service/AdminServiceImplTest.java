@@ -34,7 +34,7 @@ class AdminServiceImplTest {
 		when(reportService.reportRepository.existsById("dffojddscwfwiooisfwioj")).thenReturn(true);
 		when(reportService.reportRepository.save(report)).thenReturn(report);
 		String messageForValidReport = reportService.insertReport(report);
-		report.setReportId("dffojddscwfwiooisfwioj");
+		report.setId("dffojddscwfwiooisfwioj");
 		String messageForInvalidReport = reportService.insertReport(report);
 		assertAll(
 				() -> assertEquals("Report saved successfully",messageForValidReport),
@@ -46,12 +46,12 @@ class AdminServiceImplTest {
 	@DisplayName("Test updation of reports")
 	void testUpdateReport() {
 		Report report = new Report();
-		report.setReportId("ff9v89ru899ej9j09j0ddj");
+		report.setId("ff9v89ru899ej9j09j0ddj");
 		when(reportService.reportRepository.existsById("ff9v89ru899ej9j09j0ddj")).thenReturn(true);
 		when(reportService.reportRepository.existsById("dffojddscwfwiooisfwioj")).thenReturn(false);
 		when(reportService.reportRepository.save(report)).thenReturn(report);
 		String messageForValidReport = reportService.updateReport(report);
-		report.setReportId("dffojddscwfwiooisfwioj");
+		report.setId("dffojddscwfwiooisfwioj");
 		String messageForInvalidReport = reportService.updateReport(report);
 		assertAll(
 				() -> assertEquals("Report updated successfully",messageForValidReport),

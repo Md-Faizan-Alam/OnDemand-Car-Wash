@@ -9,22 +9,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Report {
 
 	@Id
-	private String reportId;
-	private LocalDateTime computedOn;
-	private long increaseInCustomers;
-	private long increaseInCars;
-	private long increaseInWashers;
+	private String id;
+	private LocalDateTime date;
+	private long customers;
+	private long cars;
+	private long washers;
 	private long ordersPlaced;
-	private String mostPopularWashPack;
-	private String leastPopularWashPack;
+	private String mostPopularPack;
+	private String leastPopularPack;
 	private String mostPopularAddOn;
 	private String leastPopularAddOn;
 	private double revenue;
 
 	@Override
 	public String toString() {
-		String object = "{ " + increaseInCars + ", " + increaseInCustomers + ", " + increaseInWashers + ", "
-				+ ordersPlaced + ", " + revenue + ", " + mostPopularWashPack + ", " + leastPopularWashPack + ", "
+		String object = "{ " + cars + ", " + customers + ", " + washers + ", "
+				+ ordersPlaced + ", " + revenue + ", " + mostPopularPack + ", " + leastPopularPack + ", "
 				+ mostPopularAddOn + ", " + leastPopularAddOn + "  }";
 		return object;
 	}
@@ -32,61 +32,60 @@ public class Report {
 	public Report() {
 	}
 
-	public Report(String reportId, LocalDateTime computedOn, long increaseInCustomers, long increaseInCars,
-			long increaseInWashers, long ordersPlaced, String mostPopularWashPack, String leastPopularWashPack,
+	public Report(String id, LocalDateTime date, long customers, long cars,
+			long washers, long ordersPlaced, String mostPopularPack, String leastPopularPack,
 			String mostPopularAddOn, String leastPopularAddOn, double revenue) {
-		super();
-		this.reportId = reportId;
-		this.computedOn = computedOn;
-		this.increaseInCustomers = increaseInCustomers;
-		this.increaseInCars = increaseInCars;
-		this.increaseInWashers = increaseInWashers;
+		this.id = id;
+		this.date = date;
+		this.customers = customers;
+		this.cars = cars;
+		this.washers = washers;
 		this.ordersPlaced = ordersPlaced;
-		this.mostPopularWashPack = mostPopularWashPack;
-		this.leastPopularWashPack = leastPopularWashPack;
+		this.mostPopularPack = mostPopularPack;
+		this.leastPopularPack = leastPopularPack;
 		this.mostPopularAddOn = mostPopularAddOn;
 		this.leastPopularAddOn = leastPopularAddOn;
 		this.revenue = revenue;
 	}
 
-	public String getReportId() {
-		return reportId;
+	public String getId() {
+		return id;
 	}
 
-	public void setReportId(String reportId) {
-		this.reportId = reportId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public LocalDateTime getComputedOn() {
-		return computedOn;
+	public LocalDateTime getDate() {
+		return date;
 	}
 
-	public void setComputedOn(LocalDateTime computedOn) {
-		this.computedOn = computedOn;
+	public void setDate(LocalDateTime date) {
+		this.date = date;
 	}
 
-	public long getIncreaseInCustomers() {
-		return increaseInCustomers;
+	public long getCustomers() {
+		return customers;
 	}
 
-	public void setIncreaseInCustomers(long increaseInCustomers) {
-		this.increaseInCustomers = increaseInCustomers;
+	public void setCustomers(long customers) {
+		this.customers = customers;
 	}
 
-	public long getIncreaseInCars() {
-		return increaseInCars;
+	public long getCars() {
+		return cars;
 	}
 
-	public void setIncreaseInCars(long increaseInCars) {
-		this.increaseInCars = increaseInCars;
+	public void setCars(long cars) {
+		this.cars = cars;
 	}
 
-	public long getIncreaseInWashers() {
-		return increaseInWashers;
+	public long getWashers() {
+		return washers;
 	}
 
-	public void setIncreaseInWashers(long increaseInWashers) {
-		this.increaseInWashers = increaseInWashers;
+	public void setWashers(long washers) {
+		this.washers = washers;
 	}
 
 	public long getOrdersPlaced() {
@@ -97,20 +96,20 @@ public class Report {
 		this.ordersPlaced = ordersPlaced;
 	}
 
-	public String getMostPopularWashPack() {
-		return mostPopularWashPack;
+	public String getMostPopularPack() {
+		return mostPopularPack;
 	}
 
-	public void setMostPopularWashPack(String mostPopularWashPack) {
-		this.mostPopularWashPack = mostPopularWashPack;
+	public void setMostPopularPack(String mostPopularPack) {
+		this.mostPopularPack = mostPopularPack;
 	}
 
-	public String getLeastPopularWashPack() {
-		return leastPopularWashPack;
+	public String getLeastPopularPack() {
+		return leastPopularPack;
 	}
 
-	public void setLeastPopularWashPack(String leastPopularWashPack) {
-		this.leastPopularWashPack = leastPopularWashPack;
+	public void setLeastPopularPack(String leastPopularPack) {
+		this.leastPopularPack = leastPopularPack;
 	}
 
 	public String getMostPopularAddOn() {

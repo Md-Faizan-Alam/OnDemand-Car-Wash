@@ -113,7 +113,7 @@ public class WashPackServiceImpl implements WashPackService {
 
 		Query query = new Query()
 				.addCriteria(Criteria.where("price").gte(filter.getMinPrice()).lte(filter.getMaxPrice()))
-				.with(Sort.by(Direction.ASC, filter.getSortBy()));
+				.with(Sort.by(Direction.ASC, filter.getField()));
 
 		List<WashPack> washPackList = mongoTemplate.find(query, WashPack.class);
 

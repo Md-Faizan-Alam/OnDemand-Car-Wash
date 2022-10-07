@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import setProfileStage from "../../Actions/ProfileStageAction";
+import Mapping from "../../Constants/Mapping";
 import UserService from "../../Services/UserService";
 import ActionRow from "../Minors/ActionRow";
+import SelectColumn from "../Minors/SelectColumn";
 import TextColumn from "../Minors/TextColumn";
 
 const EditProfile = (props) => {
@@ -60,19 +62,12 @@ const EditProfile = (props) => {
                         onChange={handleChange}
                         placeholder={"Email"}
                     />
-                    <div className="col">
-                        <select
-                            className="form-select login-input"
-                            aria-label="Default select example"
-                            value={user.gender}
-                            name={"gender"}
-                            onChange={handleChange}
-                        >
-                            <option value="MALE">Male</option>
-                            <option value="FEMALE">Female</option>
-                            <option value="OTHER">Other</option>
-                        </select>
-                    </div>
+                    <SelectColumn
+                        value={user.gender}
+                        name={"gender"}
+                        onChange={handleChange}
+                        optionList={Mapping.genderList}
+                    />
                 </div>
 
                 <div className="row mb-3">
