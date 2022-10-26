@@ -1,44 +1,36 @@
-import OrderBlock from "./OrderBlock";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import OrderService from "../../Services/OrderService";
 import FormIndicator from "../Form/FormIndicator";
-import OrderListHead from "../Static/OrderListHead";
-import { useSelector } from "react-redux";
 import BookNow from "../Minors/BookNow";
+import NoOrders from "../Static/NoOrders";
+import OrderListHead from "../Static/OrderListHead";
+import OrderBlock from "./OrderBlock";
 
 const OrderList = (props) => {
-    const {role} = useSelector((state) => state.user);
+    const { role } = useSelector((state) => state.user);
     const refresh = useSelector((state) => state.refresh);
     const [orderList, setOrderList] = useState([]);
     const [indicator, setIndicator] = useState("null");
 
-    let serial = 0;
+    const getOrdersByRole = async () => {
+        switch (role) {
+            case "CUSTOMER":
+                return await OrderService.getOrdersByCustomer();
+            case "WASHER":
+                return await OrderService.getAllUnacceptedOrders();
+            case "ADMIN":
+                return await OrderService.getAllOrders();
+            default:
+                return null;
+        }
+    };
 
     const getOrderList = async () => {
         setIndicator("spinner");
-        let data = [];
-
-        switch (role) {
-            case "CUSTOMER":
-                data = await OrderService.getOrdersByCustomer();
-                break;
-            case "WASHER":
-                data = await OrderService.getAllUnacceptedOrders();
-                break;
-            case "ADMIN":
-                data = await OrderService.getAllOrders();
-                break;
-            default:
-                break;
-        }
-
-        if (data === []) {
-            setIndicator("message");
-        } else {
-            setIndicator("null");
-        }
-        setOrderList(data.orderList);
+        const data = await getOrdersByRole();
+        setIndicator("null")
+        setOrderList(data);
     };
 
     useEffect(() => {
@@ -48,21 +40,23 @@ const OrderList = (props) => {
     return (
         <div className="container-fluid p-0 rounded my-5">
             <OrderListHead />
-            <FormIndicator
-                indicator={indicator}
-                message={"No Orders to display"}
-            />
-            {orderList?.map((order) => {
-                serial++;
-                return (
-                    <OrderBlock
-                        key={serial}
-                        serial={serial}
-                        order={order}
-                        role={role}
-                    />
-                );
-            })}
+            <FormIndicator indicator={indicator}/>
+            {orderList.length === 0 ? (
+                <>
+                    <NoOrders />
+                </>
+            ) : (
+                orderList?.map((order, key) => {
+                    return (
+                        <OrderBlock
+                            key={key}
+                            serial={key + 1}
+                            order={order}
+                            role={role}
+                        />
+                    );
+                })
+            )}
 
             {["CUSTOMER"].includes(role) ? <BookNow /> : null}
         </div>

@@ -1,4 +1,4 @@
-import Path from "../../Constants/Path";
+import HyperText from "../../Constants/HyperText";
 
 const ShowPassword = (props) => {
     return (
@@ -18,7 +18,7 @@ const ShowPassword = (props) => {
                         className={`bi bi-eye${props.visible ? "-slash" : ""}`}
                         viewBox="0 0 16 16"
                     >
-                        {props.visible ? Path.eyeSlashPath : Path.eyePath}
+                        {props.visible ? HyperText.eyeSlashPath : HyperText.eyePath}
                     </svg>
                 </button>
             </div>

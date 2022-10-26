@@ -11,14 +11,14 @@ const SelectedAddOns = (props) => {
 
     return (
         <>
-            <div className="row mb-5">
+            <div className="row p-0 mb-5">
                 <div
                     className="row border-bottom border-dark border-2 fs-5"
                     style={{ fontFamily: "Bree Serif" }}
                 >
                     Add Ons
                 </div>
-                <div className="row justify-content-start border-bottom border-dark border-2 py-4">
+                <div className="row justify-content-start border-bottom border-dark border-2 py-3">
                     {props.addOnList.map((element) => {
                         return <SlotItem key={element.id} pack={element} />;
                     })}

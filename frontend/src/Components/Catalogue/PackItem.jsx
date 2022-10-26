@@ -32,7 +32,7 @@ const PackItem = (props) => {
 
     return (
         <div
-            className="container bg-light shadow rounded mx-3 my-2 border"
+            className="container shadow rounded my-3 mx-2 border"
             style={boxStyle}
         >
             <div
@@ -53,8 +53,7 @@ const PackItem = (props) => {
             <div className="row justify-content-end">
                 <button
                     onClick={() => props.handleAction(props.pack.id)}
-                    className="btn btn-outline-success fs-6  m-3"
-                    style={{ width: "fit-content" }}
+                    className="btn btn-outline-success fs-6  m-3 w-fit"
                 >
                     {props.action}
                 </button>

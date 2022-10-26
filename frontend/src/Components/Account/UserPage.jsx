@@ -9,10 +9,7 @@ import Footer from "../Static/Footer";
 import UserHeader from "./UserHeader";
 
 const UserPage = (props) => {
-    const {
-        profileStage,
-        user: { firstName, lastName, role },
-    } = useSelector((state) => state);
+    const {profileStage, user: { firstName, lastName, role }} = useSelector((state) => state);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 

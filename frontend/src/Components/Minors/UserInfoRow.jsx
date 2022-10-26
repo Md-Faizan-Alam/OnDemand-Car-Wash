@@ -3,7 +3,7 @@ import Toolbox from "../../Services/Toolbox";
 const UserInfoRow = (props) => {
     return (
         <div
-            className={`row border-bottom border-success border-2 w-fit-content ${props.className}`}
+            className={`row border-bottom border-success border-2 w-fit ${props.className}`}
         >
             <div className="row text-success h5 fw-semibold mb-0">
                 {props.field}

@@ -100,6 +100,11 @@ const Mapping = {
             visible: ["ADMIN"],
         },
         {
+            to: "/user/addons",
+            name: "Add Ons",
+            visible: ["ADMIN"],
+        },
+        {
             to: "/user/allOrders",
             name: "Orders",
             visible: ["ADMIN", "WASHER"],

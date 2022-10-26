@@ -8,5 +8,5 @@
         "strictFunctionTypes": true
     },
     "exclude": ["node_modules", "**/node_modules/*"],
-    "include": ["src/**/*.jsx", "src/**/*.js"]
+    "include": ["src/**/*.jsx", "src/**/*.js", "src/Services/Demo.mjs"]
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 // Wrapper class to store the list of id(s) as a single object so that it can be easily parsed on the other side
 public class StringList {
-	private List<String> stringList = new ArrayList<String>();;
+	private List<String> stringList = new ArrayList<String>();
 
 	public StringList() {
 	}

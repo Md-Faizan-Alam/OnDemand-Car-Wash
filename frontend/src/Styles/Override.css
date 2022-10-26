@@ -1,0 +1,34 @@
+.nav-link:hover {
+    font-weight: 500;
+}
+
+.btn-outline-success {
+    font-size: min(4vw, 3vh);
+    box-shadow: 0px 3px 5px var(--bs-success);
+}
+
+.btn-outline-danger {
+    font-size: min(4vw, 3vh);
+    box-shadow: 0px 3px 5px var(--bs-danger);
+}
+
+.btn-success {
+    font-size: large;
+    padding-inline: 25px;
+    box-shadow: 0px 3px 10px var(--bs-success);
+}
+
+.btn-success:hover {
+    color: var(--bs-success);
+    background-color: transparent;
+    box-shadow: 0px 3px 5px var(--bs-success);
+}
+
+.form-control-color {
+    padding: 3px;
+    width: 14%;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}

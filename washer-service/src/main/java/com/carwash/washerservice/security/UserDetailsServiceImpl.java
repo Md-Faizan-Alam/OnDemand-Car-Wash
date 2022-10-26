@@ -13,37 +13,36 @@ import org.springframework.stereotype.Service;
 
 import com.carwash.washerservice.service.WashPackService;
 
-
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService{
-	
+public class UserDetailsServiceImpl implements UserDetailsService {
+
 	@Autowired
 	WashPackService washPackService;
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		MyUserDetails user = washPackService.getUserByUsername(username);
-		
+
 		List<GrantedAuthority> roles = new ArrayList<>();
 		roles.add(new Role(user.getRole()));
-		
-		return new User(user.getUsername() , user.getPassword(), roles );
+
+		return new User(user.getUsername(), user.getPassword(), roles);
 	}
 
 }
 
 @SuppressWarnings("serial")
 class Role implements GrantedAuthority {
-	
+
 	private String role;
-	
+
 	public Role(String role) {
 		this.role = role;
 	}
 
 	@Override
 	public String getAuthority() {
-		return "ROLE_"+this.role;
+		return "ROLE_" + this.role;
 	}
-	
+
 }

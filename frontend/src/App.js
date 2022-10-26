@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes, useLocation } from "react-router-dom";
-import "./App.css";
 import Car from "./Components/Account/Car";
 import Order from "./Components/Account/Order";
 import Profile from "./Components/Account/Profile";
 import UserPage from "./Components/Account/UserPage";
 import WashPack from "./Components/Account/WashPack";
+import AddOnPage from "./Components/Catalogue/AddOnPage";
 import AddOns from "./Components/Catalogue/AddOns";
 import PackPage from "./Components/Catalogue/PackPage";
 import FormPage from "./Components/Form/FormPage";
@@ -17,8 +17,7 @@ import Invoice from "./Components/Miscellaneous/Invoice";
 import Modal from "./Components/Miscellaneous/Modal";
 import NotFound from "./Components/Miscellaneous/NotFound";
 import Analysis from "./Components/Report/Analysis";
-
-// TODO: Design a common Delete Button for all the Components
+import "./Styles/App.css";
 
 function App() {
     const { profileStage, carStage, orderStage, packStage } = useSelector(
@@ -46,7 +45,7 @@ function App() {
                 <Route exact path="/" element={<HomePage />} />
                 <Route exact path="/invoice" element={<Invoice />} />
                 <Route exact path="/packs" element={<PackPage />} />
-                <Route exact path="/addOns" element={<AddOns />} />
+                <Route exact path="/addOns" element={<AddOnPage />} />
 
                 <Route exact path="/form" element={<FormPage />}>
                     <Route index element={<LoginForm />} />
@@ -59,6 +58,7 @@ function App() {
                     <Route exact path="myOrders" element={<Order />} />
                     <Route exact path="allOrders" element={<Order />} />
                     <Route exact path="packs" element={<WashPack />} />
+                    <Route exact path="addons" element={<AddOns />} />
                     <Route exact path="report" element={<Analysis />} />
                 </Route>
 

@@ -3,7 +3,7 @@ import Toolbox from "../../Services/Toolbox";
 const FieldButton = (props) => {
     return (
         <div>
-            <div className="row w-100 m-auto px-3">
+            <div className="row w-fit m-auto px-3">
                 <div className="btn-group-vertical">
                     {props.fieldList.map((fieldName) => (
                         <button
@@ -15,7 +15,7 @@ const FieldButton = (props) => {
                                 }))
                             }
                             type="button"
-                            className={`btn filter-tab p-0 border border-success border-2 ${
+                            className={`btn filter-tab p-0 px-2 border border-success border-2 ${
                                 props.filter.field === fieldName
                                     ? "bg-success text-light"
                                     : ""

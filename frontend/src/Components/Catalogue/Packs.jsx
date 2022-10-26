@@ -9,6 +9,7 @@ import Fallback from "../../Constants/Fallback";
 import WashPackService from "../../Services/WashPackService";
 import FormIndicator from "../Form/FormIndicator";
 import AddPackButton from "./AddPackButton";
+import CollapsedFilterPanel from "./CollapsedFilterPanel";
 import FilterPanel from "./FilterPanel";
 import PackItem from "./PackItem";
 
@@ -46,13 +47,20 @@ const Packs = (props) => {
 
     return (
         <>
-            <FormIndicator indicator={indicator} />
-
-            <div className="container-fluid pt-1 pe-5 ps-0">
+            <div className="container-fluid pt-4">
+                <FormIndicator indicator={indicator} />
+            </div>
+            <div className="container-fluid">
                 <div className="row min-vh-100">
-                    <FilterPanel filter={filter} setFilter={setFilter} />
+                    <div className="col-auto ps-5">
+                        <CollapsedFilterPanel
+                            filter={filter}
+                            setFilter={setFilter}
+                        />
+                        <FilterPanel filter={filter} setFilter={setFilter} />
+                    </div>
 
-                    <div className="col-8 py-5 d-flex justify-content-start flex-wrap">
+                    <div className="col d-flex flex-wrap">
                         {list.map((element) => {
                             return (
                                 <PackItem

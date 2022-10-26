@@ -1,0 +1,70 @@
+.w-fit {
+    width: fit-content;
+}
+.w-min {
+    width: min-content;
+}
+.w-max {
+    width: max-content;
+}
+.w-vw-75 {
+    width: 75vw;
+}
+.w-vw-50 {
+    width: 50vw;
+}
+.w-vw-25 {
+    width: 25vw;
+}
+
+.h-fit {
+    height: fit-content;
+}
+.h-min {
+    height: min-content;
+}
+.h-max {
+    height: max-content;
+}
+
+.fvw-1 {
+    font-size: 1vw;
+}
+.fvw-2 {
+    font-size: 2vw;
+}
+.fvw-3 {
+    font-size: 3vw;
+}
+.fvw-4 {
+    font-size: 4vw;
+}
+.fvw-5 {
+    font-size: 5vw;
+}
+.fvw-6 {
+    font-size: 6vw;
+}
+
+.outline-0 {
+    outline: none;
+}
+
+.font-sans-serif {
+    font-family: sans-serif;
+}
+.font-Bree-serif {
+    font-family: "Bree Serif";
+}
+
+.bg-order {
+    background-color: rgba(170, 170, 170, 0.8);
+}
+
+.hover-underline{
+    text-decoration: none;
+}
+
+.hover-underline:hover{
+    text-decoration: underline;
+}

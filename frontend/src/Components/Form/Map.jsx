@@ -37,7 +37,7 @@ const Map = (props) => {
     return (
         <div
             id="map"
-            className="container border mb-5 w-75 p-0"
+            className="row mx-auto border mb-5 w-75 p-0"
             onMouseMove={handleMove}
         >
             <div

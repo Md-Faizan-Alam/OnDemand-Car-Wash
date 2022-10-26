@@ -25,7 +25,7 @@ const OrderService = {
             .then((response) => response.data)
             .catch((error) => console.log(error));
         console.log(data);
-        return data;
+        return data.orderList;
     },
     getAllUnacceptedOrders: async () => {
         const config = {
@@ -38,7 +38,7 @@ const OrderService = {
             .then((response) => response.data)
             .catch((error) => console.log(error));
         console.log(data);
-        return data;
+        return data.orderList;
     },
     getOrdersByCustomer: async () => {
         const config = {
@@ -51,7 +51,7 @@ const OrderService = {
             .then((response) => response.data)
             .catch((error) => console.log(error));
         console.log(data);
-        return data;
+        return data.orderList;
     },
     updateOrder: async (updatedOrder) => {
         const config = {

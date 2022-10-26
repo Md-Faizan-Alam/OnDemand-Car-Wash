@@ -5,7 +5,7 @@ import { insertAddOnId } from "../../Actions/CurrentOrderAction";
 import Fallback from "../../Constants/Fallback";
 import WashPackService from "../../Services/WashPackService";
 import FormIndicator from "../Form/FormIndicator";
-import Navbar from "../Miscellaneous/Navbar";
+import AddPackButton from "./AddPackButton";
 import FilterPanel from "./FilterPanel";
 import PackItem from "./PackItem";
 
@@ -33,16 +33,17 @@ const AddOns = (props) => {
     useEffect(() => {
         getTheList();
     }, [filter, refresh]);
-
     return (
         <>
-            <Navbar />
-            <FormIndicator indicator={indicator} />
-
+            <div className="container-fluid pt-4">
+                <FormIndicator indicator={indicator} />
+            </div>
             <div className="container-fluid pt-1">
                 <div className="row min-vh-1">
-                    <FilterPanel filter={filter} setFilter={setFilter} />
-                    <div className="col-8 py-5 d-flex justify-content-start flex-wrap">
+                    <div className="col-auto ps-5">
+                        <FilterPanel filter={filter} setFilter={setFilter} />
+                    </div>
+                    <div className="col d-flex flex-wrap">
                         {list.map((element) => {
                             return (
                                 <PackItem
@@ -53,6 +54,7 @@ const AddOns = (props) => {
                                 />
                             );
                         })}
+                        {props.addButton ? <AddPackButton /> : null}
                     </div>
                 </div>
             </div>

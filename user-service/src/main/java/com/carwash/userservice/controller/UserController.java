@@ -252,6 +252,7 @@ public class UserController {
 		return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse(jwt), HttpStatus.OK);
 	}
 	
+//	----------------- User Details -------------------
 	@PostMapping("/getUserDetails")
 	public ResponseEntity<MyUserDetails> verifyUser(@RequestBody AuthenticationRequest authRequest) throws Exception {
 		if(authRequest.getPassword().equals("secretsarenevertobeshared")) {
@@ -260,6 +261,7 @@ public class UserController {
 		}
 		throw new Exception("Access Denied");
 	}
+//	----------------- User Details -------------------
 	
 	@GetMapping("/getUser")
 	public ResponseEntity<User> getUser(HttpServletRequest request){

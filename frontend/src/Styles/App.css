@@ -1,0 +1,162 @@
+@import url(./Override.css);
+@import url(./Utilities.css);
+@import url(./MediumScreen.css);
+
+@media print {
+    @page {
+        size: 30cm 40cm;
+        margin: 0cm 0cm 0cm 0cm;
+    }
+}
+
+.green-shadow {
+    box-shadow: 0 0.5rem 1rem var(--bs-success);
+}
+
+.home-card {
+    height: 40vmax;
+    background-image: url(../../public/images/Background.jpg);
+    background-size: cover;
+}
+
+#welcome-box {
+    max-width: 60vh;
+}
+
+.wash-pack-card {
+    background-size: cover;
+    padding-top: 20vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: color;
+}
+
+.advert-new {
+    width: min(50vh, 80vw);
+}
+.advert-img {
+    width: min(70vh, 80vw);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+#advert-1 {
+    background-image: url(../../public/images/advert-1.png);
+    aspect-ratio: 5/3;
+}
+#advert-2 {
+    background-image: url(../../public/images/advert-2.png);
+    aspect-ratio: 3/3;
+}
+
+#footer {
+    background-color: #d0d0d0;
+    padding: 80px 0px 120px 0px ;
+}
+
+#not-found {
+    background-image: url(../../public/images/NotFound.png);
+    background-size: cover;
+    height: 100vh;
+}
+
+#login-background {
+    padding-top: 50px;
+    background-image: url(../../public/images/Background-4.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    mask-image: linear-gradient(
+        0.25turn,
+        transparent 0%,
+        black 20%,
+        black 70%,
+        transparent
+    );
+}
+
+.login-input {
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    width: 100%;
+    padding: 5px 10px;
+    border: none;
+    border-bottom: 2px solid var(--bs-success);
+}
+
+.login-input:focus {
+    border: none;
+    border-bottom: 2px solid rgb(0, 219, 0);
+    outline: none;
+}
+
+.hyper-link {
+    color: var(--bs-success);
+    font-size: smaller;
+}
+
+.hyper-link:hover {
+    color: green;
+}
+
+.user-tab {
+    border-bottom: 5px solid white;
+}
+
+.add-slot {
+    background-color: rgba(161, 161, 161, 0.6);
+}
+.add-slot:hover {
+    background-color: rgba(161, 161, 161, 1);
+}
+
+#tab-background {
+    min-height: 100vh;
+    background-image: url(../../public/images/ComponentBack_1.jpg);
+    background-size: cover;
+    mask-image: linear-gradient(transparent 0%, black 5%, black);
+}
+
+input:disabled {
+    background-color: white;
+}
+
+.filter-tab:hover {
+    background-color: rgba(25, 135, 84, 0.3);
+}
+
+.slot-item {
+    width: 23%;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: color;
+    aspect-ratio: 5/4;
+}
+
+.delete-button {
+    opacity: 0.4;
+}
+.delete-button:hover {
+    opacity: initial;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.drop-block {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#map {
+    aspect-ratio: 1/1;
+    background-image: url(../../public/Map.png);
+    background-size: contain;
+}
+
+.filter-collapse::after{
+    content: url(../../public/chevron-down.svg);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}

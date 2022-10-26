@@ -2,13 +2,10 @@ const NavToggler = (props) => {
     return (
         <>
             <button
-                className="navbar-toggler"
+                className="navbar-toggler border-0 shadow-none"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
+                data-bs-target={`#${props.targetId}`}
             >
                 <span className="navbar-toggler-icon"></span>
             </button>

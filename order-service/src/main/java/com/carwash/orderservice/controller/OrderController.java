@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,7 +35,7 @@ import com.razorpay.RazorpayException;
 @RequestMapping("/order")
 public class OrderController {
 
-//	private static Logger logger = LoggerFactory.getLogger(OrderController.class);
+	// private static Logger logger = LoggerFactory.getLogger(OrderController.class);
 
 	@Autowired
 	RazorpayKey key;

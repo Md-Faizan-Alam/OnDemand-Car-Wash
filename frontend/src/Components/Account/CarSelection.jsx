@@ -22,7 +22,7 @@ const CarSelection = (props) => {
     }, []);
 
     return (
-        <div className="container my-5 d-flex justify-content-between flex-wrap">
+        <div className="container my-5 d-flex justify-content-between flex-wrap position-relative">
             {carList.map((element) => {
                 return (
                     <CarBlock
@@ -33,7 +33,7 @@ const CarSelection = (props) => {
                     />
                 );
             })}
-            <button className="btn btn-outline-success" onClick={goBack}>
+            <button className="btn btn-outline-success position-absolute" onClick={goBack}>
                 Back
             </button>
         </div>

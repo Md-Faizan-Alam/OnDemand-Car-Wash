@@ -1,23 +1,18 @@
 import { Link } from "react-router-dom";
 
-
 const HomeCard = (props) => {
     return (
-        <div className="container-fluid home-card">
-            <div className="w-75">
-                <div className="card ms-5 bg-transparent border-0 w-50" id="welcome-box">
-                <div className="card-body">
-                    <h1 className="card-title">
-                        Welcome to your car's favorite destination
-                    </h1>
-                    <p className="card-text">
-                        The best care that your car can get is right here with our
-                        verified washers
-                    </p>
-                    <Link
-                        to={"/packs"}
-                        className="btn btn-outline-success me-4"
-                    >
+        <div className="container-fluid home-card px-3 d-flex align-items-center">
+            <div className="ms-3 ms-md-5" id="welcome-box">
+                <h1 className="fs-2">
+                    Welcome to your car's favorite destination
+                </h1>
+                <p className="card-text">
+                    The best care that your car can get is right here with our
+                    verified washers
+                </p>
+                <div className="d-flex gap-3">
+                    <Link to={"/packs"} className="btn btn-outline-success">
                         Book Now
                     </Link>
                     <Link
@@ -31,7 +26,6 @@ const HomeCard = (props) => {
                         Schedule Later
                     </Link>
                 </div>
-                        </div>
             </div>
         </div>
     );

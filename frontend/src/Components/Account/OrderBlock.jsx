@@ -21,10 +21,7 @@ const OrderBlock = (props) => {
 
     return (
         <div
-            className="container-fluid bg-gradient rounded py-3 mb-1 fw-semibold"
-            style={{
-                backgroundColor: "rgba(170, 170, 170, 0.8)",
-            }}
+            className="container-fluid bg-gradient bg-order rounded py-3 mb-1 fw-semibold"
         >
             <div className="row text-center">
                 <div className="col-1">{props.serial}</div>

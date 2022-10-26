@@ -13,7 +13,7 @@ const SlotItem = (props) => {
     return (
         <div
             key={props.pack.id}
-            className="container rounded-2 h-100 mx-1 w-25 text-white slot-item fw-semibold mb-4 justify-items-end position-relative"
+            className="container mx-1 rounded-2 text-white slot-item fw-semibold mb-4 justify-items-end position-relative"
             style={{
                 backgroundImage: Toolbox.titleToUrl(props.pack.title),
             }}

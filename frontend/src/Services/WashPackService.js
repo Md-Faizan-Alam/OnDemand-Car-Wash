@@ -1,6 +1,4 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setPackStage } from "../Actions/PackStageAction";
 import Gateway from "../Constants/Gateway";
 
 const WashPackService = {

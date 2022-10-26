@@ -19,7 +19,12 @@ const Carousel = (props) => {
     };
 
     return (
-        <div id={props.id} className="carousel slide" data-bs-ride="carousel">
+        <div
+            id={props.id}
+            className="carousel slide"
+            data-bs-ride="carousel"
+            style={props.list?.length === 0 ? { display: "none" } : null}
+        >
             <div className="carousel-inner">
                 {Toolbox.getCarouselItem(props.list, props.handleAction)}
             </div>

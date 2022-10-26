@@ -25,7 +25,6 @@ export default configureStore({
         currentPack: CurrentPackReducer,
     },
     middleware: (getDefaultMiddleware) =>
-        // getDefaultMiddleware().concat(thunk),
         getDefaultMiddleware().concat(thunk).concat(logger),
     devTools: [composeWithDevTools],
 });

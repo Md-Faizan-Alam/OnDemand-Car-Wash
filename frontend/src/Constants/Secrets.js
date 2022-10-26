@@ -1,14 +1,11 @@
-const Storage = {
-    razorPayKeyId: "rzp_test_YWt0CAt1LZciUa",
-    razorPayKeySecret: "UveucS8r0ZcEU4loQAXEF0RF",
-}
-
 const Secret = {
+    razorPayKeyId: process.env.REACT_APP_RAZORPAY_API_KEY_ID,
+    razorPayKeySecret: process.env.REACT_APP_RAZORPAY_API_KEY_SECRET,
     getRazorPayKeyId: ()=>{
-        return Storage.razorPayKeyId;
+        return Secret.razorPayKeyId;
     },
     getRazorPayKeySecret: ()=>{
-        return Storage.razorPayKeySecret;
+        return Secret.razorPayKeySecret;
     }
 }
 

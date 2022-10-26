@@ -1,6 +1,6 @@
 const PriceButton = (props) => {
     return (
-        <div className="row w-75 m-auto">
+        <div className="row w-fit m-auto text-nowrap">
             <div className="btn-group-vertical">
                 {props.priceList.map((price) => (
                     <button
@@ -11,7 +11,7 @@ const PriceButton = (props) => {
                                 [props.name]: price,
                             }))
                         }
-                        className={`btn filter-tab p-0 border border-success border-2 ${
+                        className={`btn filter-tab p-0 px-2 border border-success border-2 ${
                             props.filter[props.name] === price
                                 ? "bg-success text-light"
                                 : ""

@@ -1,5 +1,5 @@
 const Gateway = {
-    baseURL: "http://localhost:8100",
+    baseURL: process.env.REACT_APP_BASE_URL,
     makePath: (...pathList) => {
         let fullPath = Gateway.baseURL;
         for (const path of pathList) {

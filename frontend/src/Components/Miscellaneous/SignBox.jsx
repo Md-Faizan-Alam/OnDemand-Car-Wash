@@ -6,7 +6,7 @@ const SignBox = (props) => {
     };
 
     return (
-        <ul className="navbar-nav mb-lg-0 position-absolute end-0 px-3">
+        <ul className="navbar-nav ms-2 ms-lg-0">
             {localStorage.getItem("JWT") !== "" ? (
                 <>
                     <HeadLink
