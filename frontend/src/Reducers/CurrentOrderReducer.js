@@ -1,13 +1,8 @@
-import Fallback from "../Constants/Fallback";
+import Fallback from '../Constants/Fallback';
 
 const CurrentOrderReducer = (currentOrder = Fallback.emptyOrder, action) => {
     switch (action.type) {
-        case "SET_WASH_PACK":
-            return {
-                ...currentOrder,
-                washPackId: action.payload,
-            };
-        case "INSERT_ADD_ON":
+        case 'INSERT_ADD_ON':
             return {
                 ...currentOrder,
                 addOnIdList: {
@@ -17,7 +12,7 @@ const CurrentOrderReducer = (currentOrder = Fallback.emptyOrder, action) => {
                     ],
                 },
             };
-        case "REMOVE_ADD_ON":
+        case 'REMOVE_ADD_ON':
             let modifiedList = [...currentOrder.addOnIdList.stringList];
             modifiedList = modifiedList.filter(
                 (element) => element !== action.payload
@@ -28,22 +23,17 @@ const CurrentOrderReducer = (currentOrder = Fallback.emptyOrder, action) => {
                     stringList: [...modifiedList],
                 },
             };
-        case "SET_CAR_ID":
-            return {
-                ...currentOrder,
-                carId: action.payload,
-            };
         case 'SET_LOCATION':
             return {
                 ...currentOrder,
-                location: action.payload
-            }
+                location: action.payload,
+            };
         case 'SET_BOOOKING_TIME':
             return {
                 ...currentOrder,
-                bookingTime: Date.now()
-            }
-        case "CANCEL_ORDER":
+                bookingTime: Date.now(),
+            };
+        case 'CANCEL_ORDER':
             return Fallback.emptyOrder;
         default:
             return currentOrder;

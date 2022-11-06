@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import OrderService from "../../Services/OrderService";
-import FormIndicator from "../Form/FormIndicator";
-import BookNow from "../Minors/BookNow";
-import NoOrders from "../Static/NoOrders";
-import OrderListHead from "../Static/OrderListHead";
-import OrderBlock from "./OrderBlock";
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import OrderService from '../../Services/OrderService';
+import FormIndicator from '../Form/FormIndicator';
+import BookNow from '../Minors/BookNow';
+import NoOrders from '../Static/NoOrders';
+import OrderListHead from '../Static/OrderListHead';
+import OrderBlock from './OrderBlock';
 
 const OrderList = (props) => {
     const { role } = useSelector((state) => state.user);
     const refresh = useSelector((state) => state.refresh);
     const [orderList, setOrderList] = useState([]);
-    const [indicator, setIndicator] = useState("null");
+    const [indicator, setIndicator] = useState('null');
 
     const getOrdersByRole = async () => {
         switch (role) {
-            case "CUSTOMER":
+            case 'CUSTOMER':
                 return await OrderService.getOrdersByCustomer();
-            case "WASHER":
+            case 'WASHER':
                 return await OrderService.getAllUnacceptedOrders();
-            case "ADMIN":
+            case 'ADMIN':
                 return await OrderService.getAllOrders();
             default:
                 return null;
@@ -27,10 +27,12 @@ const OrderList = (props) => {
     };
 
     const getOrderList = async () => {
-        setIndicator("spinner");
-        const data = await getOrdersByRole();
-        setIndicator("null")
-        setOrderList(data);
+        setIndicator('spinner');
+        const data = await getOrdersByRole().then((response) => {
+            setOrderList(response);
+            if (orderList?.length === 0) setIndicator('message');
+        });
+        setIndicator('null');
     };
 
     useEffect(() => {
@@ -40,8 +42,8 @@ const OrderList = (props) => {
     return (
         <div className="container-fluid p-0 rounded my-5">
             <OrderListHead />
-            <FormIndicator indicator={indicator}/>
-            {orderList.length === 0 ? (
+            <FormIndicator indicator={indicator} />
+            {indicator === 'message' ? (
                 <>
                     <NoOrders />
                 </>
@@ -58,7 +60,7 @@ const OrderList = (props) => {
                 })
             )}
 
-            {["CUSTOMER"].includes(role) ? <BookNow /> : null}
+            {['CUSTOMER'].includes(role) ? <BookNow /> : null}
         </div>
     );
 };

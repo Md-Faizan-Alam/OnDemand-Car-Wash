@@ -35,7 +35,7 @@ import com.razorpay.RazorpayException;
 @RequestMapping("/order")
 public class OrderController {
 
-	// private static Logger logger = LoggerFactory.getLogger(OrderController.class);
+	 private static Logger logger = LoggerFactory.getLogger(OrderController.class);
 
 	@Autowired
 	RazorpayKey key;
@@ -91,6 +91,7 @@ public class OrderController {
 
 	@GetMapping("/list")
 	public OrderList getAllOrders() {
+	    logger.info("Orders fetched by the user");
 		return orderService.getAllOrders();
 	}
 

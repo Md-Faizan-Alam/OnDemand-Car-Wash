@@ -15,7 +15,7 @@ const CollapsedFilterPanel = (props) => {
                 >
                     Filter
                 </button>
-                <div class="collapse" id="filterBody">
+                <div className="collapse" id="filterBody">
                     <div className="container w-fit mx-0 mt-1 d-flex flex-wrap">
                         <div className="ps-3 fw-bold py-2">
                             Sort By:

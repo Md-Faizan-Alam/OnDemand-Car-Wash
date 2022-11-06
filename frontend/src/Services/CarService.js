@@ -17,6 +17,7 @@ const CarService = {
             .catch((error) => console.log(error));
 
         console.log(`Car Insertion: ${data}`);
+        return data;
     },
 
     getCarsByCustomer: async () => {

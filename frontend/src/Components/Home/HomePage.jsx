@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { insertAddOnId, setWashPackId } from "../../Actions/CurrentOrderAction";
-import setOrderStage from "../../Actions/OrderStageAction";
-import WashPackService from "../../Services/WashPackService";
-import Navbar from "../Miscellaneous/Navbar";
-import Advertisement from "../Static/Advertisement";
-import Footer from "../Static/Footer";
-import NewFooter from "../Static/Footer";
-import Carousel from "./Carousel";
-import HomeCard from "./HomeCard";
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { insertAddOnId } from '../../Actions/CurrentOrderAction';
+import { setCurrentPack } from '../../Actions/CurrentPackAction';
+import setOrderStage from '../../Actions/OrderStageAction';
+import WashPackService from '../../Services/WashPackService';
+import Navbar from '../Miscellaneous/Navbar';
+import Advertisement from '../Static/Advertisement';
+import NewFooter from '../Static/Footer';
+import Carousel from './Carousel';
+import HomeCard from './HomeCard';
 
 const HomePage = (props) => {
     const [washPacklist, setWashPackList] = useState([]);
@@ -18,17 +18,19 @@ const HomePage = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleBook = (id) => {
-        console.log("entered handleBook");
-        dispatch(setWashPackId(id));
-        dispatch(setOrderStage("book"));
-        navigate("/user/myOrders");
+    const handleBook = async (id) => {
+        console.log('entered handleBook');
+        await WashPackService.getWashPackById(id).then((response) => {
+            dispatch(setCurrentPack(response));
+        });
+        dispatch(setOrderStage('book'));
+        navigate('/user/myOrders');
     };
 
     const selectAddOn = (id) => {
         dispatch(insertAddOnId(id));
-        dispatch(setOrderStage("book"));
-        navigate("/user/myOrders");
+        dispatch(setOrderStage('book'));
+        navigate('/user/myOrders');
     };
 
     const getPacks = async () => {
@@ -47,12 +49,12 @@ const HomePage = (props) => {
             <Navbar />
             <HomeCard />
             <Carousel
-                id={"washPackCarousel"}
+                id={'washPackCarousel'}
                 list={washPacklist}
                 handleAction={handleBook}
             />
             <Carousel
-                id={"addOnCarousel"}
+                id={'addOnCarousel'}
                 list={addOnList}
                 handleAction={selectAddOn}
             />

@@ -1,75 +1,66 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { cancelOrder } from "../../Actions/CurrentOrderAction";
-import setOrderStage from "../../Actions/OrderStageAction";
-import Fallback from "../../Constants/Fallback";
-import Secret from "../../Constants/Secrets";
-import CarService from "../../Services/CarService";
-import OrderService from "../../Services/OrderService";
-import WashPackService from "../../Services/WashPackService";
-import SelectedAddOns from "../Catalogue/SelectedAddOns";
-import SelectedCar from "../Catalogue/SelectedCar";
-import SelectedPack from "../Catalogue/SelectedPack";
-import ActionRow from "../Minors/ActionRow";
-import OrderTotal from "../Static/OrderTotal";
-import FormIndicator from "./FormIndicator";
-import Map from "./Map";
+import { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { cancelOrder } from '../../Actions/CurrentOrderAction';
+import setOrderStage from '../../Actions/OrderStageAction';
+import Fallback from '../../Constants/Fallback';
+import Secret from '../../Constants/Secrets';
+import OrderService from '../../Services/OrderService';
+import WashPackService from '../../Services/WashPackService';
+import SelectedAddOns from '../Catalogue/SelectedAddOns';
+import SelectedCar from '../Catalogue/SelectedCar';
+import SelectedPack from '../Catalogue/SelectedPack';
+import ActionRow from '../Minors/ActionRow';
+import OrderTotal from '../Static/OrderTotal';
+import FormIndicator from './FormIndicator';
+import Map from './Map';
 
 const BookWash = (props) => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
     const currentOrder = useSelector((state) => state.currentOrder);
+    const pack = useSelector((state) => state.currentPack);
+    const car = useSelector((state) => state.currentCar);
     const [addOnList, setAddOnList] = useState([]);
     const [location, setlocation] = useState(Fallback.emptyLocation);
-    const [pack, setPack] = useState(Fallback.fallbackPack);
-    const [car, setCar] = useState(Fallback.fallbackCar);
-    const [indicator, setIndicator] = useState("blank");
-    const [message, setMessage] = useState("");
+    const [indicator, setIndicator] = useState('blank');
+    const [message, setMessage] = useState('');
+
+    const total = useMemo(
+        () => addOnList.reduce((sum, addOn) => sum + addOn.price, pack.price),
+        [pack, addOnList]
+    );
+
+    const fetchAddOns = async () => {
+        await WashPackService.getAddOnsByIds(currentOrder.addOnIdList).then(
+            (response) => setAddOnList(response)
+        );
+    };
+    useEffect(() => {
+        fetchAddOns();
+    }, [currentOrder]);
 
     const handleCancel = () => {
         dispatch(cancelOrder());
-        dispatch(setOrderStage("view"));
+        dispatch(setOrderStage('view'));
     };
-
-    const calculateTotal = () => {
-        let sum = pack.price;
-        addOnList.forEach((element) => {
-            sum += element.price;
-        });
-        return sum;
-    };
-
-    const getAllStates = async () => {
-        const fetchedPack = await WashPackService.getWashPackById(
-            currentOrder.washPackId
-        );
-        const fetchedAddOnList = await WashPackService.getAddOnsByIds(
-            currentOrder.addOnIdList
-        );
-        const fetchedCar = await CarService.getCarById(currentOrder.carId);
-        setPack(fetchedPack);
-        setAddOnList(fetchedAddOnList);
-        setCar(fetchedCar);
-    };
-
-    useEffect(() => {
-        getAllStates();
-    }, [currentOrder]);
 
     const orderIsInvalid = () => {
-        if (currentOrder.carId === null) {
-            setMessage("Please select a car to proceed");
-        } else if (currentOrder.washPackId === "0") {
-            setMessage("Please select a Wash Pack to proceed");
-        } else {
-            return false;
+        switch (true) {
+            case car.carId === null:
+                setMessage('Please select a car to proceed');
+                break;
+            case pack.id === '0':
+                setMessage('Please select a Wash Pack to proceed');
+                break;
+            default:
+                return false;
         }
-        setIndicator("message");
+        setIndicator('message');
         return true;
     };
 
     const handleCheckout = async () => {
-        setIndicator("spinner");
+        setIndicator('spinner');
         if (orderIsInvalid()) return;
         await handlePay();
     };
@@ -78,39 +69,41 @@ const BookWash = (props) => {
         let event = new Date(Date.now());
         const order = {
             ...currentOrder,
+            washPackId: pack.id,
+            carId: car.carId,
             location: location,
             bookingTime: event.toISOString(),
-            amount: calculateTotal(),
+            amount: total,
         };
         await OrderService.insertOrder(order);
         setInvoice();
         dispatch(cancelOrder());
-        dispatch(setOrderStage("preview"));
+        dispatch(setOrderStage('preview'));
     };
 
     const setInvoice = () => {
         const order = {
-            date: new Date(Date.now()).toLocaleDateString("fr-CH"),
+            date: new Date(Date.now()).toLocaleDateString('fr-CH'),
             customerName: `${user.firstName} ${user.lastName}`,
             email: user.email,
             phoneNumber: user.phoneNumber,
             list: [pack, ...addOnList],
-            amount: calculateTotal(),
+            amount: total,
             car: car.modelName,
             pack: pack.title,
             addOnList: addOnList.map((element) => element.title),
         };
-        localStorage.setItem("order", JSON.stringify(order));
+        localStorage.setItem('order', JSON.stringify(order));
     };
 
     const handlePay = async () => {
-        const paymentAmount = 100 * calculateTotal();
+        const paymentAmount = 100 * total;
         const paymentOrder = await OrderService.getRazorPayOrder(paymentAmount);
         const options = {
             key: Secret.getRazorPayKeyId(),
             amount: paymentAmount,
-            currency: "INR",
-            name: "GreenWash",
+            currency: 'INR',
+            name: 'GreenWash',
             order_id: paymentOrder.id,
             handler: handleBook,
             prefill: {
@@ -120,7 +113,7 @@ const BookWash = (props) => {
             },
         };
         const razorpay = new window.Razorpay(options);
-        razorpay.on("payment.failed", (response) => {
+        razorpay.on('payment.failed', (response) => {
             alert(response.error.description);
         });
         razorpay.open();
@@ -133,10 +126,10 @@ const BookWash = (props) => {
                 <SelectedPack pack={pack} />
                 <SelectedAddOns addOnList={addOnList} />
                 <Map setLocation={setlocation} />
-                <OrderTotal total={calculateTotal()} />
+                <OrderTotal total={total} />
                 <FormIndicator indicator={indicator} message={message} />
                 <ActionRow
-                    actionName={"Checkout"}
+                    actionName={'Checkout'}
                     handleAction={handleCheckout}
                     handleCancel={handleCancel}
                 />
